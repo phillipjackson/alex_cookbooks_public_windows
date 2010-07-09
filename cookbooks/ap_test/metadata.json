@@ -1,0 +1,50 @@
+{
+  "replacing": {
+
+  },
+  "long_description": "= DESCRIPTION:\n\nTest recipes\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate \n",
+  "recipes": {
+    "ap_test": "",
+    "ap_test::default": "Not yet implemented",
+    "ap_test::ps1_exec": "Executes a powershell script",
+	"ap_test::dump_input": "Dumpes an input to c:\dump_input.txt"
+  },
+  "description": "Test recipes",
+  "maintainer": "RightScale, Inc.",
+  "recommendations": {
+
+  },
+  "name": "ap_test",
+  "version": "0.0.2",
+  "maintainer_email": "alex@rightscale.com",
+  "suggestions": {
+
+  },
+  "platforms": {
+
+  },
+  "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n",
+  "conflicting": {
+
+  },
+  "dependencies": {
+
+  },
+  "attributes": {
+  "dump\/input": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "Input to dump",
+      "display_name": "Input to dump",
+      "required": true,
+      "recipes": [
+        "ap_test::dump_input"
+      ]
+    }
+    
+  },
+  "providing": {
+  "ap_test::dump_input": [
+    ]
+  }
+}

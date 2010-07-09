@@ -1,0 +1,31 @@
+{
+    "recipes": {
+      "win_aws::install_dotnet_sdk": "Install AWS SDK for .NET",
+      "win_aws::default": "Not implemented"
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.0.4",
+    "maintainer": "RightScale, Inc.",
+    "long_description": "= DESCRIPTION:\n\nAmazon Web Services recipes and providers for Windows\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate",
+    "description": "Amazon Web Services recipes and providers for Windows",
+    "suggestions": {
+    },
+    "maintainer_email": "alex@rightscale.com",
+    "name": "win_aws",
+    "conflicting": {
+    },
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "platforms": {
+    },
+    "attributes": {
+    },
+    "replacing": {
+    }
+  }

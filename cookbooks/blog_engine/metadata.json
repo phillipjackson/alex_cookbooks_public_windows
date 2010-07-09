@@ -1,0 +1,190 @@
+{
+    "recipes": {
+      "blog_engine::restore_database": "Restores the BlogEngine database from a local machine directory.",
+      "blog_engine::drop_database": "Drops the BlogEngine database.",
+      "blog_engine::backup_database_to_s3": "Backs up the BlogEngine database to a local machine directory.",
+      "blog_engine::default": "AP: Loads the database and installs the BlogEngine application as the default IIS site",
+      "blog_engine::continuous_backup_database_to_s3": "Schedules continuous database backups to an s3 bucket. It requires the 'win_admin::change_admin_password' recipe in order to run the scheduled task under the administrator user.",
+      "blog_engine::backup_database": "Backs up the BlogEngine database to a local machine directory.",
+      "blog_engine::svn_code_checkout": "Retrieves code from SVN."
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.3.4",
+    "maintainer": "RightScale, Inc.",
+    "long_description": "= DESCRIPTION:\n\nLoads the BlogEngine data into the local SQL Server database and installs the BlogEngine application as the\ndefault web application for IIS.\n\n= REQUIREMENTS:\n\n* win_admin, and sys_monitoring cookbooks\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\nBoot Scripts\n  * default - Loads the database and installs the BlogEngine application as the default IIS site\n\nOperational Scripts\n  * backup_database - Backs up the BlogEngine database to a local machine directory.\n  * restore_database - Restores the BlogEngine database from a local machine directory.\n  * drop_database - Drops the BlogEngine database.\n",
+    "description": "AP: Install and configure the BlogEngine application, see http://www.dotnetblogengine.net",
+    "suggestions": {
+    },
+    "maintainer_email": "support@rightscale.com",
+    "name": "blog_engine",
+    "conflicting": {
+    },
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "providing": {
+    },
+    "dependencies": {
+      "win_aws": [
+
+      ],
+      "ap_win_admin": [
+
+      ]
+    },
+    "platforms": {
+    },
+    "attributes": {
+      "db_sqlserver/backup/existing_backup_file_name_pattern": {
+        "default": "{0}_*.bak",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
+        "display_name": "Pattern matching backup file names",
+        "recipes": [
+          "blog_engine::default",
+          "blog_engine::backup_database",
+          "blog_engine::backup_database_to_s3",
+          "blog_engine::restore_database"
+        ],
+        "required": "optional"
+      },
+      "db_sqlserver/backup/backup_file_name_format": {
+        "default": "{0}_{1}.bak",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
+        "display_name": "Backup file name format",
+        "recipes": [
+          "blog_engine::default",
+          "blog_engine::backup_database",
+          "blog_engine::backup_database_to_s3",
+          "blog_engine::restore_database"
+        ],
+        "required": "optional"
+      },
+      "db_sqlserver/server_name": {
+        "default": "localhost\\SQLEXPRESS",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The network name of the SQL Server instance used by recipes.",
+        "display_name": "SQL Server instance network name",
+        "recipes": [
+          "blog_engine::default",
+          "blog_engine::backup_database",
+          "blog_engine::backup_database_to_s3",
+          "blog_engine::restore_database",
+          "blog_engine::drop_database"
+        ],
+        "required": "optional"
+      },
+      "s3/bucket": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket",
+        "recipes": [
+          "blog_engine::default"
+        ],
+        "required": "optional"
+      },
+      "aws/access_key_id": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
+        "display_name": "Access Key Id",
+        "recipes": [
+          "blog_engine::default"
+        ],
+        "required": "optional"
+      },
+      "s3/file": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "File to be retrieved",
+        "display_name": "File",
+        "recipes": [
+          "blog_engine::default"
+        ],
+        "required": "optional"
+      },
+      "database/backup/daily_time": {
+        "default": "04:00",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The time of the day, based on the server's timezone, to run the backups when the 'Backup hourly frequency' input is set to 24. Format: hh:mm (Ex: 22:30)",
+        "display_name": "Backup daily time",
+        "recipes": [
+          "blog_engine::continuous_backup_database_to_s3"
+        ],
+        "required": "optional"
+      },
+      "aws/secret_access_key": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential.  Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+        "display_name": "Secret Access Key",
+        "recipes": [
+          "blog_engine::default"
+        ],
+        "required": "optional"
+      },
+      "db_sqlserver/backup/database_backup_dir": {
+        "default": "c:\\datastore\\sqlserver\\databases",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The local drive path or UNC path to the directory which will contain new SQL Server database backup (.bak) files. Note that network drives are not supported by SQL Server.",
+        "display_name": "SQL Server backup .bak directory",
+        "recipes": [
+          "blog_engine::backup_database",
+          "blog_engine::backup_database_to_s3",
+          "blog_engine::restore_database"
+        ],
+        "required": "optional"
+      },
+      "database/backup/hourly_frequency": {
+        "default": "4",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Defines the backup frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Backup daily time' input is required also.",
+        "display_name": "Backup hourly frequency",
+        "recipes": [
+          "blog_engine::continuous_backup_database_to_s3"
+        ],
+        "required": "required"
+      }
+    },
+    "replacing": {
+    }
+  }

@@ -1,0 +1,25 @@
+= DESCRIPTION:
+
+Recipes for working with S3 buckets
+
+= REQUIREMENTS:
+
+
+= ATTRIBUTES: 
+
+See metadata.rb
+
+= USAGE:
+
+Designed to be run within a RightScale ServerTemplate
+
+
+# download a a file from S3 using the :get provider
+win_aws_powershell_s3providers "downloadmyfile" do
+  access_key_id @node[:aws][:access_key_id]
+  secret_access_key @node[:aws][:secret_access_key]
+  s3_bucket @node[:s3][:bucket]
+  s3_file @node[:s3][:file]
+  download_dir 'c:'
+  action :get
+end

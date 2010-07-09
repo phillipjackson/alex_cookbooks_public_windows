@@ -1,0 +1,116 @@
+{
+  "replacing": {
+
+  },
+  "long_description": "= DESCRIPTION:\n\nAIO\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate \n",
+  "recipes": {
+    "aio": "",
+    "aio::default": "Not yet implemented",
+    "aio::get_file": "Retrieves a file from an S3 bucket",
+	"aio::put_file": "Uploads a file to an S3 bucket"
+  },
+  "description": "AIO",
+  "maintainer": "RightScale, Inc.",
+  "recommendations": {
+
+  },
+  "name": "aio",
+  "version": "0.0.1",
+  "maintainer_email": "alex@rightscale.com",
+  "suggestions": {
+
+  },
+  "platforms": {
+
+  },
+  "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n",
+  "conflicting": {
+
+  },
+  "dependencies": {
+
+  },
+  "attributes": {
+    "s3\/file": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "File to be retrieved",
+      "display_name": "File",
+      "required": true,
+      "recipes": [
+        "aio::get_file"
+      ]
+    },
+    "s3\/file": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "Name of the file on s3. When ignored, it will use the name in the File Path",
+      "display_name": "File",
+      "required": false,
+      "recipes": [
+        "aio::put_file"
+      ]
+    },
+    "s3\/bucket": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "The name of the S3 bucket",
+      "display_name": "Bucket",
+      "required": true,
+      "recipes": [
+        "aio::get_file",
+		"aio::put_file"
+      ]
+    },
+    "aws\/access_key_id": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
+      "display_name": "Access Key",
+      "required": true,
+      "recipes": [
+        "aio::get_file",
+		"aio::put_file"
+      ]
+    },
+    "aws\/secret_access_key": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "This is an Amazon credential.  Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+      "display_name": "Secret Access Key",
+      "required": true,
+      "recipes": [
+        "aio::get_file",
+		"aio::put_file"
+      ]
+    },
+    "aio\/download_dir": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "The directory where the file from s3 will be downloaded. Ex: c:\\tmp\\",
+      "display_name": "Download Dir",
+      "required": true,
+      "recipes": [
+        "aio::get_file"
+      ]
+    },
+    "aio\/file_path": {
+      "type": "string",
+      "multiple_values": false,
+      "description": "The full path to the file to be uploaded. Ex: c:\\tmp\\my.txt",
+      "display_name": "File Path",
+      "required": true,
+      "recipes": [
+        "aio::put_file"
+      ]
+    }
+  },
+  "providing": {
+    "aio::get_file": [
+
+    ],
+	"aio::put_file": [
+
+    ]
+  }
+}
