@@ -17,4 +17,5 @@ recipe "ap_win_admin::patched_start_default_website", "Starts the website named 
 attribute "ap_win_admin/admin_password",
   :display_name => "New administrator password",
   :description => "New administrator password",
-  :recipes => ["ap_win_admin::change_admin_password"]
+  :recipes => ["ap_win_admin::change_admin_password"],
+  :required => true

@@ -42,7 +42,7 @@
         "recipes": [
           "ap_win_admin::change_admin_password"
         ],
-        "required": "optional"
+        "required": "required"
       }
     },
     "replacing": {
