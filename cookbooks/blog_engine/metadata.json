@@ -51,7 +51,7 @@
           "blog_engine::backup_database_to_s3",
           "blog_engine::restore_database"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "db_sqlserver/backup/backup_file_name_format": {
         "default": "{0}_{1}.bak",
@@ -68,7 +68,7 @@
           "blog_engine::backup_database_to_s3",
           "blog_engine::restore_database"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "db_sqlserver/server_name": {
         "default": "localhost\\SQLEXPRESS",
@@ -86,7 +86,7 @@
           "blog_engine::restore_database",
           "blog_engine::drop_database"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "s3/bucket": {
         "calculated": false,
@@ -168,9 +168,10 @@
           "blog_engine::backup_database_to_s3",
           "blog_engine::restore_database"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "database/backup/hourly_frequency": {
+        "default": "4",
         "calculated": false,
         "type": "string",
         "choice": [
@@ -181,7 +182,7 @@
         "recipes": [
           "blog_engine::continuous_backup_database_to_s3"
         ],
-        "required": "required"
+        "required": "recommended"
       }
     },
     "replacing": {

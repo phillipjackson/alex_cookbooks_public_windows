@@ -22,29 +22,25 @@ attribute "db_sqlserver/server_name",
   :display_name => "SQL Server instance network name",
   :description => "The network name of the SQL Server instance used by recipes.",
   :default => "localhost\\SQLEXPRESS",
-  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database", "blog_engine::drop_database"],
-  :required => true
+  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database", "blog_engine::drop_database"]
 
 attribute "db_sqlserver/backup/database_backup_dir",
   :display_name => "SQL Server backup .bak directory",
   :description => "The local drive path or UNC path to the directory which will contain new SQL Server database backup (.bak) files. Note that network drives are not supported by SQL Server.",
   :default => "c:\\datastore\\sqlserver\\databases",
-  :recipes => ["blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"],
-  :required => true
+  :recipes => ["blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"]
 
 attribute "db_sqlserver/backup/backup_file_name_format",
   :display_name => "Backup file name format",
   :description => "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
   :default => "{0}_{1}.bak",
-  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"],
-  :required => true
+  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"]
 
 attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   :display_name => "Pattern matching backup file names",
   :description => "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
   :default => "{0}_*.bak",
-  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"],
-  :required => true
+  :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"]
   
 attribute "s3/file",
   :display_name => "File",
@@ -74,7 +70,8 @@ attribute "database/backup/hourly_frequency",
   :display_name => "Backup hourly frequency",
   :description => "Defines the backup frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Backup daily time' input is required also.",
   :recipes => ["blog_engine::continuous_backup_database_to_s3"],
-  :required => true
+  :default => "4",
+  :required => "recommended"
   
 attribute "database/backup/daily_time",
   :display_name => "Backup daily time",
