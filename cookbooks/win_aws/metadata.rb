@@ -3,11 +3,14 @@ maintainer_email "alex@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Amazon Web Services recipes and providers for Windows"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.0.4"
+version          "0.1.4"
 
 
 recipe "win_aws::default", "Not implemented"
 recipe "win_aws::install_dotnet_sdk", "Install AWS SDK for .NET"
+recipe "win_aws::register_instance_with_elb", "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
+recipe "win_aws::deregister_instance_from_elb", "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
+
 
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
@@ -23,6 +26,6 @@ attribute "aws/secret_access_key",
   
 attribute "aws/elb_name",
   :display_name => "ELB Name",
-  :description => "Defines the backup frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Backup daily time' input is required also.",
+  :description => "The name of the Elastic Load Balancer to register/deregister the instance with. (e.g., production-elb). The ELB needs to be created and configured prior to the execution of the recipe.",
   :recipes => ["win_aws::register_instance_with_elb", "win_aws::deregister_instance_from_elb"],
   :required => true
