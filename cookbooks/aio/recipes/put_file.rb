@@ -7,7 +7,7 @@
 
 
 # download
-win_aws_powershell_s3providers "uploadmyfile" do
+win_aws_powershell_s3provider "uploadmyfile" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket]

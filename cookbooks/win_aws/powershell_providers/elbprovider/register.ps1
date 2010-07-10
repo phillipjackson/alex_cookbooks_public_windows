@@ -31,10 +31,13 @@ $elb_config = New-Object -TypeName Amazon.ElasticLoadBalancing.AmazonElasticLoad
 	
 $az = $env:EC2_PLACEMENT_AVAILABILITY_ZONE
 $region = $az.substring(0,$az.length-1)
+
+Write-Outpu "*** Instance is in region: [$region]"
+
 $elb_config.WithServiceURL("https://elasticloadbalancing."+$region+".amazonaws.com")
 
 #create elb client base on the ServiceURL(region)
-$client_elb=[Amazon.AWSClientFactory]::CreateAmazonElasticLoadBalancingClient($env:AWS_ACCESS_KEY_ID,$env:AWS_SECRET_ACCESS_KEY,$elb_config)
+$client_elb=[Amazon.AWSClientFactory]::CreateAmazonElasticLoadBalancingClient($accessKeyID,$secretAccessKey,$elb_config)
 
 
 #Enable the availability zone with the load balancer

@@ -23,7 +23,7 @@ if (@node[:boot_run])
   Chef::Log.info("*** Recipe 'blog_engine::default' already executed, skipping...")
 else
   # download the sql dump
-  win_aws_powershell_s3providers "download mssql dump from bucket" do
+  win_aws_powershell_s3provider "download mssql dump from bucket" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket]
