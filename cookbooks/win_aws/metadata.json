@@ -1,15 +1,17 @@
 {
     "recipes": {
       "win_aws::install_dotnet_sdk": "Install AWS SDK for .NET",
-      "win_aws::default": "Not implemented"
+      "win_aws::deregister_instance_from_elb": "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'",
+      "win_aws::default": "Not implemented",
+      "win_aws::register_instance_with_elb": "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
     },
     "groupings": {
     },
     "recommendations": {
     },
-    "version": "0.0.4",
+    "version": "0.1.4",
     "maintainer": "RightScale, Inc.",
-    "long_description": "= DESCRIPTION:\n\nAmazon Web Services recipes and providers for Windows\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate",
+    "long_description": "= DESCRIPTION:\n\nAmazon Web Services recipes and providers for Windows\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n\nExamples for the providers:\n\n# download a a file from S3 using the :get provider\nwin_aws_powershell_s3provider \"downloadmyfile\" do\n  access_key_id @node[:aws][:access_key_id]\n  secret_access_key @node[:aws][:secret_access_key]\n  s3_bucket \"my-eu-bucket\"\n  s3_file \"myfile.txt\"\n  download_dir 'c:'\n  action :get\nend\n\n# register instance with elb\nwin_aws_powershell_elbprovider \"register instance provider call\" do\n  access_key_id @node[:aws][:access_key_id]\n  secret_access_key @node[:aws][:secret_access_key]\n  elb_name \"production-elb\"\n  action :register\nend",
     "description": "Amazon Web Services recipes and providers for Windows",
     "suggestions": {
     },
@@ -25,6 +27,48 @@
     "platforms": {
     },
     "attributes": {
+      "aws/access_key_id": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
+        "display_name": "Access Key Id",
+        "recipes": [
+          "win_aws::register_instance_with_elb",
+          "win_aws::deregister_instance_from_elb"
+        ],
+        "required": "required"
+      },
+      "aws/elb_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the Elastic Load Balancer to register/deregister the instance with. (e.g., production-elb). The ELB needs to be created and configured prior to the execution of the recipe.",
+        "display_name": "ELB Name",
+        "recipes": [
+          "win_aws::register_instance_with_elb",
+          "win_aws::deregister_instance_from_elb"
+        ],
+        "required": "required"
+      },
+      "aws/secret_access_key": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+        "display_name": "Secret Access Key",
+        "recipes": [
+          "win_aws::register_instance_with_elb",
+          "win_aws::deregister_instance_from_elb"
+        ],
+        "required": "required"
+      }
     },
     "replacing": {
     }
