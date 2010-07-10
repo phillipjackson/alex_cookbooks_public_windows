@@ -20,7 +20,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-actions :register
+actions :register, :deregister
 
 attribute :access_key_id, :kind_of => [ String ]
 attribute :secret_access_key, :kind_of => [ String ]

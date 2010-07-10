@@ -39,24 +39,14 @@ $elb_config.WithServiceURL("https://elasticloadbalancing."+$region+".amazonaws.c
 #create elb client base on the ServiceURL(region)
 $client_elb=[Amazon.AWSClientFactory]::CreateAmazonElasticLoadBalancingClient($accessKeyID,$secretAccessKey,$elb_config)
 
-
-#Enable the availability zone with the load balancer
-$elb_enable_az_request = New-Object -TypeName Amazon.ElasticLoadBalancing.Model.EnableAvailabilityZonesForLoadBalancerRequest
-
-$elb_enable_az_request.WithAvailabilityZones($az)	
-$elb_enable_az_request.WithLoadBalancerName($elbName)
-
-$elb_enable_az_response=$client_elb.EnableAvailabilityZonesForLoadBalancer($elb_enable_az_request)
-
-#register instance with the ELB
-$elb_register_request = New-Object -TypeName Amazon.ElasticLoadBalancing.Model.RegisterInstancesWithLoadBalancerRequest
+$elb_deregister_request = New-Object -TypeName Amazon.ElasticLoadBalancing.Model.DeregisterInstancesFromLoadBalancerRequest
 
 $instance_object=New-Object -TypeName Amazon.ElasticLoadBalancing.Model.Instance
 $instance_object.InstanceId=$env:EC2_INSTANCE_ID
 
-$elb_register_request.WithLoadBalancerName($elbName)
-$elb_register_request.WithInstances($instance_object)
+$elb_deregister_request.WithLoadBalancerName($elbName)
+$elb_deregister_request.WithInstances($instance_object)
 
-$elb_register_response=$client_elb.RegisterInstancesWithLoadBalancer($elb_register_request)
+$elb_register_response=$client_elb.DeregisterInstancesFromLoadBalancer($elb_deregister_request)
 
-
+write-output $elb_register_response
