@@ -32,16 +32,6 @@ if (($name -eq $NULL) -or ($name -eq ""))
     Write-Error "***Error: Task name is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
     exit 131
 }
-if (($username -eq $NULL) -or ($username -eq ""))
-{
-    Write-Error "***Error: 'username' is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
-    exit 132
-}
-if (($password -eq $NULL) -or ($password -eq ""))
-{
-    Write-Error "***Error: 'password' is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
-    exit 133
-}
 
 #remove any characters that might brake the command
 $name = $name -replace '[^\w]', ''
