@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: schedule_task
+# Recipe:: schedule_task_create
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -22,17 +22,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if (@node[:database][:backup][:hourly_frequency].nil?)
-#  @node[:database][:backup][:hourly_frequency]=""
-#end
-#
-#if (@node[:database][:backup][:daily_time].nil?)
-#  @node[:database][:backup][:daily_time]=""
-#end
-
-`mkdir c:\\tmp` if !File.directory?('c:\\tmp')
-
-# schedule the task
+# create a scheduled the task
 win_admin_powershell_schtasksprovider "rs_scheduled_task" do
   username "administrator"
   password @node[:win_admin][:admin_password]
