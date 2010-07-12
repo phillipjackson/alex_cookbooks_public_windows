@@ -27,7 +27,6 @@ attribute "schtasks/hourly_frequency",
   :display_name => "Task Hourly frequency",
   :description => "Defines the task frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Task daily time' input is required also.",
   :recipes => ["win_admin::schedule_task"],
-  :default => "4",
   :required => true
   
 attribute "schtasks/daily_time",
