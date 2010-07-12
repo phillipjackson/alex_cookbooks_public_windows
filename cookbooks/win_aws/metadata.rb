@@ -7,7 +7,7 @@ version          "0.1.4"
 
 
 recipe "win_aws::default", "Not implemented"
-recipe "win_aws::install_dotnet_sdk", "Install AWS SDK for .NET"
+recipe "win_aws::install_dotnet_sdk", "Install Amazon Web Services SDK for .NET"
 recipe "win_aws::register_instance_with_elb", "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
 recipe "win_aws::deregister_instance_from_elb", "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
 
