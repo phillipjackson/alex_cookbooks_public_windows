@@ -20,24 +20,24 @@ recipe "win_admin::schedule_task", "Schedules a task under the 'administrator' u
 attribute "win_admin/admin_password",
   :display_name => "New administrator password",
   :description => "New administrator password",
-  :recipes => ["win_admin::change_admin_password", "win_admin::schedule_task"],
+  :recipes => ["win_admin::change_admin_password", "win_admin::schedule_task_create", "win_admin::schedule_task_delete"],
   :required => true
 
 attribute "schtasks/command",
   :display_name => "Task command",
-  :description => "Defines the shell command to run. (e.g., dir >c:\dir.txt)",
-  :recipes => ["win_admin::schedule_task"],
+  :description => "Defines the shell command to run. (e.g., dir >c:\\\\dir.txt)",
+  :recipes => ["win_admin::schedule_task_create"],
   :required => true
 
 attribute "schtasks/hourly_frequency",
   :display_name => "Task Hourly frequency",
   :description => "Defines the task frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Task daily time' input is required also.",
-  :recipes => ["win_admin::schedule_task"],
+  :recipes => ["win_admin::schedule_task_create"],
   :required => true
   
 attribute "schtasks/daily_time",
   :display_name => "Task daily time",
   :description => "The time of the day, based on the server's timezone, to run the task when the 'Hourly frequency' input is set to 24. Format: hh:mm (e.g., 22:30)",
-  :recipes => ["win_admin::schedule_task"],
+  :recipes => ["win_admin::schedule_task_create"],
   :required => false
   

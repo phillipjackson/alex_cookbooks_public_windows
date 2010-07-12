@@ -36,10 +36,10 @@
 win_admin_powershell_schtasksprovider "rs_scheduled_task" do
   username "administrator"
   password @node[:win_admin][:admin_password]
+  command @node[:schtasks][:command]
   hourly_frequency @node[:schtasks][:hourly_frequency]
   daily_time @node[:schtasks][:daily_time]
-  command @node[:schtasks][:command]
-  action :add
+  action :create
 end
 
 
