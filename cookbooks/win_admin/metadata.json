@@ -47,7 +47,6 @@
         "required": "optional"
       },
       "schtasks/hourly_frequency": {
-        "default": "4",
         "calculated": false,
         "type": "string",
         "choice": [
