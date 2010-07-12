@@ -1,0 +1,80 @@
+{
+    "recipes": {
+      "win_admin::change_admin_password": "Changes the administrator password",
+      "win_admin::schedule_task": "Schedules a task under the 'administrator' user",
+      "win_admin::patched_start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
+      "win_admin::install_7zip": "Installs 7-Zip",
+      "win_admin::system_shutdown": "Shuts down the system",
+      "win_admin::install_firefox": "Installs Mozilla Firefox 3.6",
+      "win_admin::system_reboot": "Reboots the system",
+      "win_admin::enable_sql_express_service": "Enables the SQL Express service if disabled",
+      "win_admin::install_ruby": "Installs Ruby",
+      "win_admin::default": "Not yet implemented"
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.0.11",
+    "maintainer": "RightScale, Inc.",
+    "long_description": "= DESCRIPTION:\n\nWindows admin recipes.\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate",
+    "description": "Windows Admin recipes and providers",
+    "suggestions": {
+    },
+    "maintainer_email": "alex@rightscale.com",
+    "name": "win_admin",
+    "conflicting": {
+    },
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "platforms": {
+    },
+    "attributes": {
+      "schtasks/daily_time": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The time of the day, based on the server's timezone, to run the task when the 'Hourly frequency' input is set to 24. Format: hh:mm (e.g., 22:30)",
+        "display_name": "Task daily time",
+        "recipes": [
+          "win_admin::schedule_task"
+        ],
+        "required": "optional"
+      },
+      "schtasks/hourly_frequency": {
+        "default": "4",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Defines the task frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Task daily time' input is required also.",
+        "display_name": "Task Hourly frequency",
+        "recipes": [
+          "win_admin::schedule_task"
+        ],
+        "required": "required"
+      },
+      "win_admin/admin_password": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "New administrator password",
+        "display_name": "New administrator password",
+        "recipes": [
+          "win_admin::change_admin_password",
+          "win_admin::schedule_task"
+        ],
+        "required": "required"
+      }
+    },
+    "replacing": {
+    }
+  }

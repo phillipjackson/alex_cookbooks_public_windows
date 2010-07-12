@@ -7,6 +7,7 @@ version          "0.0.11"
 
 recipe "win_admin::default", "Not yet implemented"
 recipe "win_admin::change_admin_password", "Changes the administrator password"
+recipe "win_admin::enable_sql_express_service", "Enables the SQL Express service if disabled"
 recipe "win_admin::system_reboot", "Reboots the system"
 recipe "win_admin::system_shutdown", "Shuts down the system"
 recipe "win_admin::install_firefox", "Installs Mozilla Firefox 3.6"
