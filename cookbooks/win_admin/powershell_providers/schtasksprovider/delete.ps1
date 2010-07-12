@@ -29,11 +29,16 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: Task name is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
-    exit 131
+    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
+    exit 140
 }
 
 #remove any characters that might brake the command
 $name = $name -replace '[^\w]', ''
 
 schtasks.exe /delete /F /TN $name
+
+if (!$?)
+{
+	exit 141
+}

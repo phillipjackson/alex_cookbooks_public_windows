@@ -35,7 +35,7 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: Task name is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
     exit 131
 }
 if (($username -eq $NULL) -or ($username -eq ""))
@@ -88,7 +88,14 @@ else
   exit 137
 }
 
+if (!$?)
+{
+	exit 138
+}
+
 schtasks.exe /Query /TN $name
+
+
 
 
 
