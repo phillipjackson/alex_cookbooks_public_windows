@@ -59,6 +59,19 @@
         ],
         "required": "required"
       },
+      "schtasks/command": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Defines the shell command to run. (e.g., dir >c:dir.txt)",
+        "display_name": "Task command",
+        "recipes": [
+          "win_admin::schedule_task"
+        ],
+        "required": "required"
+      },
       "win_admin/admin_password": {
         "calculated": false,
         "type": "string",

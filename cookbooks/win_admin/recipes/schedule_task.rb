@@ -38,11 +38,9 @@ win_admin_powershell_schtasksprovider "rs_scheduled_task" do
   password @node[:win_admin][:admin_password]
   hourly_frequency @node[:schtasks][:hourly_frequency]
   daily_time @node[:schtasks][:daily_time]
-  command "rs_run_recipe.cmd -v -n blog_engine::backup_database_to_s3 >>c:\\tmp\\schtasks_log.txt 2>&1 & echo at: %time% [%date%] >>c:\\tmp\\schtasks_log.txt 2>&1"
+  command @node[:schtasks][:command]
   action :add
 end
-
-
 
 
 
