@@ -49,4 +49,4 @@ if (($password -eq $NULL) -or ($password -eq ""))
 #remove any characters that might brake the command
 $name = $name -replace '[^\w]', ''
 
-schtasks.exe /Query /F /RU $username /RP $password /TN $name
+schtasks.exe /delete /F /RU $username /RP $password /TN $name
