@@ -21,9 +21,6 @@
 
 # locals.
 $name = Get-NewResource name
-$username = Get-NewResource username
-$password = Get-NewResource password
-
 
 # "Stop" or "Continue" the powershell script execution when a command fails
 $ErrorActionPreference = "Stop"

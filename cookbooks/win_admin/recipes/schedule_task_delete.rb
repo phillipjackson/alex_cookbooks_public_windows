@@ -24,8 +24,6 @@
 
 # schedule the task
 win_admin_powershell_schtasksprovider "rs_scheduled_task" do
-  username "administrator"
-  password @node[:win_admin][:admin_password]
   action :delete
 end
 

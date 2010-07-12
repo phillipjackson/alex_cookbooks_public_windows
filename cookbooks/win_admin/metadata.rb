@@ -20,7 +20,7 @@ recipe "win_admin::schedule_task_delete", "Deletes a schedules task under the 'a
 attribute "win_admin/admin_password",
   :display_name => "New administrator password",
   :description => "New administrator password",
-  :recipes => ["win_admin::change_admin_password", "win_admin::schedule_task_create", "win_admin::schedule_task_delete"],
+  :recipes => ["win_admin::change_admin_password", "win_admin::schedule_task_create"],
   :required => true
 
 attribute "schtasks/command",

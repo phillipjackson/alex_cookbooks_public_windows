@@ -83,8 +83,7 @@
         "display_name": "New administrator password",
         "recipes": [
           "win_admin::change_admin_password",
-          "win_admin::schedule_task_create",
-          "win_admin::schedule_task_delete"
+          "win_admin::schedule_task_create"
         ],
         "required": "required"
       }
