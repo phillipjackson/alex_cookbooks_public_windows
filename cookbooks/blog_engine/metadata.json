@@ -4,7 +4,6 @@
       "blog_engine::drop_database": "Drops the BlogEngine database.",
       "blog_engine::backup_database_to_s3": "Backs up the BlogEngine database to a local machine directory.",
       "blog_engine::default": "AP: Loads the database and installs the BlogEngine application as the default IIS site",
-      "blog_engine::continuous_backup_database_to_s3": "Schedules continuous database backups to an s3 bucket. It requires the 'win_admin::change_admin_password' recipe in order to run the scheduled task under the administrator user.",
       "blog_engine::backup_database": "Backs up the BlogEngine database to a local machine directory.",
       "blog_engine::svn_code_checkout": "Retrieves code from SVN."
     },
@@ -26,10 +25,10 @@
     "providing": {
     },
     "dependencies": {
-      "win_aws": [
+      "win_admin": [
 
       ],
-      "ap_win_admin": [
+      "win_aws": [
 
       ]
     },
@@ -127,27 +126,13 @@
         ],
         "required": "required"
       },
-      "database/backup/daily_time": {
-        "default": "04:00",
-        "calculated": false,
-        "type": "string",
-        "choice": [
-
-        ],
-        "description": "The time of the day, based on the server's timezone, to run the backups when the 'Backup hourly frequency' input is set to 24. Format: hh:mm (Ex: 22:30)",
-        "display_name": "Backup daily time",
-        "recipes": [
-          "blog_engine::continuous_backup_database_to_s3"
-        ],
-        "required": "optional"
-      },
       "aws/secret_access_key": {
         "calculated": false,
         "type": "string",
         "choice": [
 
         ],
-        "description": "This is an Amazon credential.  Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
         "display_name": "Secret Access Key",
         "recipes": [
           "blog_engine::default"
@@ -169,20 +154,6 @@
           "blog_engine::restore_database"
         ],
         "required": "optional"
-      },
-      "database/backup/hourly_frequency": {
-        "default": "4",
-        "calculated": false,
-        "type": "string",
-        "choice": [
-
-        ],
-        "description": "Defines the backup frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Backup daily time' input is required also.",
-        "display_name": "Backup hourly frequency",
-        "recipes": [
-          "blog_engine::continuous_backup_database_to_s3"
-        ],
-        "required": "recommended"
       }
     },
     "replacing": {

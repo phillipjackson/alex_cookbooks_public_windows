@@ -1,4 +1,4 @@
-# Cookbook Name:: ap_win_admin
+# Cookbook Name:: win_admin
 # Recipe:: install_ruby
 #
 # Copyright 2010, RightScale, Inc.

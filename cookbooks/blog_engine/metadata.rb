@@ -5,7 +5,7 @@ description      "AP: Install and configure the BlogEngine application, see http
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.3.4"
 
-depends 'ap_win_admin'
+depends 'win_admin'
 depends 'win_aws'
 
 recipe 'blog_engine::default', 'AP: Loads the database and installs the BlogEngine application as the default IIS site'
@@ -14,7 +14,6 @@ recipe "blog_engine::backup_database_to_s3", "Backs up the BlogEngine database t
 recipe "blog_engine::restore_database", "Restores the BlogEngine database from a local machine directory."
 recipe "blog_engine::drop_database", "Drops the BlogEngine database."
 recipe "blog_engine::svn_code_checkout", "Retrieves code from SVN."
-recipe "blog_engine::continuous_backup_database_to_s3", "Schedules continuous database backups to an s3 bucket. It requires the 'win_admin::change_admin_password' recipe in order to run the scheduled task under the administrator user."
 
 
 
@@ -65,17 +64,3 @@ attribute "aws/secret_access_key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
   :recipes => ["blog_engine::default"],
   :required => true
-  
-attribute "database/backup/hourly_frequency",
-  :display_name => "Backup hourly frequency",
-  :description => "Defines the backup frequency in hours. Valid values: 1 up to 24. When 24 is specified the 'Backup daily time' input is required also.",
-  :recipes => ["blog_engine::continuous_backup_database_to_s3"],
-  :default => "4",
-  :required => "recommended"
-  
-attribute "database/backup/daily_time",
-  :display_name => "Backup daily time",
-  :description => "The time of the day, based on the server's timezone, to run the backups when the 'Backup hourly frequency' input is set to 24. Format: hh:mm (Ex: 22:30)",
-  :default => "04:00",
-  :recipes => ["blog_engine::continuous_backup_database_to_s3"],
-  :required => false
