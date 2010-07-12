@@ -40,5 +40,6 @@ schtasks.exe /delete /F /TN $name
 
 if (!$?)
 {
+    Write-Error "***Error: SCHTASKS execution failed."Grid Quickstart Deployment
 	exit 141
 }

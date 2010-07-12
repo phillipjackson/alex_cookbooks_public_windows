@@ -90,6 +90,7 @@ else
 
 if (!$?)
 {
+    Write-Error "***Error: SCHTASKS execution failed."
 	exit 138
 }
 
