@@ -14,8 +14,8 @@ recipe "win_admin::install_firefox", "Installs Mozilla Firefox 3.6"
 recipe "win_admin::install_7zip", "Installs 7-Zip"
 recipe "win_admin::install_ruby", "Installs Ruby"
 recipe "win_admin::patched_start_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
-recipe "win_admin::schedule_task", "Schedules a task under the 'administrator' user"
-
+recipe "win_admin::schedule_task_create", "Creates a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "win_admin::schedule_task_delete", "Deletes a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
 
 attribute "win_admin/admin_password",
   :display_name => "New administrator password",
