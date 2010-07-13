@@ -33,6 +33,5 @@ attribute :zip_backup, :equal_to => [ true, false ]
 
 attribute :svn_username, :kind_of => [ String ]
 attribute :svn_password, :kind_of => [ String ]
-attribute :root_path, :kind_of => [ String ]
-attribute :link_dir, :kind_of => [ String ]
+attribute :releases_path, :kind_of => [ String ]
 attribute :force_checkout, :equal_to => [ true, false ]
