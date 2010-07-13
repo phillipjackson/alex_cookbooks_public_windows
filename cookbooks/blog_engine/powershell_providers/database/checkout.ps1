@@ -76,17 +76,17 @@ else
 	else
 		{ $latest_release = Join-Path $releasesPath $releases[0].Name }
 	Write-Output "*** Creating new releases directory [$deploy_path]"
-	Write-Output "*** Robocopy from [$latest_release] to [$deploy_path]"
+	Write-Output "*** xcopy from [$latest_release] to [$deploy_path]"
    
-	$robo_output = invoke-expression 'robocopy.exe $latest_release $deploy_path /PURGE /S /COPYALL /B /E /NP /NFL /NDL'
-	Write-Output $robo_output
-	if ($robo_output -match "Ended :") 
+	xcopy $latest_release $deploy_path /E /I /Q /H /K /Y
+
+	if ($LastExitCode -eq 0)
 	{
 		Write-Output "*** SVN update in [$deploy_path]"
 	}
 	else
 	{
-		Write-Warning "*** Robocopy failed, proceeding with a full checkout in [$deploy_path]"
+		Write-Warning "*** xcopy failed, proceeding with a full checkout in [$deploy_path]"
 		if (Test-Path $deploy_path)
 		{
 			Write-Output "*** Deleting directory [$deploy_path]"

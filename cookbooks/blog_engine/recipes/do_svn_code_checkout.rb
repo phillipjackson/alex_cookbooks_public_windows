@@ -34,7 +34,7 @@ end
 powershell "test svn" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
-  echo "aaa" > \a.txt
+  ls c:\inetpub\releases
 POWERSHELL_SCRIPT
 
   source(powershell_script)
