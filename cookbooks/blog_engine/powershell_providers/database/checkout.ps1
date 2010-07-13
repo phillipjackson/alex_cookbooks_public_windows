@@ -34,7 +34,7 @@ if (($svnPath -eq $NULL) -or ($svnPath -eq ""))
 	Write-Error "***Error: provider requires a 'name' parameter to be set! Ex: 'http://example.com/svn/trunk'"
 	exit 131
 }
-if (($rootPath -eq $NULL) -or ($rootPath -eq ""))
+if (($releasesPath -eq $NULL) -or ($releasesPath -eq ""))
 {
 	Write-Error "***Error: provider requires 'root_path' parameter to be set! Ex: 'c:\\inetpub'"
 	exit 132
@@ -54,14 +54,9 @@ $ErrorActionPreference = "stop"
 
 $releasesPath = Join-Path $releasesPath ""
 
-if (!(Test-Path $rootPath)) {
-	Write-Output "*** Directory [$rootPath] missing, trying to create."
-	mkdir $rootPath
-}
-
 if (!(Test-Path $releasesPath)) {
 	Write-Output "*** Creating directory: $releasesPath"
-	mkdir $releasesPath  > $null
+	New-Item $releasesPath -type directory 
 }
 
 $deploy_date = $(get-date -uformat "%Y%m%d%H%M%S")
@@ -71,7 +66,7 @@ $releases=Get-ChildItem $releasesPath | Sort-Object Name -descending | Select-Ob
 if ((($releases.count -eq $null) -and ($releases -eq $null)) -or ($forceCheckout -eq "true"))
 {
 	Write-Output "*** Creating new releases directory [$deploy_path]"
-	mkdir $deploy_path  > $null
+	New-Item $deploy_path -type directory 
 	Write-Output "*** SVN checkout in [$deploy_path]"
 }
 else
@@ -103,3 +98,9 @@ else
 }
 
 svn.cmd --non-interactive --no-auth-cache --username `"$svnUsername`" --password `"$svnPassword`" checkout $svnPath $deploy_path
+
+if ($LastExitCode -ne 0)
+{ 
+	Write-Error "***Error: SVN checkout failed" 
+	exit 133
+}
