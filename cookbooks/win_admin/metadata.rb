@@ -13,7 +13,7 @@ recipe "win_admin::do_system_shutdown", "Shuts down the system"
 recipe "win_admin::install_firefox", "Installs Mozilla Firefox 3.6"
 recipe "win_admin::install_7zip", "Installs 7-Zip"
 recipe "win_admin::install_ruby", "Installs Ruby"
-recipe "win_admin::do_patched_start_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
+recipe "win_admin::do_start_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
 recipe "win_admin::do_schedule_task_create", "Creates a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
 recipe "win_admin::do_schedule_task_delete", "Deletes a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
 
