@@ -35,12 +35,14 @@ blog_engine_powershell_database "app_test" do
   action :backup
 end
 
-Chef::Log.info("*** backupfile=["+@node[:backupfile]+"]")
-puts system("powershell ls \inetpub")
+backupfromruby=`powershell ls \\inetpub\\releases`
+Chef::Log.info("loggg["+backupfromruby+"]")
 
 powershell "Scheduling continuous database backups" do
   #define the parameters to be sent to he powershell script
-  parameters({'BACKUPFILE' => @node[:backupfile]})
+  #parameters({'BACKUPFILE' => @node[:backupfile]})
+
+  parameters({'BACKUPFILE' => backupfromruby})
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
     # "Stop" or "Continue" the powershell script execution when a command fails
