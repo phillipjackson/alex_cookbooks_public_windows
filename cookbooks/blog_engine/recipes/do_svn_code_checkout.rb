@@ -25,8 +25,7 @@
 
 #checkout code on first run, then update 
 blog_engine_powershell_database "http://svn.github.com/alexpop/sample_www.git" do
-  root_path "c:\\inetpub\\releases"
-  link_dir "wwwroot"
+  releases_path "c:\\inetpub\\releases"
   force_checkout false
   action :checkout
 end
@@ -39,3 +38,13 @@ POWERSHELL_SCRIPT
 
   source(powershell_script)
 end
+
+#if ($?)
+#{
+# cmd /c "rmdir $link_path /S /Q & mklink /D $link_path $deploy_path"
+#}
+#else
+#{
+# Write-Error "*** svn checkout failed. Aborting..."
+# exit 121
+#}

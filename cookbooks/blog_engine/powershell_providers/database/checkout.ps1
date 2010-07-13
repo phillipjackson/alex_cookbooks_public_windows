@@ -25,8 +25,7 @@ $svnUsername = Get-NewResource svn_username
 $svnPassword = Get-NewResource svn_password
 
 $forceCheckout = Get-NewResource force_checkout
-$rootPath = Get-NewResource root_path
-$linkDir = Get-NewResource link_dir
+$releasesPath = Get-NewResource releases_path
 
 #check inputs.
 $Error.Clear()
@@ -39,11 +38,6 @@ if (($rootPath -eq $NULL) -or ($rootPath -eq ""))
 {
 	Write-Error "***Error: provider requires 'root_path' parameter to be set! Ex: 'c:\\inetpub'"
 	exit 132
-}
-if (($linkDir -eq $NULL) -or ($linkDir -eq ""))
-{
-	Write-Error "***Error: provider requires 'link_dir' parameter to be set! Ex: 'wwwroot'"
-	exit 133
 }
 
 if ($svnUsername -eq $NULL)
@@ -109,14 +103,3 @@ else
 }
 
 svn.cmd --non-interactive --no-auth-cache --username `"$svnUsername`" --password `"$svnPassword`" checkout $svnPath $deploy_path
-
-
-#if ($?)
-#{
-#	cmd /c "rmdir $link_path /S /Q & mklink /D $link_path $deploy_path"
-#}
-#else
-#{
-#	Write-Error "*** svn checkout failed. Aborting..."
-#	exit 121
-#}
