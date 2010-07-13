@@ -31,28 +31,32 @@ blog_engine_powershell_database "http://svn.github.com/alexpop/sample_www.git" d
   action :checkout
 end
 
-powershell "test svn" do
+powershell "Change IIS physical path" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
-  ls c:\inetpub\releases
-  
   $checkoutpath=invoke-expression 'Get-ChefNode checkoutpath'
   
-  if ($checkoutpath)
+  if (Test-Path $checkoutpath)
   {
-   &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$checkoutpath"
+  
+      # change the physicalPath for the IIS site
+      $appcmd_path = $env:systemroot + "\\system32\\inetsrv\\APPCMD.exe"
+      if (Test-Path $appcmd_path)
+      {
+        &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$checkoutpath"
+      }
+      else
+      {
+        Write-Error "***Error: APPCMD.EXE was not found, aborting" 
+        exit 136
+      }
+  }
+  else
+  {
+    Write-Error "***Error: Invalid physical path [$checkoutpath]" 
+    exit 135
   }
 POWERSHELL_SCRIPT
 
   source(powershell_script)
 end
-
-#if ($?)
-#{
-# cmd /c "rmdir $link_path /S /Q & mklink /D $link_path $deploy_path"
-#}
-#else
-#{
-# Write-Error "*** svn checkout failed. Aborting..."
-# exit 121
-#}

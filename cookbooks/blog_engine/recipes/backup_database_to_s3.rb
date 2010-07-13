@@ -35,6 +35,8 @@ blog_engine_powershell_database "app_test" do
   action :backup
 end
 
+Chef::Log.info("*** backupfile=["+@node[:backupfile]+"]")
+puts system("powershell ls \inetpub")
 
 powershell "Scheduling continuous database backups" do
   #define the parameters to be sent to he powershell script

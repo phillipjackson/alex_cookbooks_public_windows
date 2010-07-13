@@ -6,7 +6,7 @@
 # All rights reserved
 
 # start the default website
-  powershell "Start Default Web Site" do
+  powershell "Start Default Web Site and configure AutoStart" do
     # Create the powershell script
     powershell_script = <<-EOF
       # starts the default website on IIS7
@@ -16,6 +16,11 @@
       {
           &$appcmd_path start SITE "Default Web Site"
           &$appcmd_path set SITE "Default Web Site" /serverAutoStart:true
+      }
+      else
+      {
+        Write-Error "***Error: APPCMD.EXE was not found, aborting" 
+        exit 138
       }
       EOF
 
