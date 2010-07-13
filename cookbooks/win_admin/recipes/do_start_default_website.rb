@@ -15,7 +15,7 @@
       if ($appcmd_exists)
       {
           &$appcmd_path start SITE "Default Web Site"
-		  &$appcmd_path set SITE "Default Web Site" /serverAutoStart:true
+          &$appcmd_path set SITE "Default Web Site" /serverAutoStart:true
       }
       EOF
 

@@ -1,5 +1,5 @@
 # Cookbook Name:: blog_engine
-# Recipe:: svn_code_checkout 
+# Recipe:: do_svn_code_checkout 
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -25,7 +25,7 @@
 
 #checkout code on first run, then update 
 blog_engine_powershell_database "http://svn.github.com/alexpop/sample_www.git" do
-  root_path "c:\\inetpub"
+  root_path "c:\\inetpub\\releases"
   link_dir "wwwroot"
   force_checkout false
   action :checkout

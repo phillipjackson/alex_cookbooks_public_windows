@@ -16,19 +16,21 @@ Designed to be run within a RightScale ServerTemplate
 Examples for the providers:
 
 # download a a file from S3 using the :get provider
-win_aws_powershell_s3provider "downloadmyfile" do
-  access_key_id @node[:aws][:access_key_id]
-  secret_access_key @node[:aws][:secret_access_key]
-  s3_bucket "my-eu-bucket"
-  s3_file "myfile.txt"
-  download_dir 'c:'
-  action :get
-end
+
+  win_aws_powershell_s3provider "downloadmyfile" do
+    access_key_id @node[:aws][:access_key_id]
+    secret_access_key @node[:aws][:secret_access_key]
+    s3_bucket "my-eu-bucket"
+    s3_file "myfile.txt"
+    download_dir 'c:'
+    action :get
+  end
 
 # register instance with elb
-win_aws_powershell_elbprovider "register instance provider call" do
-  access_key_id @node[:aws][:access_key_id]
-  secret_access_key @node[:aws][:secret_access_key]
-  elb_name "production-elb"
-  action :register
-end
+
+  win_aws_powershell_elbprovider "register instance provider call" do
+    access_key_id @node[:aws][:access_key_id]
+    secret_access_key @node[:aws][:secret_access_key]
+    elb_name "production-elb"
+    action :register
+  end

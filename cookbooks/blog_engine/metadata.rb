@@ -13,7 +13,7 @@ recipe "blog_engine::backup_database", "Backs up the BlogEngine database to a lo
 recipe "blog_engine::backup_database_to_s3", "Backs up the BlogEngine database to a local machine directory."
 recipe "blog_engine::restore_database", "Restores the BlogEngine database from a local machine directory."
 recipe "blog_engine::drop_database", "Drops the BlogEngine database."
-recipe "blog_engine::svn_code_checkout", "Retrieves code from SVN."
+recipe "blog_engine::do_svn_code_checkout", "Retrieves code from SVN."
 
 
 
