@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: start_default_website
+# Recipe:: do_start_default_website
 #
 # Copyright 2010, RightScale, Inc.
 #

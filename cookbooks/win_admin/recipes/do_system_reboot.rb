@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: system_reboot
+# Recipe:: do_system_reboot
 #
 # Copyright 2010, RightScale, Inc.
 #

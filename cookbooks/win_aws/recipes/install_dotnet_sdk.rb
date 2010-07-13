@@ -7,11 +7,7 @@
 
 powershell "Install AWS SDK" do
   attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'install_dotnet_sdk'))
-  chef_attribute = Chef::Node::Attribute.new(
-                      {'ATTACHMENTS_PATH' => attachments_path},
-                      {},
-                      {})
-  parameters(chef_attribute)
+  parameters({'ATTACHMENTS_PATH' => attachments_path})
 
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'

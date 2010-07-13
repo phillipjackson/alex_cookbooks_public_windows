@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: change_admin_password
+# Recipe:: do_change_admin_password
 #
 # Copyright 2010, RightScale, Inc.
 #

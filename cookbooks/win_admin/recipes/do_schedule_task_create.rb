@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: schedule_task_delete
+# Recipe:: do_schedule_task_create
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -22,9 +22,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# schedule the task
+# create a scheduled the task
 win_admin_powershell_schtasksprovider "rs_scheduled_task" do
-  action :delete
+  username "administrator"
+  password @node[:win_admin][:admin_password]
+  command @node[:schtasks][:command]
+  hourly_frequency @node[:schtasks][:hourly_frequency]
+  daily_time @node[:schtasks][:daily_time]
+  action :create
 end
 
 
