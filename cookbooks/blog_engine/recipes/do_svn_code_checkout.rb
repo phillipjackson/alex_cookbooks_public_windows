@@ -35,6 +35,13 @@ powershell "test svn" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
   ls c:\inetpub\releases
+  
+  $checkoutpath=invoke-expression 'Get-ChefNode checkoutpath'
+  
+  if ($checkoutpath)
+  {
+   &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$checkoutpath"
+  }
 POWERSHELL_SCRIPT
 
   source(powershell_script)

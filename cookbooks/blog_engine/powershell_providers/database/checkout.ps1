@@ -104,3 +104,7 @@ if ($LastExitCode -ne 0)
 	Write-Error "***Error: SVN checkout failed" 
 	exit 133
 }
+else
+{
+	Set-ChefNode checkoutpath $deploy_path
+}
