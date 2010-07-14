@@ -37,7 +37,6 @@ end
 
 #hack because image 5.4.3 is not setting @nodes properly in providers 
 powershell "get the backupfilename in the powershell provider" do
-
   parameters({'BKPATH' => @node[:db_sqlserver][:backup][:database_backup_dir]})
 
   # Create the powershell script
@@ -46,26 +45,16 @@ powershell "get the backupfilename in the powershell provider" do
 POWERSHELL_SCRIPT
 
   source(powershell_script)
-
-  contains = Dir.new(@node[:db_sqlserver][:backup][:database_backup_dir]).entries
-
-  Chef::Log.info(contains)
-
-  @node[:backupfilename]=contains[contains.length-1]
 end
 
-ruby 'get the backupfilename with ruby' do
-  contains = Dir.new(@node[:db_sqlserver][:backup][:database_backup_dir]).entries
 
-  @node[:backupfilename]=contains[contains.length-1]
-end
 
   #upload dump to s3
   win_aws_powershell_s3provider "download mssql dump from bucket" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket_backups]
-    s3_file @node[:backupfilename]
-    file_path @node[:db_sqlserver][:backup][:database_backup_dir]+"\\"+Dir.new(@node[:db_sqlserver][:backup][:database_backup_dir]).entries.sort {|x,y| y <=> x }[0]
+    #if file_path is a directory, the latest file in the directory will be uploaded
+    file_path @node[:db_sqlserver][:backup][:database_backup_dir]
     action :put
   end

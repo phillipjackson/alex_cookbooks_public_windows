@@ -55,14 +55,34 @@ if (($secretAccessKey -eq $NULL) -or ($secretAccessKey -eq ""))
 $client=[Amazon.AWSClientFactory]::CreateAmazonS3Client($accessKeyID,$secretAccessKey)
 
 $fileObject = [System.IO.FileInfo]$filePath
-$filePath=$fileObject.FullName
+$fileFullPath = $fileObject.FullName
+
+#if fileObject is a directory, uploading the latest file in the directory
+if (test-path $fileFullPath -PathType Container)
+{
+	Write-Output "***[$fileFullPath] is a directory, trying to find the latest file inside."
+	$latest_file=Get-ChildItem -force $fileFullPath | Where-Object { !($_.Attributes -match "Directory") } | Sort-Object LastWriteTime -descending | Select-Object Name, FullName | Select-Object -first 1
+	if ($latest_file -eq $null)
+	{
+	    Write-Error "***[$fileFullPath] directory has no file, aborting..."
+    	exit 120
+	}
+	else
+	{
+		$fileObject=$latest_file
+		$f=$fileObject.Name
+		Write-Output "***The latest file in [$fileFullPath] directory is [$f]"
+	}
+}
+
+
 
 if (($s3File -eq $NULL) -or ($s3File -eq ""))
 {
 	$s3File = $fileObject.Name
 }
 
-Write-output "***Uploading file[$filePath] to bucket[$s3Bucket] as[$s3File]"
+Write-Output "***Uploading file[$filePath] to bucket[$s3Bucket] as[$s3File]"
 
 $request = New-Object -TypeName Amazon.S3.Model.PutObjectRequest
 [void]$request.WithFilePath($fileObject.FullName)

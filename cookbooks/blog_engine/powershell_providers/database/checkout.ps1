@@ -64,18 +64,16 @@ $deploy_path = Join-Path $releasesPath $deploy_date
 
 Write-Output "*** Creating new releases directory [$deploy_path]"
 
-$releases=Get-ChildItem $releasesPath | Sort-Object Name -descending | Select-Object Name
-if ((($releases.count -eq $null) -and ($releases -eq $null)) -or ($forceCheckout -eq "true"))
+$latest_release=Get-ChildItem $releasesPath | Sort-Object Name -descending | Select-Object Name | Select-Object -first 1
+if (($latest_release -eq $null) -or ($forceCheckout -eq "true"))
 {
 	New-Item $deploy_path -type directory 
 	Write-Output "*** SVN checkout in [$deploy_path]"
 }
 else
 {
-	if ($releases.count -eq $null)
-		{ $latest_release = Join-Path $releasesPath $releases.Name }
-	else
-		{ $latest_release = Join-Path $releasesPath $releases[0].Name }
+	$latest_release = Join-Path $releasesPath $latest_release.Name
+
 	Write-Output "*** xcopy from [$latest_release] to [$deploy_path]"
    
 	xcopy $latest_release $deploy_path /E /I /Q /H /K /Y
