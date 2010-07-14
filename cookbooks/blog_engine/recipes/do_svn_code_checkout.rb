@@ -25,7 +25,7 @@
 
 #checkout code on first run, then update 
 #https://wush.net/svn/rightscale/unified_test_app/dotnet/src
-blog_engine_powershell_database "http://svn.github.com/alexpop/sample_www.git" do
+win_code_checkout_powershell_svnprovider "http://svn.github.com/alexpop/sample_www.git" do
   releases_path "c:\\inetpub\\releases"
   force_checkout false
   action :checkout

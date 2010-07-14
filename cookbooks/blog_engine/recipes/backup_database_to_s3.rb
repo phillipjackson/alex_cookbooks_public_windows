@@ -47,8 +47,6 @@ POWERSHELL_SCRIPT
   source(powershell_script)
 end
 
-
-
   #upload dump to s3
   win_aws_powershell_s3provider "download mssql dump from bucket" do
     access_key_id @node[:aws][:access_key_id]

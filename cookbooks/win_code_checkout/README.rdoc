@@ -1,0 +1,14 @@
+= DESCRIPTION:
+
+Providers and recipes for code checkout
+
+= REQUIREMENTS:
+
+
+= ATTRIBUTES: 
+
+See metadata.rb
+
+= USAGE:
+
+Designed to be run within a RightScale ServerTemplate

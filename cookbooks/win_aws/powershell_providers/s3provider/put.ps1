@@ -55,26 +55,23 @@ if (($secretAccessKey -eq $NULL) -or ($secretAccessKey -eq ""))
 $client=[Amazon.AWSClientFactory]::CreateAmazonS3Client($accessKeyID,$secretAccessKey)
 
 $fileObject = [System.IO.FileInfo]$filePath
-$fileFullPath = $fileObject.FullName
 
-#if fileObject is a directory, uploading the latest file in the directory
-if (test-path $fileFullPath -PathType Container)
+#if fileObject is a directory, uploading the latest file from the directory
+if (test-path $fileObject.FullName -PathType Container)
 {
-	Write-Output "***[$fileFullPath] is a directory, trying to find the latest file inside."
-	$latest_file=Get-ChildItem -force $fileFullPath | Where-Object { !($_.Attributes -match "Directory") } | Sort-Object LastWriteTime -descending | Select-Object Name, FullName | Select-Object -first 1
+	Write-Output("***["+$fileObject.FullName+"] is a directory, trying to find the latest file inside.")
+	$latest_file=Get-ChildItem -force $fileObject.FullName | Where-Object { !($_.Attributes -match "Directory") } | Sort-Object LastWriteTime -descending | Select-Object Name, FullName | Select-Object -first 1
 	if ($latest_file -eq $null)
 	{
-	    Write-Error "***[$fileFullPath] directory has no file, aborting..."
+	    Write-Error("***["+$fileObject.FullName+"] directory has no file, aborting...")
     	exit 120
 	}
 	else
 	{
 		$fileObject=$latest_file
-		$f=$fileObject.Name
-		Write-Output "***The latest file in [$fileFullPath] directory is [$f]"
+		Write-Output("***The latest file in ["+$fileObject.FullName+"] directory is ["+$fileObject.Name+"]")
 	}
 }
-
 
 
 if (($s3File -eq $NULL) -or ($s3File -eq ""))
@@ -82,7 +79,7 @@ if (($s3File -eq $NULL) -or ($s3File -eq ""))
 	$s3File = $fileObject.Name
 }
 
-Write-Output "***Uploading file[$filePath] to bucket[$s3Bucket] as[$s3File]"
+Write-Output("***Uploading file["+$fileObject.Name+"] to bucket[$s3Bucket] as[$s3File]")
 
 $request = New-Object -TypeName Amazon.S3.Model.PutObjectRequest
 [void]$request.WithFilePath($fileObject.FullName)
@@ -93,11 +90,12 @@ $request = New-Object -TypeName Amazon.S3.Model.PutObjectRequest
 #If download fails it will throw an exception and $S3Response will be $null 
 $S3Response = $client.PutObject($request)
 
-if($S3Response -eq $null){ 
-	Write-Error "ERROR: Amazon S3 put requrest failed. Script halted." 
-	exit 1
+if($S3Response -eq $null)
+{ 
+	Write-Error "ERROR: Amazon S3 put requrest failed. Aborting..." 
+	exit 121
 }
 else
 {
-	Write-Output "***Upload successfully:"$S3Response
+	Write-Output("***Upload successfully. AWS Response:"+$S3Response)
 }

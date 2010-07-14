@@ -1,4 +1,3 @@
-#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,14 +18,3 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-actions :backup, :drop, :restore, :run_command, :run_script
-
-attribute :backup_dir_path, :kind_of => [ String ]
-attribute :backup_file_name_format, :kind_of => [ String ]
-attribute :existing_backup_file_name_pattern, :kind_of => [ String ]
-attribute :server_name, :kind_of => [ String ]
-attribute :force_restore, :equal_to => [ true, false ]
-attribute :commands, :kind_of => [ Array ]
-attribute :script_path, :kind_of => [ String ]
-attribute :zip_backup, :equal_to => [ true, false ]
