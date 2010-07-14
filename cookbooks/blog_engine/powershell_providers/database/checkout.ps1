@@ -62,10 +62,11 @@ if (!(Test-Path $releasesPath)) {
 $deploy_date = $(get-date -uformat "%Y%m%d%H%M%S")
 $deploy_path = Join-Path $releasesPath $deploy_date
 
+Write-Output "*** Creating new releases directory [$deploy_path]"
+
 $releases=Get-ChildItem $releasesPath | Sort-Object Name -descending | Select-Object Name
 if ((($releases.count -eq $null) -and ($releases -eq $null)) -or ($forceCheckout -eq "true"))
 {
-	Write-Output "*** Creating new releases directory [$deploy_path]"
 	New-Item $deploy_path -type directory 
 	Write-Output "*** SVN checkout in [$deploy_path]"
 }
@@ -75,7 +76,6 @@ else
 		{ $latest_release = Join-Path $releasesPath $releases.Name }
 	else
 		{ $latest_release = Join-Path $releasesPath $releases[0].Name }
-	Write-Output "*** Creating new releases directory [$deploy_path]"
 	Write-Output "*** xcopy from [$latest_release] to [$deploy_path]"
    
 	xcopy $latest_release $deploy_path /E /I /Q /H /K /Y
