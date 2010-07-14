@@ -1,4 +1,4 @@
-# Cookbook Name:: aio
+# Cookbook Name:: win_app_iis
 # Recipe:: put_file
 #
 # Copyright 2010, RightScale, Inc.
@@ -12,6 +12,6 @@ win_aws_powershell_s3provider "uploadmyfile" do
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket]
   s3_file @node[:s3][:file]
-  file_path @node[:aio][:file_path]
+  file_path @node[:win_app_iis][:file_path]
   action :put
 end

@@ -1,4 +1,4 @@
-# Cookbook Name:: aio
+# Cookbook Name:: win_app_iis
 # Recipe:: get_file
 #
 # Copyright 2010, RightScale, Inc.
@@ -11,7 +11,7 @@ win_aws_powershell_s3provider "downloadmyfile" do
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket]
   s3_file @node[:s3][:file]
-  download_dir @node[:aio][:download_dir]
+  download_dir @node[:win_app_iis][:download_dir]
   action :get
 end
 

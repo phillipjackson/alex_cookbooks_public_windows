@@ -1,21 +1,21 @@
 {
     "recipes": {
-      "aio::put_file": "Uploads a file to an S3 bucket",
-      "aio::get_file": "Retrieves a file from an S3 bucket",
-      "aio::default": "Not yet implemented"
+      "win_app_iis::put_file": "Uploads a file to an S3 bucket",
+      "win_app_iis::get_file": "Retrieves a file from an S3 bucket",
+      "win_app_iis::default": "Not yet implemented"
     },
     "groupings": {
     },
     "recommendations": {
     },
-    "version": "0.0.2",
+    "version": "0.0.3",
     "maintainer": "RightScale, Inc.",
-    "long_description": "= DESCRIPTION:\n\nRecipes for working with S3 buckets\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n\n\n# download a a file from S3 using the :get provider\nwin_aws_powershell_s3providers \"downloadmyfile\" do\n  access_key_id @node[:aws][:access_key_id]\n  secret_access_key @node[:aws][:secret_access_key]\n  s3_bucket @node[:s3][:bucket]\n  s3_file @node[:s3][:file]\n  download_dir 'c:'\n  action :get\nend",
-    "description": "AIO recipes",
+    "long_description": "= DESCRIPTION:\n\nRecipes for working with S3 buckets\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n",
+    "description": "IIS recipes",
     "suggestions": {
     },
     "maintainer_email": "alex@rightscale.com",
-    "name": "aio",
+    "name": "win_app_iis",
     "conflicting": {
     },
     "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
@@ -29,7 +29,20 @@
     "platforms": {
     },
     "attributes": {
-      "aio/download_dir": {
+      "win_app_iis/file_path": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The full path to the file to be uploaded. Ex: c:\\tmp\\my.txt",
+        "display_name": "File Path",
+        "recipes": [
+          "win_app_iis::put_file"
+        ],
+        "required": "optional"
+      },
+      "win_app_iis/download_dir": {
         "calculated": false,
         "type": "string",
         "choice": [
@@ -38,7 +51,7 @@
         "description": "The directory where the file from s3 will be downloaded. Ex: c:\\tmp\\",
         "display_name": "Download Dir",
         "recipes": [
-          "aio::get_file"
+          "win_app_iis::get_file"
         ],
         "required": "optional"
       },
@@ -51,21 +64,8 @@
         "description": "The name of the S3 bucket",
         "display_name": "Bucket",
         "recipes": [
-          "aio::get_file",
-          "aio::put_file"
-        ],
-        "required": "optional"
-      },
-      "aio/file_path": {
-        "calculated": false,
-        "type": "string",
-        "choice": [
-
-        ],
-        "description": "The full path to the file to be uploaded. Ex: c:\\tmp\\my.txt",
-        "display_name": "File Path",
-        "recipes": [
-          "aio::put_file"
+          "win_app_iis::get_file",
+          "win_app_iis::put_file"
         ],
         "required": "optional"
       },
@@ -78,8 +78,8 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
         "display_name": "Access Key Id",
         "recipes": [
-          "aio::get_file",
-          "aio::put_file"
+          "win_app_iis::get_file",
+          "win_app_iis::put_file"
         ],
         "required": "optional"
       },
@@ -92,7 +92,7 @@
         "description": "Name of the file on s3. When ignored, it will use the name in the File Path",
         "display_name": "File",
         "recipes": [
-          "aio::put_file"
+          "win_app_iis::put_file"
         ],
         "required": "optional"
       },
@@ -105,8 +105,8 @@
         "description": "This is an Amazon credential.  Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
         "display_name": "Secret Access Key",
         "recipes": [
-          "aio::get_file",
-          "aio::put_file"
+          "win_app_iis::get_file",
+          "win_app_iis::put_file"
         ],
         "required": "optional"
       }
