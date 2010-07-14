@@ -86,13 +86,12 @@ if ($db)
         	{
 				Write-Output "Deleting the bak file"
 				Remove-Item $backupFilePath
-				Set-ChefNode backupfile $backupFilePath".zip"
-				#Set-NewResource updated $True
+				Set-ChefNode backupfilename $backupFileName".zip"
         	}
         }
         else
         {
-			Set-ChefNode backupfile $backupFilePath
+			Set-ChefNode backupfilename $backupFileName
         }
     }
     else

@@ -35,30 +35,14 @@ blog_engine_powershell_database "app_test" do
   action :backup
 end
 
-
-Chef::Log.info("loggg["+backupfromruby+"]")
-
-powershell "Scheduling continuous database backups" do
+#hack because image 5.4.3 is not setting @nodes properly in providers 
+powershell "get the backupfilename name" do
   backupfromruby=`powershell ls \\inetpub\\releases`
-  @node[:backupfile]="x.txt"
   
-  #define the parameters to be sent to he powershell script
-  #parameters({'BACKUPFILE' => @node[:backupfile]})
+  if (@node[:backupfilename].nil?)
+    @node[:backupfilename]="app_test_20100714082428.bak.zip"
+  end
 
-  parameters({'BACKUPFILE' => backupfromruby})
-  # Create the powershell script
-  powershell_script = <<'POWERSHELL_SCRIPT'
-    # "Stop" or "Continue" the powershell script execution when a command fails
-    $ErrorActionPreference = "Stop"
-  
-    echo "!backupfile-env is [$env:BACKUPFILE]"
-  
-    $getchefnode=invoke-expression 'Get-ChefNode backupfile'
-    echo "!backup-getnode is [$getchefnode]"
-POWERSHELL_SCRIPT
-
-  #execute the powershell script
-  source(powershell_script)
 end
 
   #upload dump to s3
@@ -66,7 +50,7 @@ end
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket_backups]
-    s3_file @node[:backupfile]
-    file_path @node[:db_sqlserver][:backup][:database_backup_dir]
+    s3_file @node[:backupfilename]
+    file_path @node[:db_sqlserver][:backup][:database_backup_dir]+""+@node[:backupfilename]
     action :put
   end
