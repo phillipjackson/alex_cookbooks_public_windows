@@ -35,10 +35,13 @@ blog_engine_powershell_database "app_test" do
   action :backup
 end
 
-backupfromruby=`powershell ls \\inetpub\\releases`
+
 Chef::Log.info("loggg["+backupfromruby+"]")
 
 powershell "Scheduling continuous database backups" do
+  backupfromruby=`powershell ls \\inetpub\\releases`
+  @node[:backupfile]="x.txt"
+  
   #define the parameters to be sent to he powershell script
   #parameters({'BACKUPFILE' => @node[:backupfile]})
 
@@ -57,3 +60,13 @@ POWERSHELL_SCRIPT
   #execute the powershell script
   source(powershell_script)
 end
+
+  #upload dump to s3
+  win_aws_powershell_s3provider "download mssql dump from bucket" do
+    access_key_id @node[:aws][:access_key_id]
+    secret_access_key @node[:aws][:secret_access_key]
+    s3_bucket @node[:s3][:bucket_backups]
+    s3_file @node[:backupfile]
+    file_path @node[:db_sqlserver][:backup][:database_backup_dir]
+    action :put
+  end

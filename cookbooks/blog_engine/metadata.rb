@@ -42,25 +42,31 @@ attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::backup_database_to_s3", "blog_engine::restore_database"]
   
 attribute "s3/file",
-  :display_name => "File",
-  :description => "File to be retrieved",
+  :display_name => "Sql dump file",
+  :description => "Sql dump file to be retrieved from the s3 bucket",
   :recipes => ["blog_engine::default"],
-  :required => true
+  :required => "required"
 
-attribute "s3/bucket",
-  :display_name => "Bucket",
+attribute "s3/bucket_dump",
+  :display_name => "Bucket for sql dump",
   :description => "The name of the S3 bucket",
   :recipes => ["blog_engine::default"],
-  :required => true
+  :required => "required"
+  
+attribute "s3/bucket_backups",
+  :display_name => "Bucket to store backups",
+  :description => "The name of the S3 bucket",
+  :recipes => ["blog_engine::backup_database_to_s3"],
+  :required => "required"
   
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
-  :recipes => ["blog_engine::default"],
-  :required => true
+  :recipes => ["blog_engine::default", "blog_engine::backup_database_to_s3"],
+  :required => "required"
   
 attribute "aws/secret_access_key",
   :display_name => "Secret Access Key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
-  :recipes => ["blog_engine::default"],
-  :required => true
+  :recipes => ["blog_engine::default", "blog_engine::backup_database_to_s3"],
+  :required => "required"

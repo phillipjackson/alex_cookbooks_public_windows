@@ -35,6 +35,19 @@
     "platforms": {
     },
     "attributes": {
+      "s3/bucket_backups": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket to store backups",
+        "recipes": [
+          "blog_engine::backup_database_to_s3"
+        ],
+        "required": "required"
+      },
       "db_sqlserver/backup/existing_backup_file_name_pattern": {
         "default": "{0}_*.bak",
         "calculated": false,
@@ -87,19 +100,6 @@
         ],
         "required": "optional"
       },
-      "s3/bucket": {
-        "calculated": false,
-        "type": "string",
-        "choice": [
-
-        ],
-        "description": "The name of the S3 bucket",
-        "display_name": "Bucket",
-        "recipes": [
-          "blog_engine::default"
-        ],
-        "required": "required"
-      },
       "aws/access_key_id": {
         "calculated": false,
         "type": "string",
@@ -109,7 +109,8 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
         "display_name": "Access Key Id",
         "recipes": [
-          "blog_engine::default"
+          "blog_engine::default",
+          "blog_engine::backup_database_to_s3"
         ],
         "required": "required"
       },
@@ -119,8 +120,8 @@
         "choice": [
 
         ],
-        "description": "File to be retrieved",
-        "display_name": "File",
+        "description": "Sql dump file to be retrieved from the s3 bucket",
+        "display_name": "Sql dump file",
         "recipes": [
           "blog_engine::default"
         ],
@@ -135,7 +136,8 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
         "display_name": "Secret Access Key",
         "recipes": [
-          "blog_engine::default"
+          "blog_engine::default",
+          "blog_engine::backup_database_to_s3"
         ],
         "required": "required"
       },
@@ -154,6 +156,19 @@
           "blog_engine::restore_database"
         ],
         "required": "optional"
+      },
+      "s3/bucket_dump": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket for sql dump",
+        "recipes": [
+          "blog_engine::default"
+        ],
+        "required": "required"
       }
     },
     "replacing": {

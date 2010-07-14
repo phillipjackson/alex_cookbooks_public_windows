@@ -26,16 +26,16 @@ else
   win_aws_powershell_s3provider "download mssql dump from bucket" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
-    s3_bucket @node[:s3][:bucket]
+    s3_bucket @node[:s3][:bucket_dump]
     s3_file @node[:s3][:file]
     download_dir "c:\\tmp"
     action :get
   end
 
-  if (@node[:s3][:file] =~ /(.*)?\..*zip/)
-    file_prefix = $1
-    system("7z x -y \""+@node[:s3][:file]+"\"")
-  end
+#  if (@node[:s3][:file] =~ /(.*)?\..*zip/)
+#    file_prefix = $1
+#    system("7z x -y \""+@node[:s3][:file]+"\"")
+#  end
 
   # load the initial demo database from deployed SQL script.
   # no schema provided for this import call
