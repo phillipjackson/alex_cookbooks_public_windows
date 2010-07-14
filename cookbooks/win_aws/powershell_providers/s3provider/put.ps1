@@ -97,5 +97,5 @@ if($S3Response -eq $null)
 }
 else
 {
-	Write-Output("***Upload successfully. AWS Response:"+$S3Response)
+	Write-Output "***Upload successfully. AWS Response:"$S3Response
 }

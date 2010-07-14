@@ -47,8 +47,7 @@ powershell "Change IIS physical path" do
       }
       else
       {
-        Write-Error "***Error: APPCMD.EXE was not found, aborting" 
-        exit 136
+        Write-Output "***APPCMD.EXE is missing, probably 2003 image. Alternate method required...symlink" 
       }
   }
   else
