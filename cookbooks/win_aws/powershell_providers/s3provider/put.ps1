@@ -55,6 +55,7 @@ if (($secretAccessKey -eq $NULL) -or ($secretAccessKey -eq ""))
 $client=[Amazon.AWSClientFactory]::CreateAmazonS3Client($accessKeyID,$secretAccessKey)
 
 $fileObject = [System.IO.FileInfo]$filePath
+$filePath=$fileObject.FullName
 
 if (($s3File -eq $NULL) -or ($s3File -eq ""))
 {
