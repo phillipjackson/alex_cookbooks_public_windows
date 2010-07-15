@@ -22,11 +22,19 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+case @node[:svn][:force_checkout]
+  when "true"
+    @node[:svn][:force_checkout] = true
+  when "false"
+    @node[:svn][:force_checkout] = false
+end
+  
+  
 #checkout code on first run, then update
 win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
   releases_path "c:\\inetpub\\releases"
-  svn_username @node[:svn][:repo_path]
-  svn_password @node[:svn][:repo_path]
+  svn_username @node[:svn][:username]
+  svn_password @node[:svn][:password]
   force_checkout @node[:svn][:force_checkout]
   action :checkout
 end
