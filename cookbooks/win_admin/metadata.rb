@@ -7,15 +7,15 @@ version          "0.0.11"
 
 recipe "win_admin::default", "Not yet implemented"
 recipe "win_admin::do_change_admin_password", "Changes the administrator password"
-recipe "win_admin::do_enable_sql_express_service", "Enables the SQL Express service if disabled"
+recipe "win_admin::setup_sql_express_service", "Enables the SQL Express service if disabled"
 recipe "win_admin::do_system_reboot", "Reboots the system"
 recipe "win_admin::do_system_shutdown", "Shuts down the system"
 recipe "win_admin::install_firefox", "Installs Mozilla Firefox 3.6"
 recipe "win_admin::install_7zip", "Installs 7-Zip"
 recipe "win_admin::install_ruby", "Installs Ruby"
-recipe "win_admin::do_start_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
-recipe "win_admin::do_schedule_task_create", "Creates a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
-recipe "win_admin::do_schedule_task_delete", "Deletes a schedules task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "win_admin::setup_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
+recipe "win_admin::do_schedule_task_create", "Creates a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "win_admin::do_schedule_task_delete", "Deletes a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
 
 attribute "win_admin/admin_password",
   :display_name => "New administrator password",

@@ -95,7 +95,7 @@ else
 	} 
 }
 
-svn.cmd --non-interactive --no-auth-cache --username `"$svnUsername`" --password `"$svnPassword`" checkout $svnPath $deploy_path
+svn.cmd --quiet --non-interactive --no-auth-cache --username `"$svnUsername`" --password `"$svnPassword`" checkout $svnPath $deploy_path
 
 if ($LastExitCode -ne 0)
 { 

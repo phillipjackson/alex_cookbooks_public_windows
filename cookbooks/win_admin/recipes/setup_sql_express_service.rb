@@ -1,5 +1,5 @@
 # Cookbook Name:: win_admin
-# Recipe:: do_enable_sql_express_service
+# Recipe:: setup_sql_express_service
 #
 # Copyright 2010, RightScale, Inc.
 #

@@ -22,12 +22,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-#checkout code on first run, then update 
-#https://wush.net/svn/rightscale/unified_test_app/dotnet/src
-win_code_checkout_powershell_svnprovider "http://svn.github.com/alexpop/sample_www.git" do
+#checkout code on first run, then update
+win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
   releases_path "c:\\inetpub\\releases"
-  force_checkout false
+  svn_username @node[:svn][:repo_path]
+  svn_password @node[:svn][:repo_path]
+  force_checkout @node[:svn][:force_checkout]
   action :checkout
 end
 
