@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 if (@node[:boot_run])
-  Chef::Log.info("*** Recipe 'blog_engine::default' already executed, skipping...")
+  Chef::Log.info("*** Recipe 'win_db_mssql::default' already executed, skipping...")
 else
   # download the sql dump
   win_aws_powershell_s3provider "download mssql dump from bucket" do
@@ -39,13 +39,13 @@ else
 
   # load the initial demo database from deployed SQL script.
   # no schema provided for this import call
-  blog_engine_powershell_database "noschemayet" do
+  win_db_mssql_powershell_database "noschemayet" do
     server_name @node[:db_sqlserver][:server_name]
     script_path "c:\\tmp\\"+@node[:s3][:file]
     action :run_script
   end
 
-  blog_engine_powershell_database "app_test" do
+  win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
     server_name @node[:db_sqlserver][:server_name]
     commands ["CREATE USER [NetworkService] FOR LOGIN [NT AUTHORITY\\NETWORK SERVICE]",
               "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",
