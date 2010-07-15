@@ -1,4 +1,4 @@
-# Cookbook Name:: blog_engine
+# Cookbook Name:: win_app_iis
 # Recipe:: do_svn_code_checkout 
 #
 # Copyright (c) 2010 RightScale Inc
@@ -31,7 +31,7 @@ win_code_checkout_powershell_svnprovider "http://svn.github.com/alexpop/sample_w
   action :checkout
 end
 
-powershell "Change IIS physical path" do
+powershell "Change IIS physical path for Default Website" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
   $checkoutpath=invoke-expression 'Get-ChefNode checkoutpath'

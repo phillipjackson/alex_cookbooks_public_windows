@@ -10,6 +10,7 @@ depends 'win_aws'
 recipe "win_app_iis::default", "Not yet implemented"
 recipe "win_app_iis::get_file", "Retrieves a file from an S3 bucket"
 recipe "win_app_iis::put_file", "Uploads a file to an S3 bucket"
+recipe "win_app_iis::do_svn_code_checkout", "Retrieves code from SVN."
 
 attribute "s3/file",
   :display_name => "File",

@@ -4,7 +4,6 @@
       "blog_engine::drop_database": "Drops the BlogEngine database.",
       "blog_engine::backup_database_to_s3": "Backs up the BlogEngine database to a local machine directory.",
       "blog_engine::default": "AP: Loads the database and installs the BlogEngine application as the default IIS site",
-      "blog_engine::do_svn_code_checkout": "Retrieves code from SVN.",
       "blog_engine::backup_database": "Backs up the BlogEngine database to a local machine directory."
     },
     "groupings": {
