@@ -24,9 +24,9 @@
 
 case @node[:svn][:force_checkout]
   when "true"
-    @node[:svn][:force_checkout] = true
+    forceCheckout = true
   when "false"
-    @node[:svn][:force_checkout] = false
+    forceCheckout = false
 end
   
   
@@ -35,7 +35,7 @@ win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
   releases_path "c:\\inetpub\\releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]
-  force_checkout @node[:svn][:force_checkout]
+  force_checkout forceCheckout
   action :checkout
 end
 
