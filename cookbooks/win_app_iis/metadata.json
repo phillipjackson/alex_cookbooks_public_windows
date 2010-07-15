@@ -41,7 +41,20 @@
         "recipes": [
           "win_app_iis::put_file"
         ],
-        "required": "optional"
+        "required": "required"
+      },
+      "svn/force_checkout": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "A value of 'false' will attempt an svn update where 'true' will do a full checkout",
+        "display_name": "SVN Force Checkout",
+        "recipes": [
+          "win_app_iis::do_svn_code_checkout"
+        ],
+        "required": "required"
       },
       "win_app_iis/download_dir": {
         "calculated": false,
@@ -53,6 +66,20 @@
         "display_name": "Download Dir",
         "recipes": [
           "win_app_iis::get_file"
+        ],
+        "required": "required"
+      },
+      "svn/password": {
+        "default": "",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The SVN password that is used to checkout the application code from SVN repository.",
+        "display_name": "SVN Password",
+        "recipes": [
+          "win_app_iis::do_svn_code_checkout"
         ],
         "required": "optional"
       },
@@ -68,6 +95,20 @@
           "win_app_iis::get_file",
           "win_app_iis::put_file"
         ],
+        "required": "required"
+      },
+      "svn/username": {
+        "default": "",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The SVN username that is used to checkout the application code from SVN repository",
+        "display_name": "SVN Username",
+        "recipes": [
+          "win_app_iis::do_svn_code_checkout"
+        ],
         "required": "optional"
       },
       "aws/access_key_id": {
@@ -82,7 +123,7 @@
           "win_app_iis::get_file",
           "win_app_iis::put_file"
         ],
-        "required": "optional"
+        "required": "required"
       },
       "s3/file": {
         "calculated": false,
@@ -109,7 +150,20 @@
           "win_app_iis::get_file",
           "win_app_iis::put_file"
         ],
-        "required": "optional"
+        "required": "required"
+      },
+      "svn/repo_path": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The URL of your SVN repository where your application code will be checked out from.  Ex: http://mysvn.net/app/",
+        "display_name": "SVN Repo Path",
+        "recipes": [
+          "win_app_iis::do_svn_code_checkout"
+        ],
+        "required": "required"
       }
     },
     "replacing": {
