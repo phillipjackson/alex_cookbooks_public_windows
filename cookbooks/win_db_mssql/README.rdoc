@@ -1,0 +1,19 @@
+= DESCRIPTION:
+
+MSSQL Recipes and Providers
+
+= REQUIREMENTS:
+
+
+
+= USAGE:
+
+Designed to be run within a RightScale ServerTemplate.
+
+Boot Scripts
+  * default - default IIS site
+
+Operational Scripts
+  * backup_database - Backs up a database to a local machine directory.
+  * restore_database - Restores a database from a local machine directory.
+  * drop_database - Drops a database.

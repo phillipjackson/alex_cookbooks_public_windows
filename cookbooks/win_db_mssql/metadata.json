@@ -1,0 +1,185 @@
+{
+    "recipes": {
+      "win_db_mssql::drop_database": "Drops a database.",
+      "win_db_mssql::backup_database_to_s3": "Backs up a database to a local machine directory.",
+      "win_db_mssql::default": "AP: Loads the database and installs the BlogEngine application as the default IIS site",
+      "win_db_mssql::restore_database": "Restores a database from a local machine directory.",
+      "win_db_mssql::backup_database": "Backs up a database to a local machine directory."
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.3.5",
+    "maintainer": "RightScale, Inc.",
+    "long_description": "= DESCRIPTION:\n\nMSSQL Recipes and Providers\n\n= REQUIREMENTS:\n\n\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\nBoot Scripts\n  * default - default IIS site\n\nOperational Scripts\n  * backup_database - Backs up a database to a local machine directory.\n  * restore_database - Restores a database from a local machine directory.\n  * drop_database - Drops a database.\n",
+    "description": "MSSQL Recipes and Providers",
+    "suggestions": {
+    },
+    "maintainer_email": "support@rightscale.com",
+    "name": "win_db_mssql",
+    "conflicting": {
+    },
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "platforms": {
+    },
+    "attributes": {
+      "s3/bucket_backups": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket to store backups",
+        "recipes": [
+          "win_db_mssql::backup_database_to_s3"
+        ],
+        "required": "required"
+      },
+      "db_sqlserver/backup/existing_backup_file_name_pattern": {
+        "default": "{0}_*.bak",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
+        "display_name": "Pattern matching backup file names",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database",
+          "win_db_mssql::backup_database_to_s3",
+          "win_db_mssql::restore_database"
+        ],
+        "required": "optional"
+      },
+      "db_sqlserver/backup/backup_file_name_format": {
+        "default": "{0}_{1}.bak",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
+        "display_name": "Backup file name format",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database",
+          "win_db_mssql::backup_database_to_s3",
+          "win_db_mssql::restore_database"
+        ],
+        "required": "optional"
+      },
+      "db_sqlserver/server_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The network name of the SQL Server instance used by recipes.",
+        "display_name": "SQL Server instance network name",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database",
+          "win_db_mssql::backup_database_to_s3",
+          "win_db_mssql::restore_database",
+          "win_db_mssql::drop_database"
+        ],
+        "required": "required"
+      },
+      "aws/access_key_id": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
+        "display_name": "Access Key Id",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database_to_s3"
+        ],
+        "required": "required"
+      },
+      "s3/file": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Sql dump file to be retrieved from the s3 bucket",
+        "display_name": "Sql dump file",
+        "recipes": [
+          "win_db_mssql::default"
+        ],
+        "required": "required"
+      },
+      "aws/secret_access_key": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+        "display_name": "Secret Access Key",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database_to_s3"
+        ],
+        "required": "required"
+      },
+      "db_sqlserver/database_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "SQL Server database(schema) name. Ex: production",
+        "display_name": "SQL Server database name",
+        "recipes": [
+          "win_db_mssql::default",
+          "win_db_mssql::backup_database",
+          "win_db_mssql::backup_database_to_s3",
+          "win_db_mssql::restore_database",
+          "win_db_mssql::drop_database"
+        ],
+        "required": "required"
+      },
+      "db_sqlserver/backup/database_backup_dir": {
+        "default": "c:\\datastore\\sqlserver\\databases",
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The local drive path or UNC path to the directory which will contain new SQL Server database backup (.bak) files. Note that network drives are not supported by SQL Server.",
+        "display_name": "SQL Server backup .bak directory",
+        "recipes": [
+          "win_db_mssql::backup_database",
+          "win_db_mssql::backup_database_to_s3",
+          "win_db_mssql::restore_database"
+        ],
+        "required": "optional"
+      },
+      "s3/bucket_dump": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket for sql dump",
+        "recipes": [
+          "win_db_mssql::default"
+        ],
+        "required": "required"
+      }
+    },
+    "replacing": {
+    }
+  }
