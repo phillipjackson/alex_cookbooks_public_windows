@@ -19,8 +19,7 @@
       }
       else
       {
-        Write-Error "***Error: APPCMD.EXE was not found, aborting" 
-        exit 138
+          Write-Output "***APPCMD.EXE is missing on 2003 image, but Default Web Site is starting by default at boot time" 
       }
       EOF
 
