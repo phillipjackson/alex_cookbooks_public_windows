@@ -27,7 +27,7 @@ $s3File = Get-NewResource s3_file
 $downloadDir = Get-NewResource download_dir
 
 #stop and fail script when a command fails
-$ErrorActionPreference="Stop"
+#$ErrorActionPreference="Stop"
 
 #check inputs.
 $Error.Clear()
@@ -68,7 +68,7 @@ if (!(Test-Path $downloadDir))
 $targetpath = join-path ($downloadDir) $s3File
 Write-output "***Downloading file[$s3File] from bucket[$s3Bucket] to [$targetpath]"
 
-Get-Date
+w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
 
 #$request = New-Object –TypeName Amazon.S3.Model.ListObjectsRequest
 #$request.BucketName = $s3Bucket
@@ -86,6 +86,9 @@ if($S3Response -eq $null){
  Write-Error "***ERROR: Amazon S3 get requrest failed. Script halted." 
  exit 1 
 } 
+
+w32tm.exe /resync
+w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
 
 $responsestream=$S3Response.ResponseStream
 
