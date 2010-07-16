@@ -28,7 +28,7 @@ case @node[:svn][:force_checkout]
   when "false"
     forceCheckout = false
 end
-  
+
   
 #checkout code on first run, then update
 win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
@@ -55,7 +55,14 @@ powershell "Change IIS physical path for Default Website" do
       }
       else
       {
-        Write-Output "***APPCMD.EXE is missing, probably 2003 image. Alternate method required...symlink" 
+        Write-Output "***APPCMD.EXE is missing, probably 2003 image. Trying ADSI" 
+        
+        $siteName = "Default Web Site"
+        $iis = [ADSI]"IIS://localhost/W3SVC"
+        $site = $iis.psbase.children | where { $_.keyType -eq "IIsWebServer" -AND $_.ServerComment -eq $siteName }
+        $path = [ADSI]($site.psbase.path+"/ROOT")
+        $path.psbase.properties.path[0] = $checkoutpath
+        $path.psbase.CommitChanges()
       }
   }
   else
