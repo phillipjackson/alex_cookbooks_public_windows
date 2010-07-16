@@ -62,7 +62,8 @@ powershell "Change IIS physical path for Default Website" do
         $site = $iis.psbase.children | where { $_.keyType -eq "IIsWebServer" -AND $_.ServerComment -eq $siteName }
         $path = [ADSI]($site.psbase.path+"/ROOT")
         $path.psbase.properties.path[0] = $checkoutpath
-        $path.psbase.properties.DefaultDoc[0]="index.aspx,index.html"
+        #DefaultDoc cannot be configured in web.config for IIS6
+        $path.psbase.properties.DefaultDoc[0]="default.aspx,index.aspx,Default.htm,Default.asp,index.html,index.htm,iisstart.htm,index.php"
         $path.psbase.CommitChanges()
       }
   }

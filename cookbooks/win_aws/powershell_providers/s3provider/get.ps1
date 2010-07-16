@@ -69,12 +69,7 @@ $targetpath = join-path ($downloadDir) $s3File
 Write-output "***Downloading file[$s3File] from bucket[$s3Bucket] to [$targetpath]"
 
 w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
-
-#$request = New-Object –TypeName Amazon.S3.Model.ListObjectsRequest
-#$request.BucketName = $s3Bucket
-	
-#$response = $client.ListObjects($request)
-#$response.S3Objects|Format-Table -AutoSize –Property Key,Size
+#w32tm.exe /resync
 
 $get_request = New-Object –TypeName Amazon.S3.Model.GetObjectRequest
 $get_request.BucketName = $s3Bucket
@@ -86,9 +81,6 @@ if($S3Response -eq $null){
  Write-Error "***ERROR: Amazon S3 get requrest failed. Script halted." 
  exit 1 
 } 
-
-w32tm.exe /resync
-w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
 
 $responsestream=$S3Response.ResponseStream
 
