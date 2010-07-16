@@ -11,7 +11,7 @@
     },
     "recommendations": {
     },
-    "version": "0.3.5",
+    "version": "0.3.6",
     "maintainer": "RightScale, Inc.",
     "long_description": "= DESCRIPTION:\n\nMSSQL Recipes and Providers\n\n= REQUIREMENTS:\n\n\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\nBoot Scripts\n  * default - default IIS site\n\nOperational Scripts\n  * backup_database - Backs up a database to a local machine directory.\n  * restore_database - Restores a database from a local machine directory.\n  * drop_database - Drops a database.\n",
     "description": "MSSQL Recipes and Providers",

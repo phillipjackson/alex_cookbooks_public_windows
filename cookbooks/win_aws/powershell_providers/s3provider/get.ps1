@@ -68,6 +68,7 @@ if (!(Test-Path $downloadDir))
 $targetpath = join-path ($downloadDir) $s3File
 Write-output "***Downloading file[$s3File] from bucket[$s3Bucket] to [$targetpath]"
 
+Get-Date
 
 #$request = New-Object –TypeName Amazon.S3.Model.ListObjectsRequest
 #$request.BucketName = $s3Bucket
