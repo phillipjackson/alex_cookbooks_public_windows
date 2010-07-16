@@ -62,6 +62,7 @@ powershell "Change IIS physical path for Default Website" do
         $site = $iis.psbase.children | where { $_.keyType -eq "IIsWebServer" -AND $_.ServerComment -eq $siteName }
         $path = [ADSI]($site.psbase.path+"/ROOT")
         $path.psbase.properties.path[0] = $checkoutpath
+        $path.psbase.properties.DefaultDoc[0]="index.aspx,index.html"
         $path.psbase.CommitChanges()
       }
   }
