@@ -32,16 +32,17 @@ else
     action :get
   end
 
-unzipped_file=@node[:s3][:file]
+sql_dump=@node[:s3][:file]
 
 if (@node[:s3][:file] =~ /(.*)\.zip/)
-unzipped_file=$1
+sql_dump=$1
 Chef::Log.info("*** Trying to unzip the database dump.")
 powershell "Unzipping "+@node[:s3][:file] do
   parameters({'ZIPPED_FILE' => @node[:s3][:file]})
 
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
+    cd c:\tmp
     cmd /c 7z x -y "c:/tmp/${env:ZIPPED_FILE}"
 POWERSHELL_SCRIPT
 
@@ -53,7 +54,7 @@ end
   # no schema provided for this import call
   win_db_mssql_powershell_database "noschemayet" do
     server_name @node[:db_sqlserver][:server_name]
-    script_path "c:\\tmp\\"+unzipped_file
+    script_path "c:\\tmp\\"+sql_dump
     action :run_script
   end
 
