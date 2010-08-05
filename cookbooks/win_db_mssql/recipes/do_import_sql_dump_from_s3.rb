@@ -32,16 +32,28 @@ else
     action :get
   end
 
-#  if (@node[:s3][:file] =~ /(.*)?\..*zip/)
-#    file_prefix = $1
-#    system("7z x -y \""+@node[:s3][:file]+"\"")
-#  end
+unzipped_file=@node[:s3][:file]
+
+if (@node[:s3][:file] =~ /(.*)?\..*zip/)
+unzipped_file=$1
+Chef::Log.info("*** Trying to unzip the database dump.")
+powershell "Unzipping "+@node[:s3][:file] do
+  parameters({'ZIPPED_FILE' => @node[:s3][:file]})
+
+  # Create the powershell script
+  powershell_script = <<'POWERSHELL_SCRIPT'
+    cmd /c 7z x -y "c:/tmp/${env:ZIPPED_FILE}"
+POWERSHELL_SCRIPT
+
+  source(powershell_script)
+end
+end
 
   # load the initial demo database from deployed SQL script.
   # no schema provided for this import call
   win_db_mssql_powershell_database "noschemayet" do
     server_name @node[:db_sqlserver][:server_name]
-    script_path "c:\\tmp\\"+@node[:s3][:file]
+    script_path "c:\\tmp\\"+unzipped_file
     action :run_script
   end
 
