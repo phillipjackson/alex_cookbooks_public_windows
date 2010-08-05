@@ -34,7 +34,7 @@ else
 
 unzipped_file=@node[:s3][:file]
 
-if (@node[:s3][:file] =~ /(.*)?\..*zip/)
+if (@node[:s3][:file] =~ /(.*)\.zip/)
 unzipped_file=$1
 Chef::Log.info("*** Trying to unzip the database dump.")
 powershell "Unzipping "+@node[:s3][:file] do

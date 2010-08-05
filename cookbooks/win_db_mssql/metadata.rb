@@ -46,7 +46,7 @@ attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   
 attribute "s3/file",
   :display_name => "Sql dump file",
-  :description => "Sql dump file to be retrieved from the s3 bucket",
+  :description => "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
   :recipes => ["win_db_mssql::do_import_sql_dump_from_s3"],
   :required => "required"
 
