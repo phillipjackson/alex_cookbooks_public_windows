@@ -42,7 +42,7 @@ else
       parameters({'ZIPPED_FILE' => @node[:s3][:file]})
       # Create the powershell script
       powershell_script = <<'POWERSHELL_SCRIPT'
-        cd c:\tmp
+        cd c:/tmp
         cmd /c 7z x -y "c:/tmp/${env:ZIPPED_FILE}"
 POWERSHELL_SCRIPT
       source(powershell_script)

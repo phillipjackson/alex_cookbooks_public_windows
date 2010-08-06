@@ -12,8 +12,8 @@ recipe "win_admin::do_system_shutdown", "Shuts down the system"
 recipe "win_admin::install_firefox", "Installs Mozilla Firefox 3.6"
 recipe "win_admin::install_7zip", "Installs 7-Zip"
 recipe "win_admin::install_ruby", "Installs Ruby"
-recipe "win_admin::setup_scheduled_task_create", "Creates a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
-recipe "win_admin::setup_scheduled_task_delete", "Deletes a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "win_admin::setup_scheduled_task_create", "Creates the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "win_admin::setup_scheduled_task_delete", "Deletes the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
 
 attribute "win_admin/admin_password",
   :display_name => "New administrator password",

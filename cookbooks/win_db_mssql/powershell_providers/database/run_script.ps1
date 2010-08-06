@@ -28,12 +28,12 @@ $serverName = Get-NewResource server_name
 $Error.Clear()
 if (($scriptPath -eq $Null) -or ($scriptPath -eq ""))
 {
-    Write-Error "No SQL commands provided in resource".
+    Write-Error "No SQL commands provided in resource."
     exit 101
 }
 if (($serverName -eq $Null) -or ($serverName -eq ""))
 {
-    Write-Error "Invalid or missing server name".
+    Write-Error "Invalid or missing server name."
     exit 102
 }
 if (0 -ne $Error.Count)
@@ -41,8 +41,19 @@ if (0 -ne $Error.Count)
     exit 103
 }
 
-Write-Output "*** Running [$scriptPath] with no schema defined"
-# Redirect stdout to null
-sqlcmd -S $serverName -i "$scriptPath" > $null
+$win_path = ([System.IO.FileInfo])$scriptPath.fullname
 
-exit $LastExitCode
+if (test-path $win_path)
+{
+	Write-Output "*** Running [$win_path] with no schema defined."
+	
+	# Redirect stdout to null
+	sqlcmd -S $serverName -i "$win_path" > $null
+	
+	exit $LastExitCode
+}
+else
+{
+    Write-Error "[$win_path] script is missing."
+    exit 102
+}

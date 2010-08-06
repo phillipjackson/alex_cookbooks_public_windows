@@ -1,9 +1,9 @@
 {
     "recipes": {
-      "win_admin::setup_scheduled_task_create": "Creates a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
+      "win_admin::setup_scheduled_task_create": "Creates the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
       "win_admin::do_system_shutdown": "Shuts down the system",
       "win_admin::do_system_reboot": "Reboots the system",
-      "win_admin::setup_scheduled_task_delete": "Deletes a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
+      "win_admin::setup_scheduled_task_delete": "Deletes the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
       "win_admin::do_change_admin_password": "Changes the administrator password",
       "win_admin::install_7zip": "Installs 7-Zip",
       "win_admin::install_firefox": "Installs Mozilla Firefox 3.6",
