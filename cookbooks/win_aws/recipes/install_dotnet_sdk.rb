@@ -26,7 +26,7 @@ powershell "Install AWS SDK" do
     Else {
       cd "$env:ATTACHMENTS_PATH"
       Write-Output "*** Installing AWS SDK for .NET msi"
-      cmd /c msiexec /package AWSSDKForNET_1.0.9.msi /quiet
+      cmd /c msiexec /package AWSSDKForNET_1.0.11.msi /quiet
     }
 POWERSHELL_SCRIPT
 

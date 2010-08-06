@@ -72,7 +72,7 @@ if ($hourlyFrequency -ge 1 -and $hourlyFrequency -le 23)
   Write-Output "*** Setting task name [$name] with hourly frequency [$hourlyFrequency]"
   schtasks.exe /Create /F /SC HOURLY /MO $hourlyFrequency /RU $username /RP $password /TN $name /TR "$command"  
 }
-elseif ($num -eq 24)
+elseif ($hourlyFrequency -eq 24)
 {
   if (!($dailyTime -match "^[0-2]\d:[0-5]\d$"))
   {

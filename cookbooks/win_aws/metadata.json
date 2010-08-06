@@ -1,7 +1,9 @@
 {
     "recipes": {
+      "win_aws::get_file": "Retrieves a file from an S3 bucket",
       "win_aws::install_dotnet_sdk": "Install Amazon Web Services SDK for .NET",
       "win_aws::do_register_instance_with_elb": "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'",
+      "win_aws::put_file": "Uploads a file to an S3 bucket",
       "win_aws::default": "Not implemented",
       "win_aws::do_deregister_instance_from_elb": "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'"
     },
@@ -9,9 +11,9 @@
     },
     "recommendations": {
     },
-    "version": "0.1.4",
+    "version": "0.1.5",
     "maintainer": "RightScale, Inc.",
-    "long_description": "= DESCRIPTION:\n\nAmazon Web Services recipes and providers for Windows\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n\nExamples for the providers:\n\n# download a a file from S3 using the :get provider\nwin_aws_powershell_s3provider \"downloadmyfile\" do\n  access_key_id @node[:aws][:access_key_id]\n  secret_access_key @node[:aws][:secret_access_key]\n  s3_bucket \"my-eu-bucket\"\n  s3_file \"myfile.txt\"\n  download_dir 'c:'\n  action :get\nend\n\n# register instance with elb\nwin_aws_powershell_elbprovider \"register instance provider call\" do\n  access_key_id @node[:aws][:access_key_id]\n  secret_access_key @node[:aws][:secret_access_key]\n  elb_name \"production-elb\"\n  action :register\nend",
+    "long_description": "= DESCRIPTION:\n\nAmazon Web Services recipes and providers for Windows\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n\nExamples for the providers:\n\n# download a a file from S3 using the :get provider\n\n  win_aws_powershell_s3provider \"downloadmyfile\" do\n    access_key_id @node[:aws][:access_key_id]\n    secret_access_key @node[:aws][:secret_access_key]\n    s3_bucket \"my-eu-bucket\"\n    s3_file \"myfile.txt\"\n    download_dir 'c:'\n    action :get\n  end\n\n# register instance with elb\n\n  win_aws_powershell_elbprovider \"register instance provider call\" do\n    access_key_id @node[:aws][:access_key_id]\n    secret_access_key @node[:aws][:secret_access_key]\n    elb_name \"production-elb\"\n    action :register\n  end",
     "description": "Amazon Web Services recipes and providers for Windows",
     "suggestions": {
     },
@@ -27,6 +29,45 @@
     "platforms": {
     },
     "attributes": {
+      "s3/bucket": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the S3 bucket",
+        "display_name": "Bucket",
+        "recipes": [
+          "win_aws::get_file"
+        ],
+        "required": "required"
+      },
+      "win_aws/download_dir": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The directory where the file from s3 will be downloaded. Ex: c:\\tmp\\",
+        "display_name": "Download Dir",
+        "recipes": [
+          "win_aws::get_file"
+        ],
+        "required": "required"
+      },
+      "s3/file": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "File to be retrieved from the s3 bucket. Ex: app.zip",
+        "display_name": "File",
+        "recipes": [
+          "win_aws::get_file"
+        ],
+        "required": "required"
+      },
       "aws/access_key_id": {
         "calculated": false,
         "type": "string",
@@ -37,7 +78,9 @@
         "display_name": "Access Key Id",
         "recipes": [
           "win_aws::do_register_instance_with_elb",
-          "win_aws::do_deregister_instance_from_elb"
+          "win_aws::do_deregister_instance_from_elb",
+          "win_aws::get_file",
+          "win_aws::put_file"
         ],
         "required": "required"
       },
@@ -65,7 +108,22 @@
         "display_name": "Secret Access Key",
         "recipes": [
           "win_aws::do_register_instance_with_elb",
-          "win_aws::do_deregister_instance_from_elb"
+          "win_aws::do_deregister_instance_from_elb",
+          "win_aws::get_file",
+          "win_aws::put_file"
+        ],
+        "required": "required"
+      },
+      "win_aws/file_path": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The full path to the file to be uploaded. Ex: c:\\tmp\\my.txt",
+        "display_name": "File Path",
+        "recipes": [
+          "win_aws::put_file"
         ],
         "required": "required"
       }
