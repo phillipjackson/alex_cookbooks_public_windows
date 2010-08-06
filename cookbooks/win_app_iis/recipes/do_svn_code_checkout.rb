@@ -30,9 +30,9 @@ case @node[:svn][:force_checkout]
 end
 
   
-#checkout code on first run, then update
+# checkout code on first run, then update
 win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
-  releases_path "c:\\inetpub\\releases"
+  releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]
   force_checkout forceCheckout

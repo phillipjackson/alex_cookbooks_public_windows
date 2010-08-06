@@ -5,9 +5,8 @@
 #
 # All rights reserved
 
-
-# download
-win_aws_powershell_s3provider "uploadmyfile" do
+# upload file to s3
+win_aws_powershell_s3provider "upload to s3" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket]

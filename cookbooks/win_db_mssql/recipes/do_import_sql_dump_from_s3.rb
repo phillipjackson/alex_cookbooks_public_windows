@@ -28,33 +28,32 @@ else
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket_dump]
     s3_file @node[:s3][:file]
-    download_dir "c:\\tmp"
+    download_dir "c:/tmp"
     action :get
   end
 
-sql_dump=@node[:s3][:file]
+  sql_dump=@node[:s3][:file]
 
-if (@node[:s3][:file] =~ /(.*)\.zip/)
-sql_dump=$1
-Chef::Log.info("*** Trying to unzip the database dump.")
-powershell "Unzipping "+@node[:s3][:file] do
-  parameters({'ZIPPED_FILE' => @node[:s3][:file]})
-
-  # Create the powershell script
-  powershell_script = <<'POWERSHELL_SCRIPT'
-    cd c:\tmp
-    cmd /c 7z x -y "c:/tmp/${env:ZIPPED_FILE}"
+  # unzip the dump file 
+  if (@node[:s3][:file] =~ /(.*)\.zip/)
+    sql_dump=$1
+    Chef::Log.info("*** Trying to unzip the database dump.")
+    powershell "Unzipping "+@node[:s3][:file] do
+      parameters({'ZIPPED_FILE' => @node[:s3][:file]})
+      # Create the powershell script
+      powershell_script = <<'POWERSHELL_SCRIPT'
+        cd c:\tmp
+        cmd /c 7z x -y "c:/tmp/${env:ZIPPED_FILE}"
 POWERSHELL_SCRIPT
-
-  source(powershell_script)
-end
-end
+      source(powershell_script)
+    end
+  end
 
   # load the initial demo database from deployed SQL script.
   # no schema provided for this import call
   win_db_mssql_powershell_database "noschemayet" do
     server_name @node[:db_sqlserver][:server_name]
-    script_path "c:\\tmp\\"+sql_dump
+    script_path "c:/tmp/"+sql_dump
     action :run_script
   end
 
