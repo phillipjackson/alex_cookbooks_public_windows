@@ -77,4 +77,5 @@ attribute "svn/force_checkout",
   :display_name => "SVN Force Checkout",
   :description => "A value of 'false' will attempt an svn update where 'true' will do a full checkout",
   :recipes => ["win_app_iis::do_svn_code_checkout"],
+  :choice => ['true', 'false'],
   :required => "required"

@@ -47,7 +47,8 @@
         "calculated": false,
         "type": "string",
         "choice": [
-
+          "true",
+          "false"
         ],
         "description": "A value of 'false' will attempt an svn update where 'true' will do a full checkout",
         "display_name": "SVN Force Checkout",
