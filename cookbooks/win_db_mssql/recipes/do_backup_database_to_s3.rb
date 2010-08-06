@@ -35,24 +35,12 @@ win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
   action :backup
 end
 
-#list all the backups
-powershell "list the backups" do
-  parameters({'BKPATH' => @node[:db_sqlserver][:backup][:database_backup_dir]})
-
-  # Create the powershell script
-  powershell_script = <<'POWERSHELL_SCRIPT'
-    ls $env:BKPATH
-POWERSHELL_SCRIPT
-
-  source(powershell_script)
-end
-
-#upload dump to s3
-win_aws_powershell_s3provider "download mssql dump from bucket" do
+# upload backup to s3
+win_aws_powershell_s3provider "upload the latest backup to the s3 bucket" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket_backups]
-  #if file_path is a directory, the latest file in the directory will be uploaded
+  # when file_path is a directory, the latest file in the directory will be uploaded
   file_path @node[:db_sqlserver][:backup][:database_backup_dir]
   action :put
 end

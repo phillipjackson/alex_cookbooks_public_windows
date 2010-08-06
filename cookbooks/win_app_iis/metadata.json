@@ -1,5 +1,6 @@
 {
     "recipes": {
+      "win_app_iis::setup_default_website": "Starts the website named 'Default Web Site' if it is not already running",
       "win_app_iis::do_svn_code_checkout": "Retrieves code from SVN.",
       "win_app_iis::default": "Not yet implemented"
     },
@@ -7,7 +8,7 @@
     },
     "recommendations": {
     },
-    "version": "0.0.3",
+    "version": "0.1.3",
     "maintainer": "RightScale, Inc.",
     "long_description": "= DESCRIPTION:\n\nRecipes for working with S3 buckets\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate\n",
     "description": "IIS recipes",

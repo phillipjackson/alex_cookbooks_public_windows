@@ -3,6 +3,7 @@
       "win_db_mssql::do_import_sql_dump_from_s3": "Downloads an sql dump from an s3 bucket and imports it into the database.",
       "win_db_mssql::do_restore_database": "Restores a database from a local machine directory.",
       "win_db_mssql::default": "Not yet implemented.",
+      "win_db_mssql::setup_sql_express_service": "Enables the SQL Express service if disabled",
       "win_db_mssql::do_backup_database": "Backs up a database to a local machine directory.",
       "win_db_mssql::do_drop_database": "Drops a database.",
       "win_db_mssql::do_backup_database_to_s3": "Backs up a database to a local machine directory."
@@ -13,7 +14,7 @@
     },
     "version": "0.3.6",
     "maintainer": "RightScale, Inc.",
-    "long_description": "= DESCRIPTION:\n\nMSSQL Recipes and Providers\n\n= REQUIREMENTS:\n\n\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\nBoot Scripts\n  * default - default IIS site\n\nOperational Scripts\n  * backup_database - Backs up a database to a local machine directory.\n  * restore_database - Restores a database from a local machine directory.\n  * drop_database - Drops a database.\n",
+    "long_description": "= DESCRIPTION:\n\nMSSQL Recipes and Providers\n\n= REQUIREMENTS:\n\n\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\n",
     "description": "MSSQL Recipes and Providers",
     "suggestions": {
     },

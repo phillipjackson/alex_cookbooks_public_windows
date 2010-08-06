@@ -3,12 +3,14 @@ maintainer_email "alex@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "IIS recipes"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.0.3"
+version          "0.1.3"
 
 depends 'win_aws' 
 
 recipe "win_app_iis::default", "Not yet implemented"
 recipe "win_app_iis::do_svn_code_checkout", "Retrieves code from SVN."
+recipe "win_app_iis::setup_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
+
  
 attribute "svn/repo_path",
   :display_name => "SVN Repo Path",

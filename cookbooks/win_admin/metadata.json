@@ -1,10 +1,8 @@
 {
     "recipes": {
       "win_admin::setup_scheduled_task_create": "Creates a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
-      "win_admin::setup_sql_express_service": "Enables the SQL Express service if disabled",
       "win_admin::do_system_shutdown": "Shuts down the system",
       "win_admin::do_system_reboot": "Reboots the system",
-      "win_admin::setup_default_website": "Starts the website named 'Default Web Site' if it is not already running",
       "win_admin::setup_scheduled_task_delete": "Deletes a scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
       "win_admin::do_change_admin_password": "Changes the administrator password",
       "win_admin::install_7zip": "Installs 7-Zip",

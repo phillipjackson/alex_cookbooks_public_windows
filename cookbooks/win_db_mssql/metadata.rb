@@ -12,6 +12,8 @@ recipe "win_db_mssql::do_backup_database_to_s3", "Backs up a database to a local
 recipe "win_db_mssql::do_restore_database", "Restores a database from a local machine directory."
 recipe "win_db_mssql::do_drop_database", "Drops a database."
 recipe 'win_db_mssql::do_import_sql_dump_from_s3', 'Downloads an sql dump from an s3 bucket and imports it into the database.'
+recipe "win_db_mssql::setup_sql_express_service", "Enables the SQL Express service if disabled"
+
 
 
 attribute "db_sqlserver/server_name",
