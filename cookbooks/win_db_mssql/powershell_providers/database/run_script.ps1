@@ -41,7 +41,7 @@ if (0 -ne $Error.Count)
     exit 103
 }
 
-$win_path = ([System.IO.FileInfo])$scriptPath.fullname
+$win_path = ([System.IO.FileInfo]$scriptPath).fullname
 
 if (test-path $win_path)
 {
