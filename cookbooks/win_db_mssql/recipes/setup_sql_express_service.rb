@@ -1,4 +1,4 @@
-# Cookbook Name:: win_admin
+# Cookbook Name:: win_db_mssql
 # Recipe:: setup_sql_express_service
 #
 # Copyright 2010, RightScale, Inc.

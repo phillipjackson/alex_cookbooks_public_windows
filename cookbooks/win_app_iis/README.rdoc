@@ -1,6 +1,6 @@
 = DESCRIPTION:
 
-Recipes for working with S3 buckets
+Windows IIS recipes
 
 = REQUIREMENTS:
 

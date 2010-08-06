@@ -47,7 +47,7 @@ attribute "s3/file",
 attribute "s3/bucket",
   :display_name => "Bucket",
   :description => "The name of the S3 bucket",
-  :recipes => ["win_aws::get_file"],
+  :recipes => ["win_aws::get_file", "win_aws::put_file"],
   :required => "required"
   
 attribute "win_aws/download_dir",
