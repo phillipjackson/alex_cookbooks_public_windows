@@ -23,7 +23,7 @@ attribute "win_admin/admin_password",
 
 attribute "schtasks/command",
   :display_name => "Task command",
-  :description => "Defines the shell command to run. (e.g., dir >>c:\\\\dir.txt)",
+  :description => "Defines the shell command to run. (e.g., dir >> c:\\dir.txt)",
   :recipes => ["win_admin::setup_scheduled_task_create"],
   :required => "required"
 

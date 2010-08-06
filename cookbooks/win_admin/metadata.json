@@ -65,7 +65,7 @@
         "choice": [
 
         ],
-        "description": "Defines the shell command to run. (e.g., dir >>c:\\\\dir.txt)",
+        "description": "Defines the shell command to run. (e.g., dir >> c:\\dir.txt)",
         "display_name": "Task command",
         "recipes": [
           "win_admin::setup_scheduled_task_create"
