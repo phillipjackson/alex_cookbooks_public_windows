@@ -66,7 +66,7 @@ if (!(Test-Path $downloadDir))
 }
 
 $targetpath = join-path ($downloadDir) $s3File
-Write-output "***Downloading file[$s3File] from bucket[$s3Bucket] to [$targetpath]"
+Write-output "***Downloading key[$s3File] from bucket[$s3Bucket] to [$targetpath]"
 
 #w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
 #w32tm.exe /resync

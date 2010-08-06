@@ -31,6 +31,7 @@ win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
   server_name @node[:db_sqlserver][:server_name]
   force_restore false
   zip_backup true
+  delete_sql_after_zip false
   action :backup
 end
 

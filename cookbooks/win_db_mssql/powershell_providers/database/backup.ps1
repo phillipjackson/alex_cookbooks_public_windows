@@ -29,6 +29,7 @@ $backupDirPath = Get-NewResource backup_dir_path
 $existingBackupFileNamePattern = (Get-NewResource existing_backup_file_name_pattern) -f $dbName
 $backupFileNameFormat = Get-NewResource backup_file_name_format
 $zipBackup = Get-NewResource zip_backup
+$deleteSqlAfterZip = Get-NewResource delete_sql_after_zip
 
 # check if database exists before backing up.
 if (!(Get-ChefNode ($nodePath + "exists")))
@@ -84,8 +85,11 @@ if ($db)
         	Write-Output $output
         	if ($output -match "Everything is Ok")
         	{
-				Write-Output "Deleting the bak file"
-				Remove-Item $backupFilePath
+        		if ($deleteSqlAfterZip -eq "true")
+        		{
+					Write-Output "Deleting the bak file"
+					Remove-Item $backupFilePath
+				}
 				Set-ChefNode backupfilename $backupFileName".zip"
         	}
         }
