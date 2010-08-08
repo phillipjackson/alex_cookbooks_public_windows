@@ -1,4 +1,4 @@
-# Cookbook Name:: win_admin
+# Cookbook Name:: windows
 # Recipe:: install_7zip
 #
 # Copyright 2010, RightScale, Inc.

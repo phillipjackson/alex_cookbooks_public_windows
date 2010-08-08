@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: win_app_iis
+# Cookbook Name:: app_iis
 # Recipe:: default
 #
 # Copyright 2010, RightScale, Inc.

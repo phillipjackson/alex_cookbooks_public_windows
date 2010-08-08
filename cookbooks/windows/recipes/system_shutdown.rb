@@ -1,11 +1,11 @@
-# Cookbook Name:: win_admin
-# Recipe:: do_system_reboot
+# Cookbook Name:: windows
+# Recipe:: do_system_shutdown
 #
 # Copyright 2010, RightScale, Inc.
 #
 # All rights reserved
 
-powershell "Reboots the system" do
+powershell "Shuts down the system" do
 
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
@@ -13,8 +13,8 @@ powershell "Reboots the system" do
     $system = Get-WmiObject Win32_OperatingSystem -ComputerName $computer
     $system.psbase.Scope.Options.EnablePrivileges = $true
     #redirecting the output to $null to avoid script failure
-    $system.Reboot() > $null
-    Write-Output "Reboot signal sent!"
+    $system.shutdown() > $null
+    Write-Output "Shutdown signal sent!"
 POWERSHELL_SCRIPT
 
   source(powershell_script)

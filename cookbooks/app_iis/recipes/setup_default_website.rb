@@ -1,4 +1,4 @@
-# Cookbook Name:: win_app_iis
+# Cookbook Name:: app_iis
 # Recipe:: setup_default_website
 #
 # Copyright 2010, RightScale, Inc.

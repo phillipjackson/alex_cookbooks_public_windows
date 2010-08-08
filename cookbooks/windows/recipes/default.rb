@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: win_admin
+# Cookbook Name:: windows
 # Recipe:: default
 #
 # Copyright 2010, RightScale, Inc.

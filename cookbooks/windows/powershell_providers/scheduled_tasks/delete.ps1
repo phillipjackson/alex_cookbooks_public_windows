@@ -1,6 +1,3 @@
-# Cookbook Name:: win_admin
-# Recipe:: setup_scheduled_task_delete
-#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -22,13 +19,27 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# schedule the task
-win_admin_schtasks "rs_scheduled_task" do
-  action :delete
-end
+# locals.
+$name = Get-NewResource name
 
+# "Stop" or "Continue" the powershell script execution when a command fails
+$ErrorActionPreference = "Stop"
 
+#check inputs.
+$Error.Clear()
+if (($name -eq $NULL) -or ($name -eq ""))
+{
+    Write-Error "***Error: 'name' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    exit 140
+}
 
+#remove any characters that might brake the command
+$name = $name -replace '[^\w]', ''
 
+schtasks.exe /delete /F /TN $name
 
-
+if (!$?)
+{
+    Write-Error "***Error: SCHTASKS execution failed."Grid Quickstart Deployment
+	exit 141
+}

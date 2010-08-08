@@ -1,4 +1,4 @@
-# Cookbook Name:: win_app_iis
+# Cookbook Name:: app_iis
 # Recipe:: do_svn_code_checkout 
 #
 # Copyright (c) 2010 RightScale Inc

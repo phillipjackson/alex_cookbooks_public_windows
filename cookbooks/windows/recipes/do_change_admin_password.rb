@@ -1,4 +1,4 @@
-# Cookbook Name:: win_admin
+# Cookbook Name:: windows
 # Recipe:: do_change_admin_password
 #
 # Copyright 2010, RightScale, Inc.
@@ -7,7 +7,7 @@
 
 # change admin password
 powershell "Changes the administrator password" do
-  parameters({'ADMIN_PASSWORD' => @node[:win_admin][:admin_password]})
+  parameters({'ADMIN_PASSWORD' => @node[:windows][:admin_password]})
 
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'

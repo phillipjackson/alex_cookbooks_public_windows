@@ -1,3 +1,6 @@
+# Cookbook Name:: windows
+# Recipe:: setup_scheduled_task_create
+#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,27 +22,13 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# locals.
-$name = Get-NewResource name
+# create a scheduled the task
+windows_scheduled_tasks "rs_scheduled_task" do
+  username "administrator"
+  password @node[:windows][:admin_password]
+  command @node[:schtasks][:command]
+  hourly_frequency @node[:schtasks][:hourly_frequency]
+  daily_time @node[:schtasks][:daily_time]
+  action :create
+end
 
-# "Stop" or "Continue" the powershell script execution when a command fails
-$ErrorActionPreference = "Stop"
-
-#check inputs.
-$Error.Clear()
-if (($name -eq $NULL) -or ($name -eq ""))
-{
-    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_schtasks' provider. Aborting..."
-    exit 140
-}
-
-#remove any characters that might brake the command
-$name = $name -replace '[^\w]', ''
-
-schtasks.exe /delete /F /TN $name
-
-if (!$?)
-{
-    Write-Error "***Error: SCHTASKS execution failed."Grid Quickstart Deployment
-	exit 141
-}
