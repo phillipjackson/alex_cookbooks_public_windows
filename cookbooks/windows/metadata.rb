@@ -3,7 +3,7 @@ maintainer_email "support@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Windows Admin recipes and providers"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.0.11"
+version          "0.0.12"
 
 recipe "windows::default", "Not yet implemented"
 recipe "windows::do_change_admin_password", "Changes the administrator password"

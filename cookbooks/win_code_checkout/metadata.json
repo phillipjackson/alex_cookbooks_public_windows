@@ -12,7 +12,7 @@
     "description": "Providers and recipes for code checkout",
     "suggestions": {
     },
-    "maintainer_email": "alex@rightscale.com",
+    "maintainer_email": "support@rightscale.com",
     "name": "win_code_checkout",
     "conflicting": {
     },
