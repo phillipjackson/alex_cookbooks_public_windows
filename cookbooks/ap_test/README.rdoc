@@ -11,4 +11,4 @@ See metadata.rb
 
 = USAGE:
 
-Designed to be run within a RightScale ServerTemplate
+Designed to be run within a RightScale ServerTemplate.
