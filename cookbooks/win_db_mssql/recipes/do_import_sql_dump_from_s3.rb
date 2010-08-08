@@ -23,7 +23,7 @@ if (@node[:boot_run])
   Chef::Log.info("*** Recipe 'win_db_mssql::default' already executed, skipping...")
 else
   # download the sql dump
-  win_aws_powershell_s3provider "download mssql dump from bucket" do
+  win_aws_s3provider "download mssql dump from bucket" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket_dump]
@@ -51,13 +51,13 @@ POWERSHELL_SCRIPT
 
   # load the initial demo database from deployed SQL script.
   # no schema provided for this import call
-  win_db_mssql_powershell_database "noschemayet" do
+  win_db_mssql_database "noschemayet" do
     server_name @node[:db_sqlserver][:server_name]
     script_path "c:/tmp/"+sql_dump
     action :run_script
   end
 
-  win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
+  win_db_mssql_database @node[:db_sqlserver][:database_name] do
     server_name @node[:db_sqlserver][:server_name]
     commands ["CREATE USER [NetworkService] FOR LOGIN [NT AUTHORITY\\NETWORK SERVICE]",
               "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",

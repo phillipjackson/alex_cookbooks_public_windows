@@ -6,7 +6,7 @@
 # All rights reserved
 
 # download
-win_aws_powershell_s3provider "downloadmyfile" do
+win_aws_s3provider "downloadmyfile" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket]

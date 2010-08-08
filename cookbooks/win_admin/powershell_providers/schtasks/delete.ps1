@@ -29,7 +29,7 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_powershell_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_schtasksprovider' provider. Aborting..."
     exit 140
 }
 

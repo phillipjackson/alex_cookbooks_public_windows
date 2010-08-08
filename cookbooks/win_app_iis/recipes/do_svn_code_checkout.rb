@@ -31,7 +31,7 @@ end
 
   
 # checkout code on first run, then update
-win_code_checkout_powershell_svnprovider @node[:svn][:repo_path] do
+win_code_checkout_svnprovider @node[:svn][:repo_path] do
   releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]

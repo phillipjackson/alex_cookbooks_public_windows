@@ -23,7 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # backs up the database
-win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
+win_db_mssql_database @node[:db_sqlserver][:database_name] do
   machine_type = @node[:kernel][:machine]
   backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
   backup_file_name_format @node[:db_sqlserver][:backup][:backup_file_name_format]
@@ -36,7 +36,7 @@ win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
 end
 
 # upload backup to s3
-win_aws_powershell_s3provider "upload the latest backup to the s3 bucket" do
+win_aws_s3provider "upload the latest backup to the s3 bucket" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket_backups]

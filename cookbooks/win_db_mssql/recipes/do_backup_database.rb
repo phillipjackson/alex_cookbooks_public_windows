@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # loads the demo database from cookbook-relative backup file.
-win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
+win_db_mssql_database @node[:db_sqlserver][:database_name] do
   machine_type = @node[:kernel][:machine]
 
   backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]

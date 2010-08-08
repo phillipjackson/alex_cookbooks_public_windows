@@ -23,7 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # create a scheduled the task
-win_admin_powershell_schtasksprovider "rs_scheduled_task" do
+win_admin_schtasksprovider "rs_scheduled_task" do
   username "administrator"
   password @node[:win_admin][:admin_password]
   command @node[:schtasks][:command]

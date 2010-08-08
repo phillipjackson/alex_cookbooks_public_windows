@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # Drop a database.
-win_db_mssql_powershell_database @node[:db_sqlserver][:database_name] do
+win_db_mssql_database @node[:db_sqlserver][:database_name] do
   server_name @node[:db_sqlserver][:server_name]
   action :drop
 end
