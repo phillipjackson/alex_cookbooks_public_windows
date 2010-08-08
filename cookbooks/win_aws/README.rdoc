@@ -17,7 +17,7 @@ Examples for the providers:
 
 # download a a file from S3 using the :get provider
 
-  win_aws_s3provider "downloadmyfile" do
+  win_aws_s3 "downloadmyfile" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket "my-eu-bucket"
@@ -28,7 +28,7 @@ Examples for the providers:
 
 # register instance with elb
 
-  win_aws_elbprovider "register instance provider call" do
+  win_aws_elb "register instance provider call" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     elb_name "production-elb"

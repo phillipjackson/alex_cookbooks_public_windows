@@ -7,7 +7,7 @@
 #
 
 # deregister instance from elb
-win_aws_elbprovider "deregister instance provider call" do
+win_aws_elb "deregister instance provider call" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   elb_name @node[:aws][:elb_name]

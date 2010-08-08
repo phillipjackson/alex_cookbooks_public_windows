@@ -36,7 +36,7 @@ win_db_mssql_database @node[:db_sqlserver][:database_name] do
 end
 
 # upload backup to s3
-win_aws_s3provider "upload the latest backup to the s3 bucket" do
+win_aws_s3 "upload the latest backup to the s3 bucket" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   s3_bucket @node[:s3][:bucket_backups]

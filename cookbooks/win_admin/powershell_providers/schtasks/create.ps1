@@ -35,22 +35,22 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'name' is a required attribute for the 'win_admin_schtasks' provider. Aborting..."
     exit 131
 }
 if (($username -eq $NULL) -or ($username -eq ""))
 {
-    Write-Error "***Error: 'username' is a required attribute for the 'win_admin_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'username' is a required attribute for the 'win_admin_schtasks' provider. Aborting..."
     exit 132
 }
 if (($password -eq $NULL) -or ($password -eq ""))
 {
-    Write-Error "***Error: 'password' is a required attribute for the 'win_admin_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'password' is a required attribute for the 'win_admin_schtasks' provider. Aborting..."
     exit 133
 }
 if (($hourlyFrequency -eq $NULL) -or ($hourlyFrequency -eq ""))
 {
-    Write-Error "***Error: 'hourly_frequency' is a required attribute for the 'win_admin_schtasksprovider' provider. Aborting..."
+    Write-Error "***Error: 'hourly_frequency' is a required attribute for the 'win_admin_schtasks' provider. Aborting..."
     exit 134
 }
 

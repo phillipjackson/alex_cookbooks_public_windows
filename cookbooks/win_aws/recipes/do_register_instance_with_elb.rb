@@ -7,7 +7,7 @@
 #
 
 # register instance with elb
-win_aws_elbprovider "register instance provider call" do
+win_aws_elb "register instance provider call" do
   access_key_id @node[:aws][:access_key_id]
   secret_access_key @node[:aws][:secret_access_key]
   elb_name @node[:aws][:elb_name]

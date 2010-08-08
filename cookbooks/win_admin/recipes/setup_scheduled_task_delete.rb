@@ -23,7 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # schedule the task
-win_admin_schtasksprovider "rs_scheduled_task" do
+win_admin_schtasks "rs_scheduled_task" do
   action :delete
 end
 
