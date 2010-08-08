@@ -23,7 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # create a scheduled the task
-win_admin_schtasksprovider "rs_scheduled_task" do
+win_admin_schtasks "rs_scheduled_task" do
   username "administrator"
   password @node[:win_admin][:admin_password]
   command @node[:schtasks][:command]
@@ -31,9 +31,4 @@ win_admin_schtasksprovider "rs_scheduled_task" do
   daily_time @node[:schtasks][:daily_time]
   action :create
 end
-
-
-
-
-
 
