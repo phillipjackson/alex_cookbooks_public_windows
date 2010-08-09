@@ -22,7 +22,7 @@
     "name": "db_sqlserver",
     "conflicting": {
     },
-    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved - Do Not Redistribute\n\n\n",
     "providing": {
     },
     "dependencies": {
@@ -50,7 +50,7 @@
         "choice": [
 
         ],
-        "description": "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
+        "description": "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format. Ex: {0}_*.bak",
         "display_name": "Pattern matching backup file names",
         "recipes": [
           "db_sqlserver::import_dump_from_s3",
@@ -67,7 +67,7 @@
         "choice": [
 
         ],
-        "description": "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
+        "description": "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp. Ex: {0}_{1}.bak",
         "display_name": "Backup file name format",
         "recipes": [
           "db_sqlserver::import_dump_from_s3",

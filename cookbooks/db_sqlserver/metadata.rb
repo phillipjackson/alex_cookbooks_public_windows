@@ -35,13 +35,13 @@ attribute "db_sqlserver/backup/database_backup_dir",
 
 attribute "db_sqlserver/backup/backup_file_name_format",
   :display_name => "Backup file name format",
-  :description => "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
+  :description => "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp. Ex: {0}_{1}.bak",
   :default => "{0}_{1}.bak",
   :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
 
 attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   :display_name => "Pattern matching backup file names",
-  :description => "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
+  :description => "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format. Ex: {0}_*.bak",
   :default => "{0}_*.bak",
   :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
   
@@ -56,7 +56,7 @@ attribute "s3/bucket_dump",
   :description => "The name of the S3 bucket. Ex: production-bucket-dumps",
   :recipes => ["db_sqlserver::import_dump_from_s3"],
   :required => "required"
-  
+
 attribute "s3/bucket_backups",
   :display_name => "Bucket to store backups",
   :description => "The name of the S3 bucket. Ex: production-bucket-backup",
