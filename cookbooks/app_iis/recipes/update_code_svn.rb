@@ -29,7 +29,7 @@ case @node[:svn][:force_checkout]
     forceCheckout = false
 end
 
-# Checkout code in c:\inetpub\releases
+#Checkout code in c:\inetpub\releases
 code_checkout_svn @node[:svn][:repo_path] do
   releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
