@@ -5,11 +5,11 @@ description      "IIS recipes"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.1.3"
 
-depends 'win_aws' 
+depends 'aws' 
 
 recipe "app_iis::default", "Not yet implemented"
 recipe "app_iis::do_svn_code_checkout", "Retrieves code from SVN."
-recipe "app_iis::setup_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
+recipe "app_iis::start_default_website", "Starts the website named 'Default Web Site' if it is not already running" 
 
  
 attribute "svn/repo_path",

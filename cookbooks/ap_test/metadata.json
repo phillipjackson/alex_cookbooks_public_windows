@@ -1,50 +1,45 @@
 {
-  "replacing": {
+    "recipes": {
+      "ap_test::dump_input": "Dumpes an input to c:dump_input.txt",
+      "ap_test::default": "Not yet implemented",
+      "ap_test::ps1_exec": "Executes a powershell script"
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.0.1",
+    "maintainer": "RightScale, Inc.",
+    "long_description": "= DESCRIPTION:\n\nTest recipes\n\n= REQUIREMENTS:\n\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.",
+    "description": "Windows Admin",
+    "suggestions": {
+    },
+    "maintainer_email": "support@rightscale.com",
+    "name": "ap_test",
+    "conflicting": {
+    },
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "platforms": {
+    },
+    "attributes": {
+      "dump/input": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
 
-  },
-  "long_description": "= DESCRIPTION:\n\nTest recipes\n\n= ATTRIBUTES: \n\nSee metadata.rb\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate \n",
-  "recipes": {
-    "ap_test": "",
-    "ap_test::default": "Not yet implemented",
-    "ap_test::ps1_exec": "Executes a powershell script",
-	"ap_test::dump_input": "Dumpes an input to c:\dump_input.txt"
-  },
-  "description": "Test recipes",
-  "maintainer": "RightScale, Inc.",
-  "recommendations": {
-
-  },
-  "name": "ap_test",
-  "version": "0.0.2",
-  "maintainer_email": "alex@rightscale.com",
-  "suggestions": {
-
-  },
-  "platforms": {
-
-  },
-  "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n",
-  "conflicting": {
-
-  },
-  "dependencies": {
-
-  },
-  "attributes": {
-  "dump\/input": {
-      "type": "string",
-      "multiple_values": false,
-      "description": "Input to dump",
-      "display_name": "Input to dump",
-      "required": true,
-      "recipes": [
-        "ap_test::dump_input"
-      ]
+        ],
+        "description": "Input to dump",
+        "display_name": "Input to dump",
+        "recipes": [
+          "ap_test::dump_input"
+        ],
+        "required": "optional"
+      }
+    },
+    "replacing": {
     }
-    
-  },
-  "providing": {
-  "ap_test::dump_input": [
-    ]
   }
-}

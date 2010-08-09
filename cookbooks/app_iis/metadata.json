@@ -1,8 +1,8 @@
 {
     "recipes": {
       "app_iis::default": "Not yet implemented",
-      "app_iis::do_svn_code_checkout": "Retrieves code from SVN.",
-      "app_iis::setup_default_website": "Starts the website named 'Default Web Site' if it is not already running"
+      "app_iis::start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
+      "app_iis::do_svn_code_checkout": "Retrieves code from SVN."
     },
     "groupings": {
     },
@@ -22,7 +22,7 @@
     "providing": {
     },
     "dependencies": {
-      "win_aws": [
+      "aws": [
 
       ]
     },
