@@ -94,7 +94,8 @@ if (!$?)
 	exit 138
 }
 
-schtasks.exe /Query /TN $name
+#/Query /TN avail only on 2008
+#schtasks.exe /Query /TN $name
 
 
 
