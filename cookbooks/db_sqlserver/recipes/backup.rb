@@ -1,3 +1,6 @@
+# Cookbook Name:: db_sqlserver
+# Recipe:: backup_to_s3
+#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,7 +22,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# loads the demo database from cookbook-relative backup file.
+# Backup database 
 db_sqlserver_database @node[:db_sqlserver][:database_name] do
   machine_type = @node[:kernel][:machine]
 

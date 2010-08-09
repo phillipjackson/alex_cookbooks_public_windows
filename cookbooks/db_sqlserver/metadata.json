@@ -1,18 +1,18 @@
 {
     "recipes": {
-      "db_sqlserver::do_drop_database": "Drops a database.",
+      "db_sqlserver::restore": "Restores database from a local machine directory.",
+      "db_sqlserver::backup_to_s3": "Backs up database to S3.",
       "db_sqlserver::enable_sql_express_service": "Enables the SQL Express service if disabled",
-      "db_sqlserver::do_backup_database_to_s3": "Backs up a database to a local machine directory.",
-      "db_sqlserver::do_restore_database": "Restores a database from a local machine directory.",
-      "db_sqlserver::default": "Not yet implemented.",
-      "db_sqlserver::do_backup_database": "Backs up a database to a local machine directory.",
-      "db_sqlserver::do_import_sql_dump_from_s3": "Downloads an sql dump from an s3 bucket and imports it into the database."
+      "db_sqlserver::default": "Sets up default user.",
+      "db_sqlserver::backup": "Backs up database to a local machine directory.",
+      "db_sqlserver::import_dump_from_s3": "Downloads SQL dump from S3 bucket and imports it into database.",
+      "db_sqlserver::drop": "Drops a database."
     },
     "groupings": {
     },
     "recommendations": {
     },
-    "version": "0.3.6",
+    "version": "0.3.7",
     "maintainer": "RightScale, Inc.",
     "long_description": "= DESCRIPTION:\n\nMSSQL Recipes and Providers\n\n= REQUIREMENTS:\n\n\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\n",
     "description": "MSSQL Recipes and Providers",
@@ -39,7 +39,7 @@
         "description": "The name of the S3 bucket",
         "display_name": "Bucket to store backups",
         "recipes": [
-          "db_sqlserver::do_backup_database_to_s3"
+          "db_sqlserver::backup_to_s3"
         ],
         "required": "required"
       },
@@ -53,10 +53,10 @@
         "description": "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
         "display_name": "Pattern matching backup file names",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database",
-          "db_sqlserver::do_backup_database_to_s3",
-          "db_sqlserver::do_restore_database"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup",
+          "db_sqlserver::backup_to_s3",
+          "db_sqlserver::restore"
         ],
         "required": "optional"
       },
@@ -70,10 +70,10 @@
         "description": "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp.",
         "display_name": "Backup file name format",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database",
-          "db_sqlserver::do_backup_database_to_s3",
-          "db_sqlserver::do_restore_database"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup",
+          "db_sqlserver::backup_to_s3",
+          "db_sqlserver::restore"
         ],
         "required": "optional"
       },
@@ -86,11 +86,11 @@
         "description": "The network name of the SQL Server instance used by recipes.",
         "display_name": "SQL Server instance network name",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database",
-          "db_sqlserver::do_backup_database_to_s3",
-          "db_sqlserver::do_restore_database",
-          "db_sqlserver::do_drop_database"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup",
+          "db_sqlserver::backup_to_s3",
+          "db_sqlserver::restore",
+          "db_sqlserver::drop"
         ],
         "required": "required"
       },
@@ -103,8 +103,8 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
         "display_name": "Access Key Id",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database_to_s3"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup_to_s3"
         ],
         "required": "required"
       },
@@ -117,7 +117,7 @@
         "description": "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
         "display_name": "Sql dump file",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3"
+          "db_sqlserver::import_dump_from_s3"
         ],
         "required": "required"
       },
@@ -130,8 +130,8 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
         "display_name": "Secret Access Key",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database_to_s3"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup_to_s3"
         ],
         "required": "required"
       },
@@ -144,11 +144,11 @@
         "description": "SQL Server database(schema) name. Ex: production",
         "display_name": "SQL Server database name",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3",
-          "db_sqlserver::do_backup_database",
-          "db_sqlserver::do_backup_database_to_s3",
-          "db_sqlserver::do_restore_database",
-          "db_sqlserver::do_drop_database"
+          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::backup",
+          "db_sqlserver::backup_to_s3",
+          "db_sqlserver::restore",
+          "db_sqlserver::drop"
         ],
         "required": "required"
       },
@@ -162,9 +162,9 @@
         "description": "The local drive path or UNC path to the directory which will contain new SQL Server database backup (.bak) files. Note that network drives are not supported by SQL Server.",
         "display_name": "SQL Server backup .bak directory",
         "recipes": [
-          "db_sqlserver::do_backup_database",
-          "db_sqlserver::do_backup_database_to_s3",
-          "db_sqlserver::do_restore_database"
+          "db_sqlserver::backup",
+          "db_sqlserver::backup_to_s3",
+          "db_sqlserver::restore"
         ],
         "required": "optional"
       },
@@ -177,7 +177,7 @@
         "description": "The name of the S3 bucket",
         "display_name": "Bucket for sql dump",
         "recipes": [
-          "db_sqlserver::do_import_sql_dump_from_s3"
+          "db_sqlserver::import_dump_from_s3"
         ],
         "required": "required"
       }

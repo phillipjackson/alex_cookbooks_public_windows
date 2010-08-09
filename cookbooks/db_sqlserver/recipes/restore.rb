@@ -1,3 +1,6 @@
+# Cookbook Name:: db_sqlserver
+# Recipe:: restore
+#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,8 +22,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Drop a database.
+# Restore database
 db_sqlserver_database @node[:db_sqlserver][:database_name] do
+  machine_type = @node[:kernel][:machine]
+
+  backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
+  existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
   server_name @node[:db_sqlserver][:server_name]
-  action :drop
+  force_restore false
+
+  action :restore
 end

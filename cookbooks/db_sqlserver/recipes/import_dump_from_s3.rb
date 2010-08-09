@@ -1,3 +1,6 @@
+# Cookbook Name:: db_sqlserver
+# Recipe:: import_dump_from_s3
+#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -23,7 +26,7 @@ if (@node[:boot_run])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
   # download the sql dump
-  aws_s3 "download mssql dump from bucket" do
+  aws_s3 "Download SqlServer dump from S3 bucket" do
     access_key_id @node[:aws][:access_key_id]
     secret_access_key @node[:aws][:secret_access_key]
     s3_bucket @node[:s3][:bucket_dump]
@@ -55,14 +58,6 @@ POWERSHELL_SCRIPT
     server_name @node[:db_sqlserver][:server_name]
     script_path "c:/tmp/"+sql_dump
     action :run_script
-  end
-
-  db_sqlserver_database @node[:db_sqlserver][:database_name] do
-    server_name @node[:db_sqlserver][:server_name]
-    commands ["CREATE USER [NetworkService] FOR LOGIN [NT AUTHORITY\\NETWORK SERVICE]",
-              "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",
-              "EXEC sp_addrolemember 'db_datawriter', 'NetworkService'"]
-    action :run_command
   end
 
   @node[:boot_run] = true

@@ -1,3 +1,6 @@
+# Cookbook Name:: db_sqlserver
+# Recipe:: backup_to_s3
+#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,14 +22,25 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# loads the demo database from cookbook-relative backup file.
+# backs up the database
 db_sqlserver_database @node[:db_sqlserver][:database_name] do
   machine_type = @node[:kernel][:machine]
-
   backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
+  backup_file_name_format @node[:db_sqlserver][:backup][:backup_file_name_format]
   existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
   server_name @node[:db_sqlserver][:server_name]
   force_restore false
+  zip_backup true
+  delete_sql_after_zip false
+  action :backup
+end
 
-  action :restore
+# upload backup to s3
+aws_s3 "upload the latest backup to the s3 bucket" do
+  access_key_id @node[:aws][:access_key_id]
+  secret_access_key @node[:aws][:secret_access_key]
+  s3_bucket @node[:s3][:bucket_backups]
+  # when file_path is a directory, the latest file in the directory will be uploaded
+  file_path @node[:db_sqlserver][:backup][:database_backup_dir]
+  action :put
 end
