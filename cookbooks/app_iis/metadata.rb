@@ -8,7 +8,7 @@ version          "0.0.4"
 depends 'aws'
 
 recipe "app_iis::default", "Calls app_iis::update_code"
-recipe "app_iis::update_code", "Retrieves code from SVN then sets up website."
+recipe "app_iis::update_code_svn", "Retrieves code from SVN then sets up website."
 recipe "app_iis::start_default_website", "Starts the website named 'Default Web Site' if it is not already running"
 
 

@@ -1,5 +1,5 @@
 # Cookbook Name:: app_iis
-# Recipe:: update_code 
+# Recipe:: update_code_svn
 #
 # Copyright (c) 2010 RightScale Inc
 #

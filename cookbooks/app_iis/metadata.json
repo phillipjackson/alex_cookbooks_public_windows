@@ -2,7 +2,7 @@
     "recipes": {
       "app_iis::default": "Calls app_iis::update_code",
       "app_iis::start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
-      "app_iis::update_code": "Retrieves code from SVN then sets up website."
+      "app_iis::update_code_svn": "Retrieves code from SVN then sets up website."
     },
     "groupings": {
     },
