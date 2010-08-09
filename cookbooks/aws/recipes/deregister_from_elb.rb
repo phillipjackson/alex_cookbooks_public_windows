@@ -1,5 +1,5 @@
 # Cookbook Name:: aws
-# Recipe:: do_deregister_instance_from_elb
+# Recipe:: deregister_from_elb
 #
 # Copyright 2010, RightScale, Inc.
 #

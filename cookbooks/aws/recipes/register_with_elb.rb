@@ -1,5 +1,5 @@
 # Cookbook Name:: aws
-# Recipe:: do_register_instance_with_elb
+# Recipe:: register_with_elb
 #
 # Copyright 2010, RightScale, Inc.
 #

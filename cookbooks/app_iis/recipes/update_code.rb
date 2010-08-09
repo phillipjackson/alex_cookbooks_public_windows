@@ -1,5 +1,5 @@
 # Cookbook Name:: app_iis
-# Recipe:: do_svn_code_checkout 
+# Recipe:: update_code 
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -21,21 +21,13 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-case @node[:svn][:force_checkout]
-  when "true"
-    forceCheckout = true
-  when "false"
-    forceCheckout = false
-end
-
   
-# checkout code on first run, then update
+# Checkout code in c:\inetpub\releases
 code_checkout_svn @node[:svn][:repo_path] do
   releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]
-  force_checkout forceCheckout
+  force_checkout @node[:svn][:force_checkout] == 'true'
   action :checkout
 end
 
@@ -55,7 +47,7 @@ powershell "Change IIS physical path for Default Website" do
       }
       else
       {
-        Write-Output "***APPCMD.EXE is missing, probably 2003 image. Trying ADSI" 
+        Write-Output "APPCMD.EXE is missing, probably 2003 image. Trying ADSI" 
         
         $siteName = "Default Web Site"
         $iis = [ADSI]"IIS://localhost/W3SVC"
@@ -69,7 +61,7 @@ powershell "Change IIS physical path for Default Website" do
   }
   else
   {
-    Write-Error "***Error: Invalid physical path [$checkoutpath]" 
+    Write-Error "Error: Invalid physical path [$checkoutpath]" 
     exit 135
   }
 POWERSHELL_SCRIPT

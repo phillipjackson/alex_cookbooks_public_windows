@@ -68,10 +68,7 @@ if (!(Test-Path $downloadDir))
 $targetpath = join-path ($downloadDir) $s3File
 Write-output "***Downloading key[$s3File] from bucket[$s3Bucket] to [$targetpath]"
 
-#w32tm.exe /monitor /computers:"time.windows.com,pool.ntp.org"
-#w32tm.exe /resync
-
-$get_request = New-Object –TypeName Amazon.S3.Model.GetObjectRequest
+$get_request = New-Object -TypeName Amazon.S3.Model.GetObjectRequest
 $get_request.BucketName = $s3Bucket
 $get_request.key = $s3File
 

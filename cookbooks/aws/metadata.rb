@@ -7,8 +7,8 @@ version          "0.1.5"
 
 
 recipe "aws::default", "Install Amazon Web Services SDK for .NET"
-recipe "aws::do_register_instance_with_elb", "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'aws::default'"
-recipe "aws::do_deregister_instance_from_elb", "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'aws::default'"
+recipe "aws::register_with_elb", "Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'aws::default'"
+recipe "aws::deregister_from_elb", "Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'aws::default'"
 recipe "aws::download", "Retrieves a file from an S3 bucket"
 recipe "aws::upload", "Uploads a file to an S3 bucket"
 
@@ -16,19 +16,19 @@ recipe "aws::upload", "Uploads a file to an S3 bucket"
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
-  :recipes => ["aws::do_register_instance_with_elb", "aws::do_deregister_instance_from_elb", "aws::download", "aws::upload"],
+  :recipes => ["aws::register_with_elb", "aws::deregister_from_elb", "aws::download", "aws::upload"],
   :required => "required"
   
 attribute "aws/secret_access_key",
   :display_name => "Secret Access Key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
-  :recipes => ["aws::do_register_instance_with_elb", "aws::do_deregister_instance_from_elb", "aws::download", "aws::upload"],
+  :recipes => ["aws::register_with_elb", "aws::deregister_from_elb", "aws::download", "aws::upload"],
   :required => "required"
   
 attribute "aws/elb_name",
   :display_name => "ELB Name",
   :description => "The name of the Elastic Load Balancer to register/deregister the instance with. (e.g., production-elb). The ELB needs to be created and configured prior to the execution of the recipe.",
-  :recipes => ["aws::do_register_instance_with_elb", "aws::do_deregister_instance_from_elb"],
+  :recipes => ["aws::register_with_elb", "aws::deregister_from_elb"],
   :required => "required"
 
 attribute "aws/file_path",

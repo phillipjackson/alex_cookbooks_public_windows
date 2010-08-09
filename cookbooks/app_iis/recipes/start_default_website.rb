@@ -1,5 +1,5 @@
 # Cookbook Name:: app_iis
-# Recipe:: setup_default_website
+# Recipe:: start_default_website
 #
 # Copyright 2010, RightScale, Inc.
 #
@@ -19,7 +19,7 @@
       }
       else
       {
-          Write-Output "***APPCMD.EXE is missing on 2003 image, but Default Web Site is starting by default at boot time" 
+          Write-Output "APPCMD.EXE is missing on 2003 image, but Default Web Site is starting by default at boot time" 
       }
       EOF
 
