@@ -36,7 +36,7 @@
         "choice": [
 
         ],
-        "description": "The name of the S3 bucket",
+        "description": "The name of the S3 bucket. Ex: production-bucket-backup",
         "display_name": "Bucket to store backups",
         "recipes": [
           "db_sqlserver::backup_to_s3"
@@ -83,7 +83,7 @@
         "choice": [
 
         ],
-        "description": "The network name of the SQL Server instance used by recipes.",
+        "description": "The network name of the SQL Server instance used by recipes. Ex: localhostSQLEXPRESS",
         "display_name": "SQL Server instance network name",
         "recipes": [
           "db_sqlserver::import_dump_from_s3",
@@ -174,7 +174,7 @@
         "choice": [
 
         ],
-        "description": "The name of the S3 bucket",
+        "description": "The name of the S3 bucket. Ex: production-bucket-dumps",
         "display_name": "Bucket for sql dump",
         "recipes": [
           "db_sqlserver::import_dump_from_s3"

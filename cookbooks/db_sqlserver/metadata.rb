@@ -17,7 +17,7 @@ recipe "db_sqlserver::enable_sql_express_service", "Enables the SQL Express serv
 
 attribute "db_sqlserver/server_name",
   :display_name => "SQL Server instance network name",
-  :description => "The network name of the SQL Server instance used by recipes.",
+  :description => "The network name of the SQL Server instance used by recipes. Ex: localhost\SQLEXPRESS",
   :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
   :required => "required"
 
@@ -53,13 +53,13 @@ attribute "s3/file",
 
 attribute "s3/bucket_dump",
   :display_name => "Bucket for sql dump",
-  :description => "The name of the S3 bucket",
+  :description => "The name of the S3 bucket. Ex: production-bucket-dumps",
   :recipes => ["db_sqlserver::import_dump_from_s3"],
   :required => "required"
   
 attribute "s3/bucket_backups",
   :display_name => "Bucket to store backups",
-  :description => "The name of the S3 bucket",
+  :description => "The name of the S3 bucket. Ex: production-bucket-backup",
   :recipes => ["db_sqlserver::backup_to_s3"],
   :required => "required"
   

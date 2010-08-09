@@ -34,7 +34,7 @@ code_checkout_svn @node[:svn][:repo_path] do
   releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]
-  force_checkout @node[:svn][:force_checkout] == 'true'
+  force_checkout forceCheckout
   action :checkout
 end
 
