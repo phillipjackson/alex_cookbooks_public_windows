@@ -31,12 +31,12 @@ $releasesPath = Get-NewResource releases_path
 $Error.Clear()
 if (($svnPath -eq $NULL) -or ($svnPath -eq ""))
 {
-	Write-Error "***Error: provider requires a 'name' parameter to be set! Ex: 'http://example.com/svn/trunk'"
+	Write-Error "Error: provider requires a 'name' parameter to be set! Ex: 'http://example.com/svn/trunk'"
 	exit 131
 }
 if (($releasesPath -eq $NULL) -or ($releasesPath -eq ""))
 {
-	Write-Error "***Error: provider requires 'root_path' parameter to be set! Ex: 'c:\\inetpub'"
+	Write-Error "Error: provider requires 'root_path' parameter to be set! Ex: 'c:\\inetpub'"
 	exit 132
 }
 
@@ -55,42 +55,42 @@ $ErrorActionPreference = "stop"
 $releasesPath = Join-Path $releasesPath ""
 
 if (!(Test-Path $releasesPath)) {
-	Write-Output "*** Creating directory: $releasesPath"
+	Write-Output "Creating directory: $releasesPath"
 	New-Item $releasesPath -type directory 
 }
 
 $deploy_date = $(get-date -uformat "%Y%m%d%H%M%S")
 $deploy_path = Join-Path $releasesPath $deploy_date
 
-Write-Output "*** Creating new releases directory [$deploy_path]"
+Write-Output "Creating new releases directory [$deploy_path]"
 
 $latest_release=Get-ChildItem $releasesPath | Sort-Object Name -descending | Select-Object Name | Select-Object -first 1
 if (($latest_release -eq $null) -or ($forceCheckout -eq "true"))
 {
 	New-Item $deploy_path -type directory 
-	Write-Output "*** SVN checkout in [$deploy_path]"
+	Write-Output "SVN checkout in [$deploy_path]"
 }
 else
 {
 	$latest_release = Join-Path $releasesPath $latest_release.Name
 
-	Write-Output "*** xcopy from [$latest_release] to [$deploy_path]"
+	Write-Output "xcopy from [$latest_release] to [$deploy_path]"
    
 	xcopy $latest_release $deploy_path /E /I /Q /H /K /Y
 
 	if ($LastExitCode -eq 0)
 	{
-		Write-Output "*** SVN update in [$deploy_path]"
+		Write-Output "SVN update in [$deploy_path]"
 	}
 	else
 	{
-		Write-Warning "*** xcopy failed, proceeding with a full checkout in [$deploy_path]"
+		Write-Warning "xcopy failed, proceeding with a full checkout in [$deploy_path]"
 		if (Test-Path $deploy_path)
 		{
-			Write-Output "*** Deleting directory [$deploy_path]"
+			Write-Output "Deleting directory [$deploy_path]"
 			Remove-Item $deploy_path -r -force
 		}
-		Write-Output "*** Creating new releases directory [$deploy_path]"
+		Write-Output "Creating new releases directory [$deploy_path]"
 		New-Item $deploy_path -type directory 
 	} 
 }
@@ -99,7 +99,7 @@ svn.cmd --quiet --non-interactive --no-auth-cache --username `"$svnUsername`" --
 
 if ($LastExitCode -ne 0)
 { 
-	Write-Error "***Error: SVN checkout failed" 
+	Write-Error "Error: SVN checkout failed" 
 	exit 133
 }
 else

@@ -1,13 +1,9 @@
 = DESCRIPTION:
 
-Providers and recipes for code checkout
+Providers for code checkout
 
 = REQUIREMENTS:
 
-
-= ATTRIBUTES: 
-
-See metadata.rb
 
 = USAGE:
 

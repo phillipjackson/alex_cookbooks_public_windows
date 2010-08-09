@@ -1,11 +1,8 @@
 = DESCRIPTION:
 
-Amazon Web Services recipes and providers for Windows
+Aws recipes and providers.
 
-= REQUIREMENTS:
-
-
-= ATTRIBUTES: 
+= ATTRIBUTES:
 
 See metadata.rb
 
@@ -13,24 +10,9 @@ See metadata.rb
 
 Designed to be run within a RightScale ServerTemplate
 
-Examples for the providers:
+Boot Scripts
+* install_dotnet_sdk - Install Amazon Web Services SDK for .NET
+* register_with_elb - Register the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'
 
-# download a a file from S3 using the :get provider
-
-  win_aws_s3 "downloadmyfile" do
-    access_key_id @node[:aws][:access_key_id]
-    secret_access_key @node[:aws][:secret_access_key]
-    s3_bucket "my-eu-bucket"
-    s3_file "myfile.txt"
-    download_dir 'c:'
-    action :get
-  end
-
-# register instance with elb
-
-  win_aws_elb "register instance provider call" do
-    access_key_id @node[:aws][:access_key_id]
-    secret_access_key @node[:aws][:secret_access_key]
-    elb_name "production-elb"
-    action :register
-  end
+Decommission Scripts
+* deregister_from_elb - Deregister the instance with an Elastic Load Balancer created in the same ec2 region. Requires recipe: 'win_aws::install_dotnet_sdk'

@@ -1,5 +1,5 @@
 # Cookbook Name:: win_aws
-# Recipe:: get_file
+# Recipe:: download
 #
 # Copyright 2010, RightScale, Inc.
 #
