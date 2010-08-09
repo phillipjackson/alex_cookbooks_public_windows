@@ -2,10 +2,7 @@
 
 Windows admin recipes.
 
-= REQUIREMENTS:
-
-
-= ATTRIBUTES: 
+= ATTRIBUTES:
 
 See metadata.rb
 

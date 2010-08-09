@@ -35,22 +35,22 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: 'name' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    Write-Error "***Error: 'name' is a required attribute for the 'scheduled_tasks' provider. Aborting..."
     exit 131
 }
 if (($username -eq $NULL) -or ($username -eq ""))
 {
-    Write-Error "***Error: 'username' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    Write-Error "***Error: 'username' is a required attribute for the 'scheduled_tasks' provider. Aborting..."
     exit 132
 }
 if (($password -eq $NULL) -or ($password -eq ""))
 {
-    Write-Error "***Error: 'password' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    Write-Error "***Error: 'password' is a required attribute for the 'scheduled_tasks' provider. Aborting..."
     exit 133
 }
 if (($hourlyFrequency -eq $NULL) -or ($hourlyFrequency -eq ""))
 {
-    Write-Error "***Error: 'hourly_frequency' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    Write-Error "***Error: 'hourly_frequency' is a required attribute for the 'scheduled_tasks' provider. Aborting..."
     exit 134
 }
 
@@ -62,15 +62,15 @@ $hourlyFrequency=[int]$hourlyFrequency
 
 if ((($dailyTime -eq $NULL) -or ($dailyTime -eq "")) -and ($hourly_frequency -eq 24))
 {
-    Write-Error "***Error: 'daily_time' is a required attribute for the 'windows_scheduled_tasks' provider when 'hourly_frequency=24'. Aborting..."
+    Write-Error "***Error: 'daily_time' is a required attribute for the 'scheduled_tasks' provider when 'hourly_frequency=24'. Aborting..."
     exit 135
 }
 
- 
+
 if ($hourlyFrequency -ge 1 -and $hourlyFrequency -le 23)
 {
   Write-Output "*** Setting task name [$name] with hourly frequency [$hourlyFrequency]"
-  schtasks.exe /Create /F /SC HOURLY /MO $hourlyFrequency /RU $username /RP $password /TN $name /TR "$command"  
+  schtasks.exe /Create /F /SC HOURLY /MO $hourlyFrequency /RU $username /RP $password /TN $name /TR "$command"
 }
 elseif ($hourlyFrequency -eq 24)
 {
@@ -94,7 +94,7 @@ if (!$?)
 	exit 138
 }
 
-#/Query /TN avail only on 2008
+#/Query /TN available only in 2008
 #schtasks.exe /Query /TN $name
 
 

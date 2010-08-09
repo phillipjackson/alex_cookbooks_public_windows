@@ -1,5 +1,5 @@
 # Cookbook Name:: utilities
-# Recipe:: do_system_reboot
+# Recipe:: system_reboot
 #
 # Copyright 2010, RightScale, Inc.
 #

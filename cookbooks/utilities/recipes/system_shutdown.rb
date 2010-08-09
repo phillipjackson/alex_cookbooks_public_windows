@@ -1,5 +1,5 @@
 # Cookbook Name:: utilities
-# Recipe:: do_system_shutdown
+# Recipe:: system_shutdown
 #
 # Copyright 2010, RightScale, Inc.
 #
