@@ -1,6 +1,6 @@
 {
     "recipes": {
-      "app_iis::default": "Calls app_iis::update_code",
+      "app_iis::default": "Calls app_iis::update_code_svn",
       "app_iis::start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
       "app_iis::update_code_svn": "Retrieves code from SVN then sets up website."
     },
@@ -39,7 +39,7 @@
         "description": "A value of 'false' will attempt an svn update where 'true' will do a full checkout",
         "display_name": "SVN Force Checkout",
         "recipes": [
-          "app_iis::update_code"
+          "app_iis::update_code_svn"
         ],
         "required": "required"
       },
@@ -53,7 +53,7 @@
         "description": "The SVN password that is used to checkout the application code from SVN repository.",
         "display_name": "SVN Password",
         "recipes": [
-          "app_iis::update_code"
+          "app_iis::update_code_svn"
         ],
         "required": "optional"
       },
@@ -67,7 +67,7 @@
         "description": "The SVN username that is used to checkout the application code from SVN repository",
         "display_name": "SVN Username",
         "recipes": [
-          "app_iis::update_code"
+          "app_iis::update_code_svn"
         ],
         "required": "optional"
       },
@@ -80,7 +80,7 @@
         "description": "The URL of your SVN repository where your application code will be checked out from.  Ex: http://mysvn.net/app/",
         "display_name": "SVN Repo Path",
         "recipes": [
-          "app_iis::update_code"
+          "app_iis::update_code_svn"
         ],
         "required": "required"
       }

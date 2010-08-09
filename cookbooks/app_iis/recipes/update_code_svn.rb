@@ -22,19 +22,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-case @node[:svn][:force_checkout]
-  when "true"
-    forceCheckout = true
-  when "false"
-    forceCheckout = false
-end
-
 # Checkout code in c:\inetpub\releases
 code_checkout_svn @node[:svn][:repo_path] do
   releases_path "c:/inetpub/releases"
   svn_username @node[:svn][:username]
   svn_password @node[:svn][:password]
-  force_checkout forceCheckout
+  force_checkout @node[:svn][:force_checkout] == 'true'
   action :checkout
 end
 

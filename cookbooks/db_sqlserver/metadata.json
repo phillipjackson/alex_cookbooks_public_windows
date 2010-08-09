@@ -83,7 +83,7 @@
         "choice": [
 
         ],
-        "description": "The network name of the SQL Server instance used by recipes. Ex: localhostSQLEXPRESS",
+        "description": "The network name of the SQL Server instance used by recipes. Ex: localhost\\SQLEXPRESS",
         "display_name": "SQL Server instance network name",
         "recipes": [
           "db_sqlserver::import_dump_from_s3",
