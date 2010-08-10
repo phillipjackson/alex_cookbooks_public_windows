@@ -29,7 +29,7 @@ $ErrorActionPreference = "Stop"
 $Error.Clear()
 if (($name -eq $NULL) -or ($name -eq ""))
 {
-    Write-Error "***Error: 'name' is a required attribute for the 'windows_scheduled_tasks' provider. Aborting..."
+    Write-Error "Error: 'name' is a required attribute for the 'scheduled_tasks' provider. Aborting..."
     exit 140
 }
 
@@ -40,6 +40,6 @@ schtasks.exe /delete /F /TN $name
 
 if (!$?)
 {
-    Write-Error "***Error: SCHTASKS execution failed."Grid Quickstart Deployment
+    Write-Error "Error: SCHTASKS execution failed."
 	exit 141
 }
