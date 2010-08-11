@@ -12,12 +12,12 @@ recipe "db_sqlserver::backup_to_s3", "Backs up database to S3."
 recipe "db_sqlserver::restore", "Restores database from a local machine directory."
 recipe "db_sqlserver::drop", "Drops a database."
 recipe "db_sqlserver::import_dump_from_s3", 'Downloads SQL dump from S3 bucket and imports it into database.'
-recipe "db_sqlserver::enable_sql_express_service", "Enables the SQL Express service if disabled"
+recipe "db_sqlserver::enable_sql_service", "Enables the SQL Server service if disabled"
 
 
 attribute "db_sqlserver/server_name",
   :display_name => "SQL Server instance network name",
-  :description => "The network name of the SQL Server instance used by recipes. Ex: localhost\\SQLEXPRESS",
+  :description => "The network name of the SQL Server instance used by recipes. Ex: 'localhost\\SQLEXPRESS' for SQL EXPRESS or 'localhost' for SQL STANDARD",
   :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
   :required => "required"
 

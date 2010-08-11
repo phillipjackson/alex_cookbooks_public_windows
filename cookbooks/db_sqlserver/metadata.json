@@ -2,7 +2,7 @@
     "recipes": {
       "db_sqlserver::restore": "Restores database from a local machine directory.",
       "db_sqlserver::backup_to_s3": "Backs up database to S3.",
-      "db_sqlserver::enable_sql_express_service": "Enables the SQL Express service if disabled",
+      "db_sqlserver::enable_sql_service": "Enables the SQL Server service if disabled",
       "db_sqlserver::default": "Sets up default user.",
       "db_sqlserver::backup": "Backs up database to a local machine directory.",
       "db_sqlserver::import_dump_from_s3": "Downloads SQL dump from S3 bucket and imports it into database.",
@@ -22,7 +22,7 @@
     "name": "db_sqlserver",
     "conflicting": {
     },
-    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved - Do Not Redistribute\n\n\n",
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved - Do Not Redistribute\n",
     "providing": {
     },
     "dependencies": {
@@ -83,7 +83,7 @@
         "choice": [
 
         ],
-        "description": "The network name of the SQL Server instance used by recipes. Ex: localhost\\SQLEXPRESS",
+        "description": "The network name of the SQL Server instance used by recipes. Ex: 'localhost\\SQLEXPRESS' for SQL EXPRESS or 'localhost' for SQL STANDARD",
         "display_name": "SQL Server instance network name",
         "recipes": [
           "db_sqlserver::import_dump_from_s3",
