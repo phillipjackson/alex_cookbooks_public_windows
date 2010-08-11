@@ -1,5 +1,5 @@
 # Cookbook Name:: utilities
-# Recipe:: scheduled_task_create
+# Recipe:: delete_scheduled_task
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -22,12 +22,13 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# create a scheduled the task
+# Delete the scheduled task
 utilities_scheduled_tasks "rs_scheduled_task" do
-  username "administrator"
-  password @node[:utilities][:admin_password]
-  command @node[:schtasks][:command]
-  hourly_frequency @node[:schtasks][:hourly_frequency]
-  daily_time @node[:schtasks][:daily_time]
-  action :create
+  action :delete
 end
+
+
+
+
+
+

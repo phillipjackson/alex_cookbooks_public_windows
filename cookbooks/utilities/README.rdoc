@@ -1,6 +1,6 @@
 = DESCRIPTION:
 
-Windows admin recipes.
+Windows utilities recipes.
 
 = ATTRIBUTES:
 
