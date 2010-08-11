@@ -1,5 +1,5 @@
 # Cookbook Name:: app_iis
-# Recipe:: update_code_svn
+# Recipe:: update_code_s3
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -22,28 +22,38 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Checkout code in c:\inetpub\releases
-code_checkout_svn @node[:svn][:repo_path] do
-  releases_path "c:/inetpub/releases"
-  svn_username @node[:svn][:username]
-  svn_password @node[:svn][:password]
-  force_checkout @node[:svn][:force_checkout] == 'true'
-  action :checkout
+# download the sql dump
+aws_s3 "Download code from S3 bucket" do
+  access_key_id @node[:aws][:access_key_id]
+  secret_access_key @node[:aws][:secret_access_key]
+  s3_bucket @node[:s3][:application_code_bucket]
+  s3_file @node[:s3][:application_code_package]
+  download_dir "c:/tmp"
+  action :get
 end
+
+
+# Unzip code in c:\inetpub\releases
+code_checkout_zip "Unzipping code in the releases directory" do
+  releases_path "c:/inetpub/releases"
+  zip_path "c:/tmp/"+@node[:s3][:application_code_package]
+  action :unzip
+end
+
 
 powershell "Change IIS physical path for Default Website" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
-  $checkoutpath=invoke-expression 'Get-ChefNode checkoutpath'
+  $releasesunzippath=invoke-expression 'Get-ChefNode releasesunzippath'
   
-  if (Test-Path $checkoutpath -PathType Container)
+  if (Test-Path $releasesunzippath -PathType Container)
   {
   
       # change the physicalPath for the IIS site
       $appcmd_path = $env:systemroot + "\\system32\\inetsrv\\APPCMD.exe"
       if (Test-Path $appcmd_path)
       {
-        &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$checkoutpath"
+        &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$releasesunzippath"
       }
       else
       {
@@ -53,7 +63,7 @@ powershell "Change IIS physical path for Default Website" do
         $iis = [ADSI]"IIS://localhost/W3SVC"
         $site = $iis.psbase.children | where { $_.keyType -eq "IIsWebServer" -AND $_.ServerComment -eq $siteName }
         $path = [ADSI]($site.psbase.path+"/ROOT")
-        $path.psbase.properties.path[0] = $checkoutpath
+        $path.psbase.properties.path[0] = $releasesunzippath
         #DefaultDoc cannot be configured in web.config for IIS6
         $path.psbase.properties.DefaultDoc[0]="default.aspx,index.aspx,Default.htm,Default.asp,index.html,index.htm,iisstart.htm,index.php"
         $path.psbase.CommitChanges()
@@ -61,7 +71,7 @@ powershell "Change IIS physical path for Default Website" do
   }
   else
   {
-    Write-Error "Error: Invalid physical path [$checkoutpath]" 
+    Write-Error "Error: Invalid physical path [$releasesunzippath]" 
     exit 135
   }
 POWERSHELL_SCRIPT

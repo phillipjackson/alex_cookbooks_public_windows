@@ -2,7 +2,8 @@
     "recipes": {
       "app_iis::default": "Calls app_iis::update_code_svn",
       "app_iis::start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
-      "app_iis::update_code_svn": "Retrieves code from SVN then sets up website."
+      "app_iis::update_code_svn": "Retrieves code from SVN then sets up website.",
+      "app_iis::update_code_s3": "Retrieves code from s3 then sets up website."
     },
     "groupings": {
     },
@@ -18,7 +19,7 @@
     "name": "app_iis",
     "conflicting": {
     },
-    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved - Do Not Redistribute\n",
     "providing": {
     },
     "dependencies": {
@@ -29,6 +30,32 @@
     "platforms": {
     },
     "attributes": {
+      "s3/application_code_package": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The name of the application package that can be retrieve from the S3 bucket. Ex: productioncode.zip",
+        "display_name": "Application Package",
+        "recipes": [
+          "app_iis::update_code_s3"
+        ],
+        "required": "required"
+      },
+      "s3/application_code_bucket": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The S3 bucket, where the application can be retrieved. Ex: production-code-bucket",
+        "display_name": "Application Bucket",
+        "recipes": [
+          "app_iis::update_code_s3"
+        ],
+        "required": "required"
+      },
       "svn/force_checkout": {
         "calculated": false,
         "type": "string",
@@ -57,6 +84,19 @@
         ],
         "required": "optional"
       },
+      "aws/access_key_id": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
+        "display_name": "Access Key Id",
+        "recipes": [
+          "app_iis::update_code_s3"
+        ],
+        "required": "required"
+      },
       "svn/username": {
         "default": "",
         "calculated": false,
@@ -70,6 +110,19 @@
           "app_iis::update_code_svn"
         ],
         "required": "optional"
+      },
+      "aws/secret_access_key": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
+        "display_name": "Secret Access Key",
+        "recipes": [
+          "app_iis::update_code_s3"
+        ],
+        "required": "required"
       },
       "svn/repo_path": {
         "calculated": false,
