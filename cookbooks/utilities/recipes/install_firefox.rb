@@ -13,8 +13,8 @@ powershell "Installs Mozilla Firefox" do
   powershell_script = <<'POWERSHELL_SCRIPT'
     cd "$env:ATTACHMENTS_PATH"
 
-    $file = "Firefox%20Setup%203.6.exe"
-    $url =  "http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.6/win32/en-US/"+$file
+    $file = "Firefox%20Setup%203.6.6.exe"
+    $url =  "http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.6.6/win32/en-US/"+$file
 
     cmd /c curl --max-time 180 -C - -O $url
 
