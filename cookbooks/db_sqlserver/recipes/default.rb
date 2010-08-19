@@ -26,6 +26,10 @@ if (@node[:boot_run])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
 
+Chef::Log.info("*** @node[:boot_run] was:"+@node[:boot_run])
+@node[:boot_run] = true
+Chef::Log.info("*** @node[:boot_run] is:"+@node[:boot_run])
+
 # Create default user
 db_sqlserver_database @node[:db_sqlserver][:database_name] do
   server_name @node[:db_sqlserver][:server_name]
@@ -35,5 +39,5 @@ db_sqlserver_database @node[:db_sqlserver][:database_name] do
   action :run_command
 end
 
-  @node[:boot_run] = true
+
 end
