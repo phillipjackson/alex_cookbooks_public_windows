@@ -23,7 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 if (@node[:boot_run])
-  Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
+  Chef::Log.info("*** Recipe 'db_sqlserver::import_dump_from_s3' already executed, skipping...")
 else
   # download the sql dump
   aws_s3 "Download SqlServer dump from S3 bucket" do

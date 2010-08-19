@@ -22,6 +22,10 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+if (@node[:boot_run])
+  Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
+else
+
 # Create default user
 db_sqlserver_database @node[:db_sqlserver][:database_name] do
   server_name @node[:db_sqlserver][:server_name]
@@ -29,4 +33,7 @@ db_sqlserver_database @node[:db_sqlserver][:database_name] do
     "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",
     "EXEC sp_addrolemember 'db_datawriter', 'NetworkService'"]
   action :run_command
+end
+
+  @node[:boot_run] = true
 end
