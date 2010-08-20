@@ -45,7 +45,7 @@ else
 
   sql_dump=@node[:s3][:file]
 
-  # unzip the dump file 
+  # unpack the dump file 
   if (@node[:s3][:file] =~ /(.*)\.(zip|7z|gzip|rar)/)
     sql_dump=$1
     Chef::Log.info("*** Unpacking database dump.")
