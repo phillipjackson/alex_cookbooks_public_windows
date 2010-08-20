@@ -1,0 +1,230 @@
+#
+# Copyright (c) 2010 RightScale Inc
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+require 'rubygems'
+require 'rubygems/dependency_installer'
+require 'logger'
+require 'eventmachine'
+require 'fileutils'
+require 'win32ole'
+require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'Sandbox', 'right_link', 'config', 'platform'))
+require File.join(File.dirname(__FILE__), 'lib', 'collectd', 'collectd')
+require File.join(File.dirname(__FILE__), 'lib', 'monitor')
+
+module RightScale
+
+  class WindowsMonitor
+
+    RS_HOST_PORT             = 3011 # RightScale collectd server port
+    SAMPLING_INTERVAL        = 20   # Interval in seconds between two sampling
+    MAX_EXCEPTIONS           = 3    # Maximum number of exceptions before aborting monitoring
+    EXCEPTIONS_EXPIRY        = 60   # Number of seconds after which exceptions counter gets reset
+    SCRIPT_UPDATE_DELAY_SECS = 10   # Number of seconds after which a changed script is reloaded
+
+    TEMP_DIR          = File.join(ENV['TEMP'], 'RightScale')
+    PID_FILE          = File.join(TEMP_DIR, 'monitoring.pid')
+    MONITORS_DIR_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'monitors').gsub("\\", "/"))
+    MONITORS_FILTER   = File.join(MONITORS_DIR_PATH, '*.rb')
+
+    # Check whether monitoring is already running and if not start it
+    def self.start
+      begin
+        if File.exists?(PID_FILE)
+          pid = IO.read(PID_FILE).to_i rescue -1
+          alive = Process.kill(0, pid) && true rescue false
+          return if alive
+          File.delete(PID_FILE)
+        end
+        unless File.exists?(PID_FILE)
+          FileUtils.mkdir_p(TEMP_DIR)
+          File.open(PID_FILE, 'w') { |f| f.print Process.pid }
+          mon = WindowsMonitor.new
+          mon.start
+        end
+      rescue Exception => e
+        File.open(File.join(TEMP_DIR, 'monitoring_errors.log'), 'a') { |f| f.puts "Monitoring plugin failed to start:\n#{e.class}: #{e.message}\n#{e.backtrace.join("\n")}" }
+        puts "Monitoring plugin failed to start:\n#{e.class}: #{e.message}\n#{e.backtrace.join("\n")}"
+        raise e
+      end
+    end
+
+    # Stop monitoring if it's running
+    # Delete pid file, running process will realize it's gone and exit
+    def self.stop
+      File.delete(PID_FILE) if File.exists?(PID_FILE)
+      sleep 1
+    end
+
+    # Start monitoring, do nothing if already monitoring
+    #
+    # === Return
+    # Does not return unless more than MAX_EXCEPTIONS exception get raised in
+    # less than EXCEPTIONS_EXPIRY seconds
+    #
+    # === Raise
+    # Exception:: If user data is missing
+    def start
+      unless EM.reactor_running?
+        @wmi = WIN32OLE.connect('winmgmts://')
+        @iteration = 0
+        log_file = File.join(TEMP_DIR, 'monitoring.log')
+        @logger = Logger.new(log_file)
+        @logger.level = Logger::INFO
+        require File.join(RightScale::Platform.filesystem.spool_dir, 'ec2', 'user-data')
+
+        # create collectd connection to our server.
+        @collectd = Collectd.new(server = ENV['RS_SKETCHY'],
+                                 port = RS_HOST_PORT,
+                                 host = '<%= @node[:rightscale][:instance_uuid] %>',
+                                 interval = SAMPLING_INTERVAL)
+
+        initialize_monitors
+
+        @logger.info('Windows monitoring starting')
+        EM.run do
+          EM.add_periodic_timer(0.5) { stop unless File.exists?(PID_FILE) }
+          EM.add_wall_clock_periodic_timer(SAMPLING_INTERVAL) do
+            run_once
+          end
+        end
+        @logger.info('Windows monitoring stopping')
+      end
+      true
+    end
+
+    # Stop monitoring, do nothing if not monitoring
+    #
+    # === Return
+    # true:: Always return true
+    def stop
+      EM.stop if EM.reactor_running?
+      true
+    end
+
+    protected
+
+    # Single monitoring iteration
+    #
+    # === Return
+    # true:: Always return true
+    def run_once
+      @iteration += 1
+
+      @now_time = Time.now.to_i
+      @collectd.start(@now_time)
+
+      @priority_queue.each do |prioritized_queue|
+        prioritized_queue.each do |monitor|
+          begin
+            @logger.debug("monitor.name = #{monitor.name}")
+            monitor.run_script({:iteration=>@iteration, :now_time=>@now_time})
+          rescue Exception => e
+            handle_exception(monitor.name, e)
+          end
+        end
+      end
+
+      # flush and send
+      @collectd.flush
+
+      # reinitialize after each send to pick up any script changes.
+      initialize_monitors
+    end
+
+    # Create a monitor for each file in the monitors directory. Supports
+    # periodic reinitialzation to handle changing or (dis)appearing scripts.
+    #
+    # === Return
+    # true:: Always return true
+    def initialize_monitors
+      @monitors = {} unless @monitors
+      latest_monitors = {}
+      Dir[MONITORS_FILTER].each do |rb_file|
+        # use script name to uniquely identify monitor.
+        monitor_name = File.basename(rb_file, ".rb")
+
+        # use instance evaluation to load monitor from script.
+        now_time = Time.now
+        File.open(rb_file) do |f|
+          # age out old scripts gracefully in case script is still being
+          # deployed. it will be picked up on the next cycle in any case.
+          script_timestamp = f.mtime()
+          old_monitor = @monitors[monitor_name]
+          if old_monitor && (old_monitor.script_timestamp == script_timestamp || (now_time - script_timestamp) < SCRIPT_UPDATE_DELAY_SECS)
+            latest_monitors[monitor_name] = old_monitor
+          else
+            @logger.info("Initializing Monitor for: #{monitor_name}")
+            monitor = Monitor.new({:wmi => @wmi, :collectd => @collectd, :logger => @logger, :name => monitor_name})
+            monitor.script_timestamp = script_timestamp
+            monitor.instance_eval(f.read())
+            monitor.init if monitor.respond_to?(:init)
+            latest_monitors[monitor.name] = monitor
+          end
+        end
+      end
+
+      # remove any monitors whose scripts have been deleted to handle a corner
+      # case for refactoring monitor scripts during development.
+      @monitors = latest_monitors
+
+      # prioritize monitors to reduce any time-sensitive error creep.
+      @priority_queue = []
+      Monitor::PRIORITIES.size.times { @priority_queue << [] }
+      @monitors.values.each do |monitor|
+        @priority_queue[monitor.priority] << monitor
+      end
+
+      true
+    end
+
+    # Handle given exception
+    # Stop monitoring if more than 3 exceptions occur in less than 1 minute
+    #
+    # === Parameters
+    # title(String):: Title used for logging
+    # e(Exception):: Exception being handled
+    #
+    # === Return
+    # true:: Always return true
+    def handle_exception(title, e)
+      @logger.error("#{title} monitoring failed with #{e.message} from #{e.backtrace.join("\n")}")
+      @exceptions_count ||= 0
+      @exceptions_count += 1
+      if @exceptions_count > MAX_EXCEPTIONS
+        stop
+      else
+        @expiry_timer.cancel if @expiry_timer
+        @expiry_timer = EM::Timer.new(EXCEPTIONS_EXPIRY) { @exceptions_count = 0; @expiry_timer = nil }
+      end
+      true
+    end
+  end
+
+end
+
+if ARGV[0] == '--start'
+  RightScale::WindowsMonitor.start
+elsif ARGV[0] == '--shutdown'
+  RightScale::WindowsMonitor.stop
+else
+  puts 'Usage: ruby monitoring.rb --start|--shutdown'
+end

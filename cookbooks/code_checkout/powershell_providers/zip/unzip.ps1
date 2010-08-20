@@ -55,16 +55,20 @@ if (!(test-path $zipPath))
 	exit 143 
 }
 
-Write-Output "Unpacking [$zipPath] to [$deploy_path]"
+Write-Output "Unzipping [$zipPath] to [$deploy_path]"
 
-cmd /c 7z x -y "$zipPath" -o$deploy_path
+$command='cmd /c 7z x -y "'+$zipPath+'" -o"'+$deploy_path+'""'
 
-if ($LastExitCode -ne 0)
-{ 
-	Write-Error "Error: Unzipping failed"
-	exit 144
-}
-else
+$command_ouput=invoke-expression $command
+
+if ($command_ouput -match 'Everything is Ok')
 {
 	Set-ChefNode releasesunzippath $deploy_path
 }
+else
+{ 
+	echo $command_ouput
+	Write-Error "Error: Unzipping failed"
+	exit 144
+}
+
