@@ -6,7 +6,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.3.7"
 
 
-recipe 'db_sqlserver::default', 'Sets up default user.'
+recipe 'db_sqlserver::default', 'Sets up default user and enables SQL service.'
 recipe "db_sqlserver::backup", "Backs up database to a local machine directory."
 recipe "db_sqlserver::backup_to_s3", "Backs up database to S3."
 recipe "db_sqlserver::restore", "Restores database from a local machine directory."
