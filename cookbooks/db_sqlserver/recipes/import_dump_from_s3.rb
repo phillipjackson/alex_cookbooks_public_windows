@@ -23,11 +23,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#if (@node[:db_sqlserver_import_dump_from_s3_executed])
-#  Chef::Log.info("### dump already executed="+@node[:db_sqlserver_import_dump_from_s3_executed])
-#else
-#  Chef::Log.info("### dump node not set")
-#end
+if (@node[:db_sqlserver_import_dump_from_s3_executed])
+  Chef::Log.info("### dump already executed="+@node[:db_sqlserver_import_dump_from_s3_executed].to_s)
+else
+  Chef::Log.info("### dump node not set")
+end
 
 
 if (@node[:db_sqlserver_import_dump_from_s3_executed])
