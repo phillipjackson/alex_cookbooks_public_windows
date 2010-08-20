@@ -22,6 +22,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+Chef::Log.info("### dump already executed="+@node[:db_sqlserver_import_dump_from_s3_executed])
+
 if (@node[:db_sqlserver_import_dump_from_s3_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
