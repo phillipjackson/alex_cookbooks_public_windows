@@ -38,7 +38,7 @@ else
   sql_dump=@node[:s3][:file]
 
   # unpack the dump file 
-  if (@node[:s3][:file] =~ /(.*)\.(zip|7z|tgz|rar|tar\.gz)/)
+  if (@node[:s3][:file] =~ /(.*)\.(zip|7z|rar)/)
     sql_dump=$1
     Chef::Log.info("*** Unpacking database dump.")
     powershell "Unpacking "+@node[:s3][:file] do
