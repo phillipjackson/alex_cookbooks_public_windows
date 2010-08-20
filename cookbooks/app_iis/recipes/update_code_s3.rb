@@ -33,11 +33,11 @@ aws_s3 "Download code from S3 bucket" do
 end
 
 
-# Unzip code in c:\inetpub\releases
-code_checkout_zip "Unzipping code in the releases directory" do
+# Unpack code in c:\inetpub\releases
+code_checkout_package "Unpacking code in the releases directory" do
   releases_path "c:/inetpub/releases"
-  zip_path "c:/tmp/"+@node[:s3][:application_code_package]
-  action :unzip
+  package_path "c:/tmp/"+@node[:s3][:application_code_package]
+  action :unpack
 end
 
 
@@ -47,16 +47,16 @@ powershell "Change IIS physical path for Default Website" do
   #tell the script to "stop" or "continue" when a command fails
   $ErrorActionPreference = "stop"
 
-  $releasesunzippath=invoke-expression 'Get-ChefNode releasesunzippath'
+  $releasesunpackpath=invoke-expression 'Get-ChefNode releasesunpackpath'
   
-  if (Test-Path $releasesunzippath -PathType Container)
+  if (Test-Path $releasesunpackpath -PathType Container)
   {
   
       # change the physicalPath for the IIS site
       $appcmd_path = $env:systemroot + "\\system32\\inetsrv\\APPCMD.exe"
       if (Test-Path $appcmd_path)
       {
-        &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$releasesunzippath"
+        &$appcmd_path set SITE "Default Web Site" "/[path='/'].[path='/'].physicalPath:$releasesunpackpath"
       }
       else
       {
@@ -66,7 +66,7 @@ powershell "Change IIS physical path for Default Website" do
         $iis = [ADSI]"IIS://localhost/W3SVC"
         $site = $iis.psbase.children | where { $_.keyType -eq "IIsWebServer" -AND $_.ServerComment -eq $siteName }
         $path = [ADSI]($site.psbase.path+"/ROOT")
-        $path.psbase.properties.path[0] = $releasesunzippath
+        $path.psbase.properties.path[0] = $releasesunpackpath
         #DefaultDoc cannot be configured in web.config for IIS6
         $path.psbase.properties.DefaultDoc[0]="default.aspx,index.aspx,Default.htm,Default.asp,index.html,index.htm,iisstart.htm,index.php"
         $path.psbase.CommitChanges()
@@ -74,7 +74,7 @@ powershell "Change IIS physical path for Default Website" do
   }
   else
   {
-    Write-Error "Error: Invalid physical path [$releasesunzippath]" 
+    Write-Error "Error: Invalid physical path [$releasesunpackpath]" 
     exit 135
   }
 POWERSHELL_SCRIPT

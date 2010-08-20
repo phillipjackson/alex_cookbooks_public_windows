@@ -20,14 +20,14 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # locals.
-$zipPath = Get-NewResource zip_path
+$packagePath = Get-NewResource package_path
 $releasesPath = Get-NewResource releases_path
 
 #check inputs.
 $Error.Clear()
-if (($zipPath -eq $NULL) -or ($zipPath -eq ""))
+if (($packagePath -eq $NULL) -or ($packagePath -eq ""))
 {
-	Write-Error "Error: provider requires 'zip_path' parameter to be set! Ex: 'c:\\tmp\\app.zip'"
+	Write-Error "Error: provider requires 'package_path' parameter to be set! Ex: 'c:\\tmp\\app.zip'"
 	exit 141
 }
 if (($releasesPath -eq $NULL) -or ($releasesPath -eq ""))
@@ -49,21 +49,21 @@ if (!(Test-Path $releasesPath)) {
 $deploy_date = $(get-date -uformat "%Y%m%d%H%M%S")
 $deploy_path = Join-Path $releasesPath $deploy_date
 
-if (!(test-path $zipPath))
+if (!(test-path $packagePath))
 {
-	Write-Error "Error: [$zipPath] does not exist. Aborting!"
+	Write-Error "Error: [$packagePath] does not exist. Aborting!"
 	exit 143 
 }
 
-Write-Output "Unzipping [$zipPath] to [$deploy_path]"
+Write-Output "Unzpacking [$packagePath] to [$deploy_path]"
 
-$command='cmd /c 7z x -y "'+$zipPath+'" -o"'+$deploy_path+'""'
+$command='cmd /c 7z x -y "'+$packagePath+'" -o"'+$deploy_path+'""'
 
 $command_ouput=invoke-expression $command
 
 if ($command_ouput -match 'Everything is Ok')
 {
-	Set-ChefNode releasesunzippath $deploy_path
+	Set-ChefNode releasesunpackpath $deploy_path
 }
 else
 { 

@@ -20,7 +20,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-actions :unzip
+actions :unpack
 
 attribute :releases_path, :kind_of => [ String ]
-attribute :zip_path, :kind_of => [ String ]
+attribute :package_path, :kind_of => [ String ]
