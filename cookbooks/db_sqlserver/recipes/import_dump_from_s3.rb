@@ -22,14 +22,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-if (@node[:db_sqlserver_import_dump_from_s3_executed])
-  Chef::Log.info("### dump already executed="+@node[:db_sqlserver_import_dump_from_s3_executed].to_s)
-else
-  Chef::Log.info("### dump node not set")
-end
-
-
 if (@node[:db_sqlserver_import_dump_from_s3_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
@@ -46,7 +38,7 @@ else
   sql_dump=@node[:s3][:file]
 
   # unpack the dump file 
-  if (@node[:s3][:file] =~ /(.*)\.(zip|7z|gzip|rar)/)
+  if (@node[:s3][:file] =~ /(.*)\.(zip|7z|gzip|rar|tar\.gz)/)
     sql_dump=$1
     Chef::Log.info("*** Unpacking database dump.")
     powershell "Unpacking "+@node[:s3][:file] do

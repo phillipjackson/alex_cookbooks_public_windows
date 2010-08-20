@@ -23,12 +23,6 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 if (@node[:db_sqlserver_default_executed])
-  Chef::Log.info("### default already executed="+@node[:db_sqlserver_default_executed].to_s)
-else
-  Chef::Log.info("### default node not set")
-end
-
-if (@node[:db_sqlserver_default_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
   # Create default user
