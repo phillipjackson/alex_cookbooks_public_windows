@@ -22,7 +22,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Chef::Log.info("### default already executed="+@node[:db_sqlserver_default_executed])
+if (@node[:db_sqlserver_default_executed])
+  Chef::Log.info("### default already executed="+@node[:db_sqlserver_default_executed])
+else
+  Chef::Log.info("### default node not set")
+end
 
 if (@node[:db_sqlserver_default_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
