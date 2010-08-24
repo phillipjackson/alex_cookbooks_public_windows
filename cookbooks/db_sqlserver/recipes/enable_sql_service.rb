@@ -5,8 +5,8 @@
 #
 # All rights reserved
 
-# enable the SQL Express service
-powershell "Enable the SQL Express service" do
+# enable the SQL service
+powershell "Enable the SQL service" do
   # Create the powershell script
   powershell_script = <<EOF
     $sqlServiceName='MSSQL$SQLEXPRESS'

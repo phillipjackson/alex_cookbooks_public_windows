@@ -22,7 +22,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
-#checkout code on first run, then update
-include_recipe 'app_iis::update_code_svn'
+
 
 

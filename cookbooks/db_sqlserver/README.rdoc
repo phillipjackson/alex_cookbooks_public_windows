@@ -1,10 +1,10 @@
 = DESCRIPTION:
 
-MSSQL Recipes and Providers
+SQL Server Recipes and Providers
 
 = REQUIREMENTS:
 
-
+Use on a RightImage which includes SQL Server (2005 or 2008, Express or Standard).
 
 = USAGE:
 

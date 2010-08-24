@@ -18,13 +18,13 @@ recipe "db_sqlserver::enable_sql_service", "Enables the SQL Server service if di
 attribute "db_sqlserver/server_name",
   :display_name => "SQL Server instance network name",
   :description => "The network name of the SQL Server instance used by recipes. Ex: 'localhost\\SQLEXPRESS' for SQL EXPRESS or 'localhost' for SQL STANDARD",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
   :required => "required"
 
 attribute "db_sqlserver/database_name",
   :display_name => "SQL Server database name",
   :description => "SQL Server database(schema) name. Ex: production",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::drop"],
   :required => "required"
 
 attribute "db_sqlserver/backup/database_backup_dir",
@@ -37,24 +37,31 @@ attribute "db_sqlserver/backup/backup_file_name_format",
   :display_name => "Backup file name format",
   :description => "Format string with Powershell-style string format arguments for creating backup files. The 0 argument represents the database name and the 1 argument represents a generated time stamp. Ex: {0}_{1}.bak",
   :default => "{0}_{1}.bak",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
 
 attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   :display_name => "Pattern matching backup file names",
   :description => "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format. Ex: {0}_*.bak",
   :default => "{0}_*.bak",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
-  
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore"]
+
+attribute "db_sqlserver/restore/force_restore",
+  :display_name => "Force restore",
+  :description => "Whether to force restoring backup on top of any pre-existing database",
+  :recipes => ["db_sqlserver::restore"],
+  :choice => ['true', 'false'],
+  :default => "false"
+
 attribute "s3/file",
   :display_name => "Sql dump file",
   :description => "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
-  :recipes => ["db_sqlserver::import_dump_from_s3"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
   :required => "required"
 
 attribute "s3/bucket_dump",
   :display_name => "Bucket for sql dump",
   :description => "The name of the S3 bucket. Ex: production-bucket-dumps",
-  :recipes => ["db_sqlserver::import_dump_from_s3"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
   :required => "required"
 
 attribute "s3/bucket_backups",
@@ -66,11 +73,11 @@ attribute "s3/bucket_backups",
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
   :required => "required"
   
 attribute "aws/secret_access_key",
   :display_name => "Secret Access Key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
-  :recipes => ["db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
   :required => "required"

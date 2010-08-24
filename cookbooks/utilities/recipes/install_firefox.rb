@@ -13,10 +13,11 @@ powershell "Installs Mozilla Firefox" do
   powershell_script = <<'POWERSHELL_SCRIPT'
     cd "$env:ATTACHMENTS_PATH"
 
-    $file = "Firefox%20Setup%203.6.6.exe"
-    $url =  "http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.6.6/win32/en-US/"+$file
+    $file = "Firefox%20Setup%203.6.8.exe"
+    $url =  "http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.6.8/win32/en-US/"+$file
 
-    cmd /c curl --max-time 180 -C - -O $url
+    $curlPath = join-path $env:ProgramFiles "RightScale\\SandBox\\Git\\bin\\curl.exe"
+    cmd /c "$curlPath" --max-time 120 -C - -O $url
 
     cmd /c $file /INI=./firefox_quiet_install.ini
 

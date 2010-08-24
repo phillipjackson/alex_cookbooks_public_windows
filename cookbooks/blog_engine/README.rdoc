@@ -1,0 +1,21 @@
+= DESCRIPTION:
+
+Loads the BlogEngine data into the local SQL Server database and installs the BlogEngine application as the
+default web application for IIS.
+
+= REQUIREMENTS:
+
+* utilities, and sys_monitoring cookbooks
+
+= USAGE:
+
+Designed to be run within a RightScale ServerTemplate.
+
+Boot Scripts
+  * default - Loads the database and installs the BlogEngine application as the default IIS site
+  * add_monitories - Load custom monitors
+
+Operational Scripts
+  * backup_database - Backs up the BlogEngine database to a local machine directory.
+  * restore_database - Restores the BlogEngine database from a local machine directory.
+  * drop_database - Drops the BlogEngine database.

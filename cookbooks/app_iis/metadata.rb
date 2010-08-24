@@ -3,7 +3,7 @@ maintainer_email "support@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "IIS recipes"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.0.4"
+version          "0.0.5"
 
 depends 'aws'
 
@@ -54,7 +54,7 @@ attribute "aws/secret_access_key",
   
 attribute "s3/application_code_package",
   :display_name => "Application Package",
-  :description => "The name of the application package that can be retrieve from the S3 bucket. Ex: productioncode.zip",
+  :description => "The name of the application package that can be retrieved from the S3 bucket. Ex: productioncode.zip",
   :recipes => ["app_iis::update_code_s3"],
   :required => "required"
 

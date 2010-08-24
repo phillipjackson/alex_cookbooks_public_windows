@@ -20,7 +20,7 @@
     "name": "aws",
     "conflicting": {
     },
-    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved\n\n\n",
+    "license": "Copyright (c) 2010 RightScale, Inc.\n\nAll rights reserved - Do Not Redistribute\n",
     "providing": {
     },
     "dependencies": {
