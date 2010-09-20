@@ -1,0 +1,7 @@
+= DESCRIPTION:
+
+Recipes for haproxy
+
+= USAGE:
+
+

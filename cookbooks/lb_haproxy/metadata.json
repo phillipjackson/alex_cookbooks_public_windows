@@ -1,0 +1,43 @@
+{
+    "recipes": {
+      "lb_haproxy::do_attach_request": "Attaches an application server to the load balancer"
+    },
+    "groupings": {
+    },
+    "recommendations": {
+    },
+    "version": "0.0.2",
+    "maintainer": "Alex Pop",
+    "long_description": "= DESCRIPTION:\n\nRecipes for haproxy\n\n= USAGE:\n\n\n",
+    "description": "Installs/Configures lb_haproxy",
+    "suggestions": {
+    },
+    "maintainer_email": "alex@rightscale.com",
+    "name": "lb_haproxy",
+    "conflicting": {
+    },
+    "license": "All rights reserved",
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "platforms": {
+    },
+    "attributes": {
+      "lb_haproxy/applistener_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Sets the name of the HAProxy load balance pool on frontends in /home/haproxy/rightscale_lb.cfg. Application severs will join this load balance pool by using this name. Ex: www",
+        "display_name": "Applistener Name",
+        "recipes": [
+          "lb_haproxy::do_attach_request"
+        ],
+        "required": "required"
+      }
+    },
+    "replacing": {
+    }
+  }
