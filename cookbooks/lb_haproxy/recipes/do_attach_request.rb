@@ -9,8 +9,7 @@
 
 right_link_tag "loadbalancer:app=#{@node[:lb_haproxy][:applistener_name]}"
 Chef::Log.info("*** App listener is: #{@node[:lb_haproxy][:applistener_name]}")
-Chef::Log.info("*** Private ip is: #{@node[:network][:interfaces][:configuration][:ip_address]}")
-#@node[:network][:interfaces][:configuration][:ip_address]
+#Chef::Log.info("*** Private ip is: #{@node[:network][:interfaces][:configuration][:ip_address]}")
 
 remote_recipe "Attach me to load ballancer" do
   recipe "lb_haproxy::do_attach"
