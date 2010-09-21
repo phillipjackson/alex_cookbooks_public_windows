@@ -7,7 +7,7 @@
     },
     "recommendations": {
     },
-    "version": "0.0.2",
+    "version": "0.0.3",
     "maintainer": "Alex Pop",
     "long_description": "= DESCRIPTION:\n\nRecipes for haproxy\n\n= USAGE:\n\n\n",
     "description": "Installs/Configures lb_haproxy",
@@ -35,7 +35,7 @@
         "display_name": "Applistener Name",
         "recipes": [
           "lb_haproxy::do_attach_request",
-          "lb_haproxy::do_deattach_request"
+          "lb_haproxy::do_detach_request"
         ],
         "required": "required"
       }
