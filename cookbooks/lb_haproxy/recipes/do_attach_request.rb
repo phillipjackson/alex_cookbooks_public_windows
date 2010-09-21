@@ -14,7 +14,7 @@ Chef::Log.info("*** App listener is: #{@node[:lb_haproxy][:applistener_name]}")
 remote_recipe "Attach me to load ballancer" do
   recipe "lb_haproxy::do_attach"
   attributes :remote_recipe => {
-                :backend_ip => "10.48.11.63",
+                :backend_ip => "10.226.115.128",
                 :backend_id => @node[:rightscale][:instance_uuid]
               }
               
