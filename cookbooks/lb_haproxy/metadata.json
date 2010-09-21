@@ -1,6 +1,7 @@
 {
     "recipes": {
-      "lb_haproxy::do_attach_request": "Attaches an application server to the load balancer"
+      "lb_haproxy::do_attach_request": "Attaches an application server to the load balancer",
+      "lb_haproxy::do_detach_request": "Detaches an application server from the load balancer"
     },
     "groupings": {
     },
@@ -33,7 +34,8 @@
         "description": "Sets the name of the HAProxy load balance pool on frontends in /home/haproxy/rightscale_lb.cfg. Application severs will join this load balance pool by using this name. Ex: www",
         "display_name": "Applistener Name",
         "recipes": [
-          "lb_haproxy::do_attach_request"
+          "lb_haproxy::do_attach_request",
+          "lb_haproxy::do_deattach_request"
         ],
         "required": "required"
       }
