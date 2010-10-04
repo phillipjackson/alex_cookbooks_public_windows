@@ -124,7 +124,7 @@
           "db_sqlserver::default",
           "db_sqlserver::import_dump_from_s3"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "db_sqlserver/restore/force_restore": {
         "default": "false",
@@ -202,7 +202,7 @@
           "db_sqlserver::default",
           "db_sqlserver::import_dump_from_s3"
         ],
-        "required": "required"
+        "required": "optional"
       }
     },
     "replacing": {

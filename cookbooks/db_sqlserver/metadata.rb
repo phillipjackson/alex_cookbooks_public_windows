@@ -56,13 +56,13 @@ attribute "s3/file_dump",
   :display_name => "Sql dump file",
   :description => "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
   :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
-  :required => "required"
+  :required => "optional"
 
 attribute "s3/bucket_dump",
   :display_name => "Bucket for sql dump",
   :description => "The name of the S3 bucket. Ex: production-bucket-dumps",
   :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
-  :required => "required"
+  :required => "optional"
 
 attribute "s3/bucket_backups",
   :display_name => "Bucket to store backups",
