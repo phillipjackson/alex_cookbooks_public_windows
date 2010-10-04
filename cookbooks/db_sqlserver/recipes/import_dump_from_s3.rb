@@ -24,7 +24,8 @@
 
 if (@node[:s3][:file_dump].nil? || @node[:s3][:file_dump].empty? || @node[:s3][:bucket_dump].nil? || @node[:s3][:bucket_dump].empty?)
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
-else
+  exit 0
+end
 
 if (@node[:db_sqlserver_import_dump_from_s3_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
@@ -65,5 +66,4 @@ POWERSHELL_SCRIPT
   end
 
   @node[:db_sqlserver_import_dump_from_s3_executed] = true
-end
 end
