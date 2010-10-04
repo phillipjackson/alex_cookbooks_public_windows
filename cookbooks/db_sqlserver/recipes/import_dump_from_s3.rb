@@ -24,7 +24,7 @@
 
 if (@node[:s3][:file_dump].nil? || @node[:s3][:file_dump].empty? || @node[:s3][:bucket_dump].nil? || @node[:s3][:bucket_dump].empty?)
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
-  exit 0
+  exit(0)
 end
 
 if (@node[:db_sqlserver_import_dump_from_s3_executed])
