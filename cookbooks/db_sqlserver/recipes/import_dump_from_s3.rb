@@ -25,7 +25,6 @@
 if (@node[:s3].is_a?(Hash) && !@node[:s3][:file_dump].to_s.empty? && !@node[:s3][:bucket_dump].to_s.empty?)
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
 else
-
   if (@node[:db_sqlserver_import_dump_from_s3_executed])
     Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
   else
