@@ -22,7 +22,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if (@node[:s3][:file_dump].nil? || @node[:s3][:bucket_dump].nil?)
+if (@node[:s3].is_a?(Hash) && !@node[:s3][:file_dump].to_s.empty? && !@node[:s3][:bucket_dump].to_s.empty?)
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
 else
 
