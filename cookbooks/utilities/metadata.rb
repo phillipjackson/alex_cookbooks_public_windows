@@ -14,6 +14,7 @@ recipe "utilities::install_7zip", "Installs 7-Zip"
 recipe "utilities::install_ruby", "Installs Ruby"
 recipe "utilities::create_scheduled_task", "Creates the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
 recipe "utilities::delete_scheduled_task", "Deletes the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
+recipe "utilities::online_attached_drives", "Change 'Offline' status to 'Online' for the attached drives"
 
 attribute "utilities/admin_password",
   :display_name => "New administrator password",
