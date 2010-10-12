@@ -1,4 +1,4 @@
-# Cookbook Name:: app_iis 
+# Cookbook Name:: app_iis
 # Recipe:: update_code_s3
 #
 # Copyright (c) 2010 RightScale Inc
