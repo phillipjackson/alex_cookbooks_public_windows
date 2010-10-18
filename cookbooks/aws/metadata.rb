@@ -3,7 +3,7 @@ maintainer_email "support@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Amazon Web Services recipes and providers for Windows"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.1.5"
+version          "0.1.6"
 
 
 recipe "aws::default", "Install Amazon Web Services SDK for .NET"
@@ -39,7 +39,7 @@ attribute "aws/file_path",
   
 attribute "s3/file",
   :display_name => "File",
-  :description => "File to be retrieved from the s3 bucket. Ex: app.zip",
+  :description => "File to be retrieved from the s3 bucket. Ex: app.zip or dir/app.zip",
   :recipes => ["aws::download"],
   :required => "required"
 
