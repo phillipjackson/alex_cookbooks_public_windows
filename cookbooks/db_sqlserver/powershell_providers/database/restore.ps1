@@ -32,8 +32,8 @@ $backupFileNamePattern = (Get-NewResource existing_backup_file_name_pattern) -f 
 # check if database exists before restoring.
 if (!$forceRestore -and (Get-ChefNode ($nodePath + "exists")))
 {
-    Write-Warning "Not restoring ""$dbName"" because it already exists."
-    exit 0
+    Write-Error "Not restoring ""$dbName"" because it already exists."
+    exit 105
 }
 
 # connect to server.
@@ -44,10 +44,9 @@ $backupDir     = Get-Item $backupDirPath -ea Stop
 $backupDirPath = $backupDir.FullName
 Write-Verbose "Using backup directory ""$backupDirPath"""
 
-# select backup file for restore by first match of backup file pattern.
+# select the latest backup file to restore
 $backupFiles = $backupDir.GetFiles($backupFileNamePattern)
-
-if ($backupFile = $backupFiles[0])
+if ($backupFile = $backupFiles[-1])
 {
     # check restore history to see if this revision has already been applied,
     # even if the database was subsequently dropped. this is intended to support
@@ -89,6 +88,7 @@ if ($backupFile = $backupFiles[0])
     $restore.Database = $headerDbName
 
     # restore.
+    start-sleep -seconds 1
     $restore.SqlRestore($server)
     if ($Error.Count -eq 0)
     {

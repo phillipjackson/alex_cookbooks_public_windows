@@ -1,7 +1,6 @@
 {
     "recipes": {
       "utilities::install_firefox": "Installs Mozilla Firefox 3.6",
-      "utilities::install_ruby": "Installs Ruby",
       "utilities::online_attached_drives": "Change 'Offline' status to 'Online' for the attached drives",
       "utilities::install_7zip": "Installs 7-Zip",
       "utilities::system_reboot": "Reboots the system",

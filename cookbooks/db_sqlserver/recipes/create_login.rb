@@ -1,5 +1,5 @@
 # Cookbook Name:: db_sqlserver
-# Recipe:: backup_to_s3
+# Recipe:: create_login
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -22,29 +22,17 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# backs up the database
-db_sqlserver_database @node[:db_sqlserver][:database_name] do
-  machine_type = @node[:kernel][:machine]
-  backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
-  backup_file_name_format @node[:db_sqlserver][:backup][:backup_file_name_format]
-  existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
-  server_name @node[:db_sqlserver][:server_name]
-  force_restore false
-  zip_backup true
-  delete_sql_after_zip false
-  max_old_backups_to_keep @node[:db_sqlserver][:backup][:backups_to_keep]
-  
-  action :backup
-end
+if (@node[:db_sqlserver_create_login_executed])
+  Chef::Log.info("*** Recipe 'db_sqlserver::create_login' already executed, skipping...")
+else
+  # Create login
+  db_sqlserver_database @node[:db_sqlserver][:database_name] do
+    server_name @node[:db_sqlserver][:server_name]
+    commands ["CREATE LOGIN "+@node[:db_sqlserver][:application_user]+" WITH PASSWORD = '"+@node[:db_sqlserver][:application_pass]+"';",
+      "ALTER LOGIN "+@node[:db_sqlserver][:application_user]+" WITH CHECK_EXPIRATION = OFF;",
+      "ALTER LOGIN "+@node[:db_sqlserver][:application_user]+" WITH CHECK_POLICY = OFF;"]
+    action :run_command
+  end
 
-# upload backup to s3
-aws_s3 "upload the latest backup to the s3 bucket" do
-  access_key_id @node[:aws][:access_key_id]
-  secret_access_key @node[:aws][:secret_access_key]
-  s3_bucket @node[:s3][:bucket_backups]
-  # when file_path is a directory, the latest file in the directory will be uploaded
-  file_path @node[:db_sqlserver][:backup][:database_backup_dir]
-  # increase default timeout to 30 minutes. Default is 20(1200 seconds)
-  timeout_seconds 1800
-  action :put
+  @node[:db_sqlserver_create_login_executed] = true
 end

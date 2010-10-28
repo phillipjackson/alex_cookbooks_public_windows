@@ -1,12 +1,12 @@
 # Cookbook Name:: db_sqlserver
-# Recipe:: enable_sql_service
+# Recipe:: restart_sql_service
 #
 # Copyright 2010, RightScale, Inc.
 #
 # All rights reserved
 
 # enable the SQL service
-powershell "Enable the SQL service" do
+powershell "Restart the MSSQL Server" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
     $sqlServiceName='MSSQL$SQLEXPRESS'
@@ -18,32 +18,18 @@ powershell "Enable the SQL service" do
         if ($Null -eq $serviceController)
         {
             Write-Error "SQL Server service is not installed"
-            exit 100
+            exit 110
         }
     }
 
     if ($serviceController.Status -eq "Stopped")
     {
-        sc.exe config $sqlServiceName start= auto
-        if ($LastExitCode -eq 0)
-        {
-            net start $sqlServiceName
-            if ($LastExitCode -ne 0)
-            {
-                Write-Error "Failed to start $sqlServiceName service"
-                exit $LastExitCode
-            }
-        }
-        else
-        {
-            Write-Error "Failed to enable $sqlServiceName service"
-            exit $LastExitCode
-        }
+       net start $sqlServiceName
     }
     else
     {
-        $message = "$sqlServiceName service is already " + $serviceController.Status
-        Write-Output $message
+        net stop $sqlServiceName
+        net start $sqlServiceName
     }
 POWERSHELL_SCRIPT
 

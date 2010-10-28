@@ -43,3 +43,9 @@ attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
   :description => "Wildcard file matching pattern (i.e. not a Regex) with Powershell-style string format arguments for finding backup files. The 0 argument represents the database name and the rest of the pattern should match the file names generated from the backup_file_name_format.",
   :default => "{0}_*.bak",
   :recipes => ["blog_engine::default", "blog_engine::backup_database", "blog_engine::restore_database"]
+
+attribute "db_sqlserver/backup/backups_to_keep",
+  :display_name => "Old backups to keep",
+  :description => "Defines the number of old backups to keep. Ex: 30",
+  :recipes => ["db_sqlserver::backup_database"],
+  :required => "required"

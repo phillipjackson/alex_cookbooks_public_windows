@@ -26,7 +26,7 @@ unless (!@node[:s3][:file_dump].to_s.empty? && !@node[:s3][:bucket_dump].to_s.em
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
 else
   if (@node[:db_sqlserver_import_dump_from_s3_executed])
-    Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
+    Chef::Log.info("*** Recipe 'db_sqlserver::import_dump_from_s3' already executed, skipping...")
   else
     # download the sql dump
     aws_s3 "Download SqlServer dump from S3 bucket" do
